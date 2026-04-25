@@ -1,0 +1,219 @@
+.floating-button-container {
+  position: relative;
+  display: inline-block;
+}
+
+.floating-button {
+  position: relative;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  box-shadow: 
+    0 8px 25px rgba(0, 0, 0, 0.15),
+    0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Sizes */
+.floating-button.sm {
+  width: 48px;
+  height: 48px;
+  font-size: 1.25rem;
+}
+
+.floating-button.md {
+  width: 56px;
+  height: 56px;
+  font-size: 1.5rem;
+}
+
+.floating-button.lg {
+  width: 64px;
+  height: 64px;
+  font-size: 1.75rem;
+}
+
+.floating-button.xl {
+  width: 72px;
+  height: 72px;
+  font-size: 2rem;
+}
+
+/* Variants */
+.floating-button.primary {
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  color: white;
+}
+
+.floating-button.secondary {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+}
+
+.floating-button.accent {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  color: white;
+}
+
+.floating-button.danger {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  color: white;
+}
+
+.floating-button.glass {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #374151;
+}
+
+/* Button Elements */
+.button-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  background: inherit;
+  border-radius: 50%;
+  filter: blur(20px);
+  transform: translate(-50%, -50%);
+  z-index: -1;
+}
+
+.button-icon {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.25rem 0.5rem;
+  border-radius: 12px;
+  min-width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.4);
+  z-index: 3;
+}
+
+.button-ripple {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s ease, height 0.3s ease;
+  z-index: 1;
+}
+
+.floating-button:active .button-ripple {
+  width: 120%;
+  height: 120%;
+}
+
+.button-tooltip {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 8px;
+  padding: 0.5rem 0.75rem;
+  background: rgba(15, 23, 42, 0.9);
+  color: white;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border-radius: 8px;
+  white-space: nowrap;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+}
+
+.button-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 4px solid transparent;
+  border-top-color: rgba(15, 23, 42, 0.9);
+}
+
+/* Hover Effects */
+.floating-button:hover {
+  box-shadow: 
+    0 12px 35px rgba(0, 0, 0, 0.2),
+    0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+.floating-button.primary:hover {
+  box-shadow: 
+    0 12px 35px rgba(99, 102, 241, 0.4),
+    0 6px 15px rgba(99, 102, 241, 0.3);
+}
+
+.floating-button.secondary:hover {
+  box-shadow: 
+    0 12px 35px rgba(16, 185, 129, 0.4),
+    0 6px 15px rgba(16, 185, 129, 0.3);
+}
+
+.floating-button.accent:hover {
+  box-shadow: 
+    0 12px 35px rgba(245, 158, 11, 0.4),
+    0 6px 15px rgba(245, 158, 11, 0.3);
+}
+
+.floating-button.danger:hover {
+  box-shadow: 
+    0 12px 35px rgba(239, 68, 68, 0.4),
+    0 6px 15px rgba(239, 68, 68, 0.3);
+}
+
+/* Pulse Animation */
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.floating-button.pulse {
+  animation: pulse 2s infinite;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .floating-button.lg {
+    width: 56px;
+    height: 56px;
+    font-size: 1.5rem;
+  }
+  
+  .floating-button.xl {
+    width: 64px;
+    height: 64px;
+    font-size: 1.75rem;
+  }
+}

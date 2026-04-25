@@ -1,0 +1,27 @@
+{
+  "name": "pharmacy-backend",
+  "version": "1.0.0",
+  "description": "Backend API for pharmacy management system",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "seed": "node database/seed.js",
+    "db:init": "node database/seed.js",
+    "populate": "node database/populate.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+  "socket.io": "^4.7.2",
+    "mongoose": "^8.18.1",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.2",
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^9.0.2",
+    "express-validator": "^7.0.1",
+    "moment": "^2.29.4"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  }
+}
