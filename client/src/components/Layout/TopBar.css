@@ -485,6 +485,60 @@
   gap: 0.75rem;
 }
 
+/* Mobile Menu Button */
+.mobile-menu-btn {
+  display: none;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 12px;
+  font-size: 1.25rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mobile-menu-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
+}
+
+/* Mobile User Menu */
+.mobile-user-menu {
+  padding: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(99, 102, 241, 0.05);
+}
+
+.mobile-user-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  text-align: center;
+}
+
+.mobile-user-name {
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.mobile-user-role {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.7);
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+
 @media (max-width: 768px) {
   .top-bar {
     padding: 1rem;
@@ -526,6 +580,10 @@
   
   .logout-btn span {
     display: none;
+  }
+  
+  .mobile-menu-btn {
+    display: flex !important;
   }
   
   .notifications-dropdown {

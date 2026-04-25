@@ -868,3 +868,34 @@
   }
   
   .summary-card {
+    padding: 15px;
+  }
+  
+  .summary-icon {
+    width: 50px;
+    height: 50px;
+    font-size: 1.2rem;
+  }
+  
+  .summary-number {
+    font-size: 1.5rem;
+  }
+  
+  .dues-content {
+    padding: 15px;
+  }
+  
+  .due-card {
+    padding: 15px;
+  }
+  
+  .due-header {
+    flex-direction: column;
+    gap: 15px;
+    align-items: stretch;
+  }
+  
+  .due-actions {
+    justify-content: center;
+  }
+}

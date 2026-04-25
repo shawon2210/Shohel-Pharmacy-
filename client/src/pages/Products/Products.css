@@ -585,4 +585,51 @@
   }
   
   .search-box {
-    min-wid
+    min-width: auto;
+  }
+  
+  .filter-controls {
+    justify-content: center;
+  }
+  
+  .medicines-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+  
+  .modal {
+    margin: 10px;
+    max-height: 95vh;
+  }
+  
+  .form-actions {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 480px) {
+  .medicine-card {
+    padding: 15px;
+  }
+  
+  .medicine-header {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .medicine-actions {
+    align-self: flex-end;
+  }
+  
+  .modal-header {
+    padding: 15px 20px;
+  }
+  
+  .medicine-form,
+  .medicine-details {
+    padding: 20px;
+  }
+}

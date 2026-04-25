@@ -725,3 +725,32 @@
   .new-sale-page {
     background: white;
     padding: 0;
+  }
+  
+  .page-header {
+    background: #007bff !important;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+  }
+  
+  .sale-container {
+    box-shadow: none;
+    border: 1px solid #000;
+  }
+  
+  .sale-left,
+  .sale-right {
+    border: none;
+    padding: 20px;
+  }
+  
+  .action-buttons,
+  .back-button {
+    display: none;
+  }
+  
+  .search-container,
+  .add-to-cart-form {
+    display: none;
+  }
+}

@@ -409,4 +409,7 @@
 
 .dashboard-loading p {
   font-size: 1.125rem;
-  font-weight: 600
+  font-weight: 600;
+  color: #64748b;
+  text-align: center;
+}

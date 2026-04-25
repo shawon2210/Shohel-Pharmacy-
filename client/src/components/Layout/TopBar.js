@@ -263,4 +263,30 @@ const TopBar = ({ user }) => {
                         if (notification.link) navigate(notification.link);
                         // optionally mark read
                         axios.post(`/api/notifications/${notification.id}/read`).catch(() => {});
-                        setNotifications(prev => prev.map(n => n.id === notifi
+                        setNotifications(prev => prev.map(n => n.id === notification.id ? { ...n, isRead: true } : n));
+                        setNotificationCount(prev => Math.max(prev - (notification.isRead ? 0 : 1), 0));
+                        setShowNotifications(false);
+                      }} style={{ cursor: 'pointer' }}>
+                        <p className="notification-title">{notification.title}</p>
+                        <span className="notification-message">{notification.message}</span>
+                        <span className="notification-time">{new Date(notification.time).toLocaleString()}</span>
+                      </div>
+                      <div className="notification-actions">
+                        <button className="dismiss-btn" onClick={(e) => {
+                          e.stopPropagation();
+                          dismissNotification(notification.id);
+                        }}>×</button>
+                      </div>
+                    </motion.div>
+                  );
+                })
+              )}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </header>
+  );
+};
+
+export default TopBar;

@@ -158,4 +158,13 @@
     padding-bottom: 70px;
   }
   
- 
+  .page-container {
+    padding: 0 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-container {
+    padding: 0 0.5rem;
+  }
+}

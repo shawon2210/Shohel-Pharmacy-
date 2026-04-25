@@ -31,10 +31,10 @@
 .grid-button {
   position: relative;
   width: 100%;
-  min-height: 120px;
+  min-height: clamp(100px, 15vw, 140px);
   background: transparent;
   border: none;
-  border-radius: 20px;
+  border-radius: clamp(16px, 2vw, 20px);
   cursor: pointer;
   overflow: hidden;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -71,21 +71,21 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.75rem;
-  padding: 1.5rem;
+  gap: clamp(0.5rem, 2vw, 0.75rem);
+  padding: clamp(1rem, 3vw, 1.5rem);
   height: 100%;
 }
 
 .button-icon {
-  width: 48px;
-  height: 48px;
+  width: clamp(40px, 10vw, 48px);
+  height: clamp(40px, 10vw, 48px);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 2rem;
+  font-size: clamp(1.5rem, 4vw, 2rem);
   color: #6366f1;
   background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(168, 85, 247, 0.1) 100%);
-  border-radius: 16px;
+  border-radius: clamp(12px, 2vw, 16px);
   transition: all 0.3s ease;
 }
 
@@ -96,6 +96,7 @@
 
 .button-text {
   text-align: center;
+  font-size: clamp(0.75rem, 2vw, 0.875rem);
 }
 
 .button-title {

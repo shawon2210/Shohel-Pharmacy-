@@ -817,4 +817,50 @@
   }
   
   .modal {
-    margin
+    margin: 10px;
+    max-height: calc(100vh - 20px);
+  }
+  
+  .detail-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .expense-management-page {
+    padding: 10px;
+  }
+  
+  .page-header {
+    padding: 15px;
+  }
+  
+  .page-header h1 {
+    font-size: 1.5rem;
+  }
+  
+  .expense-form-container {
+    padding: 20px;
+  }
+  
+  .form-header h2 {
+    font-size: 1.5rem;
+  }
+  
+  .summary-cards {
+    padding: 20px;
+  }
+  
+  .filters-section,
+  .expenses-content {
+    padding: 20px;
+  }
+  
+  .expense-details {
+    padding: 20px;
+  }
+  
+  .expense-card {
+    padding: 15px;
+  }
+}
