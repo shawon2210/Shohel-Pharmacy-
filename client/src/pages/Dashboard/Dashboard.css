@@ -118,22 +118,6 @@
   margin: 0;
 }
 
-.card-header {
-  margin-bottom: 1rem;
-}
-
-.card-header h3 {
-  font-size: 1rem;
-  font-weight: 600;
-  color: #374151;
-  margin: 0;
-}
-
-.card-subtitle {
-  font-size: 0.875rem;
-  color: #6b7280;
-  font-weight: 500;
-}
 
 .main-stat {
   font-size: clamp(1.875rem, 6vw, 2.5rem);
@@ -412,4 +396,152 @@
   font-weight: 600;
   color: #64748b;
   text-align: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dashboard::before {
+    animation: none !important;
+  }
+
+  .loading-spinner {
+    animation: none !important;
+  }
+
+  .card-icon::before {
+    transition: none !important;
+  }
+}
+
+/* Enhanced Feature Badge Styling */
+.feature-badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: white;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.4);
+  animation: badge-pop 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  z-index: 3;
+}
+
+@keyframes badge-pop {
+  0% { transform: scale(0); }
+  100% { transform: scale(1); }
+}
+
+/* Animated Card Hover Effects */
+.animated-card {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
+              box-shadow 0.3s ease;
+}
+
+.animated-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+}
+
+/* Dashboard Content Fade-In */
+.dashboard-content {
+  animation: fadeIn 0.5s ease-out;
+}
+
+/* Skeleton Loader Styles */
+.skeleton-card {
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 16px;
+  padding: clamp(1.25rem, 3vw, 2rem);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  animation: skeleton-pulse 1.5s infinite;
+}
+
+.skeleton-header {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.75rem, 3vw, 1rem);
+  margin-bottom: clamp(1rem, 3vw, 1.5rem);
+}
+
+.skeleton-icon {
+  width: clamp(48px, 12vw, 56px);
+  height: clamp(48px, 12vw, 56px);
+  border-radius: clamp(12px, 2vw, 16px);
+  background: rgba(99, 102, 241, 0.1);
+}
+
+.skeleton-text {
+  flex: 1;
+  height: 1.5rem;
+  background: rgba(99, 102, 241, 0.1);
+  border-radius: 8px;
+  width: 60%;
+}
+
+.skeleton-stat {
+  height: clamp(1.875rem, 6vw, 2.5rem);
+  background: rgba(99, 102, 241, 0.1);
+  border-radius: 8px;
+  margin-bottom: clamp(0.75rem, 2vw, 1rem);
+  width: 40%;
+}
+
+.skeleton-details {
+  height: 1rem;
+  background: rgba(99, 102, 241, 0.1);
+  border-radius: 8px;
+  width: 80%;
+}
+
+.skeleton-title {
+  height: 2rem;
+  background: rgba(99, 102, 241, 0.1);
+  border-radius: 8px;
+  margin-bottom: 2.5rem;
+  width: 30%;
+  animation: skeleton-pulse 1.5s infinite;
+}
+
+.skeleton-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1.25rem;
+}
+
+.skeleton-feature-item {
+  height: 100px;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  animation: skeleton-pulse 1.5s infinite;
+}
+
+@keyframes skeleton-pulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+/* Responsive Fixes for Tiny Screens */
+@media (max-width: 360px) {
+  .update-cards {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .feature-section .section-title {
+    font-size: 1.25rem;
+  }
+  
+  .main-stat {
+    font-size: 1.5rem;
+  }
 }

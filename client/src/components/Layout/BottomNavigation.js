@@ -119,13 +119,16 @@ const BottomNavigation = ({ currentPath }) => {
             <button
               key={item.path}
               className={`nav-item ${isActive ? 'active' : ''} ${item.isPrimary ? 'primary' : ''}`}
+              type="button"
               onClick={() => handleNavigation(item.path)}
               title={item.name}
+              aria-label={item.name}
+              aria-current={isActive ? 'page' : undefined}
               onMouseEnter={(e) => {
                 e.currentTarget.style.setProperty('--hover-delay', `${index * 0.1}s`);
               }}
             >
-              <span className="nav-icon">
+              <span className="nav-icon" aria-hidden="true">
                 <IconComponent />
                 <div className="icon-glow" />
               </span>
@@ -145,10 +148,12 @@ const BottomNavigation = ({ currentPath }) => {
         {hasMoreItems && (
           <button
             className="nav-item more-button"
+            type="button"
             onClick={() => setShowAllItems(true)}
             title="Show More Options"
+            aria-label="Show more navigation options"
           >
-            <span className="nav-icon">
+            <span className="nav-icon" aria-hidden="true">
               <FiMoreHorizontal />
               <div className="icon-glow" />
             </span>
@@ -160,10 +165,12 @@ const BottomNavigation = ({ currentPath }) => {
         {isMobile && showAllItems && (
           <button
             className="nav-item less-button"
+            type="button"
             onClick={() => setShowAllItems(false)}
             title="Show Less"
+            aria-label="Show fewer navigation options"
           >
-            <span className="nav-icon">
+            <span className="nav-icon" aria-hidden="true">
               <FiChevronUp />
               <div className="icon-glow" />
             </span>
