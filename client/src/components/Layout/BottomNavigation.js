@@ -42,6 +42,11 @@ const BottomNavigation = () => {
   }, [location.pathname, showAllItems, isMobile]);
 
   const handleNavigation = useCallback((path, event) => {
+    // Haptic feedback for mobile devices
+    if (navigator.vibrate) {
+      navigator.vibrate(10); // Very short vibration for tap feedback
+    }
+    
     // Ripple effect with precise positioning
     if (event && event.currentTarget) {
       const rect = event.currentTarget.getBoundingClientRect();
@@ -139,7 +144,7 @@ const BottomNavigation = () => {
       aria-label="Main navigation"
       ref={navRef}
     >
-      <div className="nav-items">
+      <div className={`nav-items ${showAllItems ? 'expanded' : ''}`}>
         {displayItems.map((item, index) => {
           const IconComponent = item.icon;
           const active = isActive(item);

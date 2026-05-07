@@ -1,6 +1,7 @@
 /* ==============================================
    SHOHEL PHARMACY - PREMIUM iOS/FINTECH BOTTOM NAV
    Dark Glassmorphism | Purple-Pink Neon Glow | Spring Animations
+   ENHANCED: Better UX, Tooltips, Haptic Feedback
    ============================================== */
 
 /* ==============================================
@@ -40,6 +41,7 @@
   --spring-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
   --duration-fast: 150ms;
   --duration-normal: 300ms;
+  --duration-slow: 500ms;
   
   /* Floating Dock - iOS Style */
   --dock-radius: clamp(24px, 6vw, 30px);
@@ -180,6 +182,12 @@
   transform: translateY(-5px) scale(1.1);
 }
 
+/* Micro-bounce on Active Click */
+.nav-item:active {
+  transform: translateY(-5px) scale(1.05);
+  transition: all 0.1s ease-out;
+}
+
 /* ==============================================
    ACTIVE INDICATOR - iOS Style Pill
    ============================================== */
@@ -216,17 +224,17 @@
 }
 
 /* ==============================================
-   ICON CONTAINER
-   Monochrome Style with Grayscale
+   ICON CONTAINER - ENHANCED
+   Premium Monochrome with Depth & Better Positioning
    ============================================== */
 .nav-icon {
   display: flex;
   align-items: center;
   justify-content: center;
   
-  /* Responsive Sizing */
-  width: clamp(20px, 5vw, 26px);
-  height: clamp(20px, 5vw, 26px);
+  /* Responsive Sizing - Optimized for vertical centering */
+  width: clamp(28px, 7vw, 36px);
+  height: clamp(28px, 7vw, 36px);
   
   border-radius: 50%;
   background: transparent;
@@ -235,32 +243,109 @@
   position: relative;
   z-index: 2;
   transition: all var(--duration-normal) var(--spring-bounce);
+  
+  /* Enhanced positioning - better vertical alignment */
+  margin: 0 auto;
+  padding: 4px;
 }
 
-/* Icon SVG - Grayscale for Inactive */
+/* Icon SVG - Grayscale for Inactive with stroke adjustment */
 .nav-icon svg {
-  width: clamp(16px, 4vw, 20px);
-  height: clamp(16px, 4vw, 20px);
+  width: clamp(18px, 4.5vw, 22px);
+  height: clamp(18px, 4.5vw, 22px);
   filter: var(--icon-filter-inactive);
   transition: all var(--duration-fast) var(--spring-timing);
+  stroke-width: 1.5; /* Crisper icon strokes */
 }
 
-/* Hover Icon */
+/* Hover Icon - Enhanced */
+.nav-item:hover .nav-icon {
+  background: rgba(255, 255, 255, 0.06);
+  transform: scale(1.08);
+}
+
 .nav-item:hover .nav-icon svg {
   filter: var(--icon-filter-hover);
-  transform: scale(1.1);
+  transform: scale(1.12);
+  stroke-width: 1.8; /* Bolder on hover */
 }
 
-/* Active Icon - Full Color + Gradient Background */
+/* Active Icon - Premium Gradient with Glow Ring */
 .nav-item.active .nav-icon {
   background: var(--active-gradient);
-  box-shadow: var(--active-glow-outer);
-  transform: scale(1.2);
+  box-shadow: 
+    var(--active-glow-outer),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  transform: scale(1.25);
+  
+  /* Concentric glow effect */
+  &::before {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    background: transparent;
+    border: 2px solid rgba(168, 85, 247, 0.3);
+    animation: iconRingPulse 2s ease-in-out infinite;
+  }
 }
 
 .nav-item.active .nav-icon svg {
   filter: var(--icon-filter-active);
-  transform: scale(1.05);
+  transform: scale(1.08);
+  stroke-width: 2; /* Boldest for active */
+  color: white; /* Ensure white color for active icons */
+}
+
+/* Icon Ring Pulse Animation */
+@keyframes iconRingPulse {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.1);
+  }
+}
+
+/* ==============================================
+   ICON POSITIONING ADJUSTMENTS
+   Better Vertical Alignment & Spacing
+   ============================================== */
+
+/* Adjust nav-item to have better icon alignment */
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px; /* Consistent gap between icon and label */
+  
+  /* Enhanced touch target with better padding */
+  padding: calc(var(--item-padding) * 0.8) calc(var(--item-padding) * 0.6);
+  min-height: 56px; /* Taller for better icon presentation */
+}
+
+/* Refined label positioning */
+.nav-label {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+  font-size: clamp(0.5rem, 1.8vw, 0.625rem);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  
+  margin-top: 0; /* Remove top margin, use gap instead */
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  line-height: 1.1;
+  color: inherit;
+  transition: all var(--duration-fast) var(--spring-timing);
 }
 
 /* ==============================================
@@ -301,8 +386,43 @@
 }
 
 /* ==============================================
+   TOOLTIP - Desktop Hover Labels
+   ============================================== */
+@media (min-width: 769px) {
+  .nav-item {
+    position: relative;
+  }
+  
+  .nav-item::after {
+    content: attr(aria-label);
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%) translateY(4px);
+    background: rgba(0, 0, 0, 0.9);
+    backdrop-filter: blur(10px);
+    color: #ffffff;
+    font-size: 0.75rem;
+    font-weight: 500;
+    padding: 6px 10px;
+    border-radius: 6px;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transition: all var(--duration-fast) var(--spring-timing);
+    z-index: 10000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+  
+  .nav-item:hover::after {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+/* ==============================================
    PRIMARY BUTTON (New Sale)
-   Elevated Floating Action
+   Elevated Floating Action with Pulse
    ============================================== */
 .nav-item.primary {
   background: var(--active-gradient);
@@ -321,6 +441,26 @@
   padding: calc(var(--item-padding) * 1.2) calc(var(--item-padding) * 0.9);
   
   transition: all var(--duration-normal) var(--spring-bounce);
+  
+  /* Pulse Animation to Draw Attention */
+  animation: primaryPulse 3s ease-in-out infinite;
+}
+
+@keyframes primaryPulse {
+  0%, 100% {
+    box-shadow: 
+      var(--active-shadow),
+      0 0 0 1px rgba(255, 255, 255, 0.15),
+      inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  }
+  50% {
+    box-shadow: 
+      0 4px 16px rgba(168, 85, 247, 0.5),
+      0 8px 24px rgba(236, 72, 153, 0.3),
+      0 0 0 2px rgba(255, 255, 255, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.35),
+      0 0 30px rgba(168, 85, 247, 0.3);
+  }
 }
 
 .nav-item.primary:hover {
@@ -330,6 +470,7 @@
     0 12px 40px rgba(236, 72, 153, 0.3),
     0 0 0 2px rgba(255, 255, 255, 0.2),
     inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  animation: none; /* Stop pulse on hover */
 }
 
 .nav-item.primary:active {
@@ -404,8 +545,110 @@
 }
 
 /* ==============================================
+   MORE/LESS BUTTONS
+   Expand/Collapse Navigation - Enhanced
+   ============================================== */
+.more-button,
+.less-button {
+  position: relative;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: calc(var(--dock-radius) - 10px);
+  transition: all var(--duration-fast) var(--spring-timing);
+  overflow: visible;
+}
+
+.more-button:hover,
+.less-button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(168, 85, 247, 0.3);
+  transform: translateY(-2px) scale(1.05);
+}
+
+.more-button::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  width: 12px;
+  height: 12px;
+  background: var(--active-gradient);
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba(168, 85, 247, 0.6);
+  animation: enhancedPulse 2s ease-in-out infinite;
+  z-index: 10;
+}
+
+@keyframes enhancedPulse {
+  0%, 100% {
+    opacity: 0.5;
+    transform: scale(1);
+    box-shadow: 0 0 8px rgba(168, 85, 247, 0.4);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.4);
+    box-shadow: 0 0 16px rgba(168, 85, 247, 0.8);
+  }
+}
+
+/* Less button specific */
+.less-button::before {
+  content: '−';
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  width: 16px;
+  height: 16px;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: none;
+  transition: all var(--duration-fast) var(--spring-timing);
+  z-index: 10;
+}
+
+.less-button:hover::before {
+  background: rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+  transform: scale(1.1);
+}
+
+/* ==============================================
+   EXPANDED MENU ANIMATION
+   Staggered Entrance for New Items
+   ============================================== */
+.nav-items.expanded .nav-item {
+  animation: slideInUp 0.3s var(--spring-bounce) both;
+}
+
+.nav-items.expanded .nav-item:nth-child(1) { animation-delay: 0s; }
+.nav-items.expanded .nav-item:nth-child(2) { animation-delay: 0.05s; }
+.nav-items.expanded .nav-item:nth-child(3) { animation-delay: 0.1s; }
+.nav-items.expanded .nav-item:nth-child(4) { animation-delay: 0.15s; }
+.nav-items.expanded .nav-item:nth-child(5) { animation-delay: 0.2s; }
+.nav-items.expanded .nav-item:nth-child(6) { animation-delay: 0.25s; }
+.nav-items.expanded .nav-item:nth-child(7) { animation-delay: 0.3s; }
+
+@keyframes slideInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ==============================================
    RIPPLE EFFECT
-   iOS-Inspired Tap Feedback
+   Enhanced iOS-Inspired Tap Feedback
    ============================================== */
 .nav-ripple {
   position: absolute;
@@ -414,27 +657,29 @@
   width: 0;
   height: 0;
   background: radial-gradient(circle,
-    rgba(255, 255, 255, 0.35) 0%,
-    rgba(255, 255, 255, 0.1) 50%,
-    transparent 70%
+    rgba(255, 255, 255, 0.4) 0%,
+    rgba(255, 255, 255, 0.15) 40%,
+    rgba(168, 85, 247, 0.1) 70%,
+    transparent 100%
   );
   border-radius: 50%;
   transform: translate(-50%, -50%);
-  transition: all 0.5s var(--spring-timing);
+  transition: all 0.6s var(--spring-timing);
   opacity: 0;
   pointer-events: none;
   z-index: 1;
 }
 
 .nav-item:active .nav-ripple {
-  width: 100px;
-  height: 100px;
+  width: 120px;
+  height: 120px;
   opacity: 1;
   transition: all 0.3s var(--spring-timing);
 }
 
 /* ==============================================
    FOCUS STATES (Accessibility)
+   Enhanced with Glow
    ============================================== */
 .nav-item:focus {
   outline: none;
@@ -444,6 +689,7 @@
   outline: 2px solid #a855f7;
   outline-offset: 3px;
   border-radius: calc(var(--dock-radius) - 10px);
+  box-shadow: 0 0 0 4px rgba(168, 85, 247, 0.3);
 }
 
 /* ==============================================
@@ -566,7 +812,8 @@
   .nav-label,
   .active-indicator,
   .nav-badge,
-  .nav-ripple {
+  .nav-ripple,
+  .nav-item.primary {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
