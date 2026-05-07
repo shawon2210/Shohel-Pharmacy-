@@ -1,0 +1,26 @@
+{
+  "name": "shohel-pharmacy-management",
+  "version": "1.0.0",
+  "description": "Comprehensive pharmacy management system",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node start.js",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "cd server && npm run dev",
+    "client": "cd client && npm start",
+    "install-all": "npm install && cd server && npm install && cd ../client && npm install",
+    "build": "cd client && npm run build",
+    "test-auth": "node test-auth.js"
+  },
+  "keywords": [
+    "pharmacy",
+    "management",
+    "medicine",
+    "inventory"
+  ],
+  "author": "Shohel Pharmacy",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}
