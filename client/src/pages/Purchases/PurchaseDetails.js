@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { 
-  FaArrowLeft, FaPrint, FaDownload, FaEdit, FaTrash,
+  FaArrowLeft, FaPrint, FaDownload,
   FaBuilding, FaCalendarAlt, FaCreditCard, FaMoneyBillWave,
   FaBoxes, FaUser, FaPhone, FaMapMarkerAlt, FaFileInvoice
 } from 'react-icons/fa';
@@ -16,11 +16,7 @@ const PurchaseDetails = () => {
   const [purchase, setPurchase] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetchPurchaseDetails();
-  }, [id]);
-
-  const fetchPurchaseDetails = async () => {
+  const fetchPurchaseDetails = useCallback(async () => {
     try {
       setLoading(true);
       const response = await axios.get(`/api/purchases/${id}`);
@@ -32,7 +28,11 @@ const PurchaseDetails = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [id, navigate]);
+
+  useEffect(() => {
+    fetchPurchaseDetails();
+  }, [fetchPurchaseDetails]);
 
   const printPurchase = () => {
     window.print();

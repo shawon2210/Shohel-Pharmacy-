@@ -3,8 +3,49 @@ const router = express.Router();
 const Expense = require('../models/Expense');
 const { body, validationResult } = require('express-validator');
 
+// Mock expenses data for when MongoDB is not available
+const getMockExpenses = (query = {}, page = 1, limit = 20) => {
+  const mockExpenses = [
+    { _id: 'mock_exp_1', description: 'Electricity Bill', vendor: 'DESCO', amount: 5000, expenseDate: new Date(), category: 'Utilities', paymentMethod: 'bank_transfer', receiptNumber: 'REC-001' },
+    { _id: 'mock_exp_2', description: 'Staff Salary', vendor: 'John Doe', amount: 15000, expenseDate: new Date(Date.now() - 86400000), category: 'Salaries', paymentMethod: 'cash', receiptNumber: 'REC-002' },
+    { _id: 'mock_exp_3', description: 'Medicine Transport', vendor: 'Fast Logistics', amount: 2000, expenseDate: new Date(Date.now() - 172800000), category: 'Transportation', paymentMethod: 'mobile_banking', receiptNumber: 'REC-003' }
+  ];
+  
+  let filtered = [...mockExpenses];
+  if (query.category) filtered = filtered.filter(e => e.category === query.category);
+  if (query.$or) filtered = filtered.filter(e => 
+    query.$or.some(q => {
+      if (q.description) return e.description.toLowerCase().includes(q.description.$regex.toLowerCase());
+      if (q.vendor) return e.vendor.toLowerCase().includes(q.vendor.$regex.toLowerCase());
+      return false;
+    })
+  );
+  
+  const total = filtered.length;
+  const start = (page -1) * limit;
+  const paginated = filtered.slice(start, start + parseInt(limit));
+  
+  const summary = {
+    totalExpenses: filtered.length,
+    totalAmount: filtered.reduce((sum, e) => sum + e.amount, 0),
+    averageExpense: filtered.length > 0 ? filtered.reduce((sum, e) => sum + e.amount, 0) / filtered.length : 0
+  };
+  
+  return { expenses: paginated, totalPages: Math.ceil(total / limit), currentPage: parseInt(page), total, summary };
+};
+
 // Get all expenses with pagination and filters
 router.get('/', async (req, res) => {
+  // Mock mode
+  if (global.mockMode) {
+    console.log('💸 Returning MOCK expenses data');
+    const { page = 1, limit = 20, category = '', search = '' } = req.query;
+    let query = {};
+    if (category) query.category = category;
+    if (search) query.$or = [{ description: { $regex: search, $options: 'i' } }, { vendor: { $regex: search, $options: 'i' } }];
+    return res.json(getMockExpenses(query, page, limit));
+  }
+  
   try {
     const { 
       page = 1, 
@@ -98,6 +139,13 @@ router.get('/', async (req, res) => {
 
 // Get single expense
 router.get('/:id', async (req, res) => {
+  // Mock mode
+  if (global.mockMode) {
+    const mockExp = getMockExpenses().expenses.find(e => e._id === req.params.id);
+    if (!mockExp) return res.status(404).json({ message: 'Expense not found' });
+    return res.json(mockExp);
+  }
+  
   try {
     const expense = await Expense.findById(req.params.id);
     
@@ -120,6 +168,13 @@ router.post('/', [
   body('paymentMethod').optional().isIn(['cash', 'card', 'bank_transfer', 'cheque']),
   body('recordedBy').notEmpty().withMessage('Recorded by is required')
 ], async (req, res) => {
+  // Mock mode
+  if (global.mockMode) {
+    console.log('💸 MOCK: Creating expense', req.body.description);
+    const newExpense = { _id: 'mock_exp_' + Date.now(), ...req.body, expenseDate: new Date() };
+    return res.status(201).json(newExpense);
+  }
+  
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -137,6 +192,12 @@ router.post('/', [
 
 // Update expense
 router.put('/:id', async (req, res) => {
+  // Mock mode
+  if (global.mockMode) {
+    console.log('💸 MOCK: Updating expense', req.params.id);
+    return res.json({ _id: req.params.id, ...req.body });
+  }
+  
   try {
     const expense = await Expense.findByIdAndUpdate(
       req.params.id,
@@ -156,6 +217,12 @@ router.put('/:id', async (req, res) => {
 
 // Delete expense
 router.delete('/:id', async (req, res) => {
+  // Mock mode
+  if (global.mockMode) {
+    console.log('💸 MOCK: Deleting expense', req.params.id);
+    return res.json({ message: 'Expense deleted successfully' });
+  }
+  
   try {
     const expense = await Expense.findByIdAndDelete(req.params.id);
     
@@ -171,6 +238,20 @@ router.delete('/:id', async (req, res) => {
 
 // Get today's expenses summary
 router.get('/summary/today', async (req, res) => {
+  // Mock mode
+  if (global.mockMode) {
+    console.log('💸 MOCK: Getting today\'s expenses summary');
+    return res.json({
+      totalExpenses: 3,
+      totalAmount: 22000,
+      averageExpense: 7333,
+      categoryBreakdown: [
+        { category: 'Utilities', total: 5000, count: 1 },
+        { category: 'Salaries', total: 15000, count: 1 }
+      ]
+    });
+  }
+  
   try {
     const today = new Date();
     const startOfDay = new Date(today.getFullYear(), today.getMonth(), today.getDate());
@@ -195,6 +276,22 @@ router.get('/summary/today', async (req, res) => {
 
 // Get expense analytics
 router.get('/analytics/period', async (req, res) => {
+  // Mock mode
+  if (global.mockMode) {
+    console.log('💸 MOCK: Getting expense analytics');
+    return res.json({
+      period: req.query.period || 'month',
+      totalExpenses: 10,
+      totalAmount: 65000,
+      averageExpense: 6500,
+      categoryBreakdown: [
+        { category: 'Utilities', total: 15000, count: 3 },
+        { category: 'Salaries', total: 30000, count: 2 },
+        { category: 'Transportation', total: 20000, count: 5 }
+      ]
+    });
+  }
+  
   try {
     const { period = 'month' } = req.query;
     let startDate, endDate;

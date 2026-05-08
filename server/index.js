@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const dotenv = require('dotenv');
+const path = require('path');
 
 // Load environment variables
 dotenv.config();
@@ -9,7 +10,11 @@ dotenv.config();
 const app = express();
 
 // Middleware
-app.use(cors());
+const corsOptions = {
+  origin: process.env.CLIENT_URL || '*',
+  credentials: true,
+};
+app.use(cors(corsOptions));
 app.use(express.json());
 
 // Database connection
@@ -20,8 +25,13 @@ const { initializeDatabase } = require('./database/init');
 setupConnectionHandlers();
 
 // Connect to database and initialize
-connectDB().then(async () => {
-  await initializeDatabase();
+connectDB().then(async (conn) => {
+  if (conn) {
+    await initializeDatabase();
+    console.log('✅ Database initialized');
+  } else {
+    console.log('🔧 Running in MOCK MODE - no database connection');
+  }
 }).catch(error => {
   console.error('❌ Failed to start server:', error);
   process.exit(1);
@@ -42,6 +52,17 @@ app.use('/api/notifications', require('./routes/notifications'));
 app.get('/api/health', (req, res) => {
   res.json({ message: 'Pharmacy Management API is running!' });
 });
+
+// Serve static files from React build (production)
+if (process.env.NODE_ENV === 'production') {
+  const buildPath = path.join(__dirname, '../client/build');
+  app.use(express.static(buildPath));
+  
+  // Catchall handler for client-side routing
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(buildPath, 'index.html'));
+  });
+}
 
 const PORT = process.env.PORT || 5001;
 const server = app.listen(PORT, () => {

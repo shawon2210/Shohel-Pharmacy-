@@ -1,5 +1,8 @@
 const mongoose = require('mongoose');
 
+// Global mock mode flag
+global.mockMode = false;
+
 const connectDB = async () => {
   try {
     // Use local MongoDB by default, cloud as fallback
@@ -14,17 +17,10 @@ const connectDB = async () => {
 
     let conn;
     
-    // Helper: sanitize cloud URI to remove unsupported options (e.g. bufferMaxEntries)
+    // Helper: sanitize cloud URI to remove unsupported options
     const sanitizeMongoURI = (uri) => {
       if (!uri || typeof uri !== 'string') return uri;
-      // remove bufferMaxEntries (case-insensitive) and its value
-      const cleaned = uri.replace(/([?&])buffermaxentries=[^&]*(&?)/i, (m, p1, p2) => {
-        // If there is a following param, keep the separator, otherwise remove the separator
-        return p2 ? p1 : '';
-      }).replace(/([?&])bufferMaxEntries=[^&]*(&?)/i, (m, p1, p2) => p2 ? p1 : '');
-      if (cleaned !== uri) {
-        console.log('⚙️ Sanitized MongoDB URI: removed unsupported query params');
-      }
+      const cleaned = uri.replace(/([?&])bufferMaxEntries=[^&]*(&?)/i, (m, p1, p2) => p2 ? p1 : '');
       return cleaned;
     };
 
@@ -32,6 +28,8 @@ const connectDB = async () => {
     try {
       conn = await mongoose.connect(localURI, options);
       console.log('✅ Local MongoDB connected successfully');
+      global.mockMode = false;
+      return conn;
     } catch (localError) {
       console.log('⚠️ Local MongoDB not available, trying cloud connection...');
       
@@ -39,19 +37,18 @@ const connectDB = async () => {
         const cleanedCloudURI = sanitizeMongoURI(cloudURI);
         conn = await mongoose.connect(cleanedCloudURI, options);
         console.log('✅ Cloud MongoDB connected successfully');
+        global.mockMode = false;
+        return conn;
       } else {
         throw localError;
       }
     }
     
-    console.log(`📍 Database: ${conn.connection.name}`);
-    console.log(`🌐 Host: ${conn.connection.host}:${conn.connection.port}`);
-    
-    return conn;
-    
   } catch (error) {
     console.error('❌ MongoDB connection failed:', error.message);
-    throw error;
+    console.log('🔧 Starting server in MOCK MODE (no database)');
+    global.mockMode = true;
+    return null;
   }
 };
 

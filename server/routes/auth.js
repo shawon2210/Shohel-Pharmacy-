@@ -3,6 +3,43 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { body, validationResult } = require('express-validator');
+
+// Mock user for mock mode
+const MOCK_USER = {
+  _id: 'mock_user_123',
+  username: 'admin',
+  email: 'admin@shohelpharmacy.com',
+  fullName: 'Shohel Admin',
+  role: 'admin',
+  isActive: true,
+  passwordHash: bcrypt.hashSync('admin123', 10) // Pre-hashed password
+};
+
+// Middleware to handle mock mode
+const mockModeCheck = (req, res, next) => {
+  if (global.mockMode) {
+    // For verify endpoint
+    if (req.path === '/verify') {
+      const token = req.header('Authorization')?.replace('Bearer ', '');
+      if (token === 'mock_token_123') {
+        return res.json({
+          user: {
+            id: MOCK_USER._id,
+            username: MOCK_USER.username,
+            email: MOCK_USER.email,
+            fullName: MOCK_USER.fullName,
+            role: MOCK_USER.role
+          }
+        });
+      }
+      return res.status(401).json({ message: 'Invalid token' });
+    }
+  }
+  next();
+};
+
+router.use(mockModeCheck);
+
 const User = require('../models/User');
 
 // Login
@@ -18,7 +55,28 @@ router.post('/login', [
     
     const { username, password } = req.body;
     
-    // Find user in database
+    // MOCK MODE: Accept admin/admin123
+    if (global.mockMode) {
+      console.log('🔧 Mock mode: Checking credentials', { username });
+      if (username === 'admin' && password === 'admin123') {
+        const token = 'mock_token_123';
+        console.log('✅ Mock login successful');
+        return res.json({
+          token,
+          user: {
+            id: MOCK_USER._id,
+            username: MOCK_USER.username,
+            email: MOCK_USER.email,
+            fullName: MOCK_USER.fullName,
+            role: MOCK_USER.role
+          }
+        });
+      } else {
+        return res.status(401).json({ message: 'Invalid credentials' });
+      }
+    }
+    
+    // REAL MODE: Find user in database
     const user = await User.findOne({ 
       $or: [{ username }, { email: username }],
       isActive: true 

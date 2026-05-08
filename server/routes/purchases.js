@@ -4,8 +4,44 @@ const Purchase = require('../models/Purchase');
 const Medicine = require('../models/Medicine');
 const { body, validationResult } = require('express-validator');
 
+// Mock purchases data for when MongoDB is not available
+const getMockPurchases = (query = {}, page = 1, limit = 20) => {
+  const mockPurchases = [
+    { _id: 'mock_pur_1', purchaseNumber: 'PR-2026-001', supplierName: 'MediDist Ltd', supplierPhone: '01512345678', purchaseDate: new Date(), items: [{ medicine: 'mock_med_1', medicineName: 'Napa Extra', quantity: 100, unitPrice: 80, totalPrice: 8000 }], subtotal: 8000, discount: 200, totalAmount: 7800, paidAmount: 7800, dueAmount: 0, paymentMethod: 'bank_transfer', status: 'completed', receivedBy: 'mock_user_123' },
+    { _id: 'mock_pur_2', purchaseNumber: 'PR-2026-002', supplierName: 'Square Pharma', supplierPhone: '01612345678', purchaseDate: new Date(Date.now() - 86400000), items: [{ medicine: 'mock_med_2', medicineName: 'Amoxicillin 500', quantity: 50, unitPrice: 120, totalPrice: 6000 }], subtotal: 6000, discount: 0, totalAmount: 6000, paidAmount: 4000, dueAmount: 2000, paymentMethod: 'cash', status: 'partial', receivedBy: 'mock_user_123' }
+  ];
+  
+  let filtered = [...mockPurchases];
+  if (query.supplierName) filtered = filtered.filter(p => p.supplierName.toLowerCase().includes(query.supplierName.$regex.toLowerCase()));
+  if (query.paymentMethod) filtered = filtered.filter(p => p.paymentMethod === query.paymentMethod);
+  
+  const total = filtered.length;
+  const start = (page - 1) * limit;
+  const paginated = filtered.slice(start, start + parseInt(limit));
+  
+  const summary = {
+    totalPurchases: filtered.length,
+    totalAmount: filtered.reduce((sum, p) => sum + p.totalAmount, 0),
+    totalPaid: filtered.reduce((sum, p) => sum + p.paidAmount, 0),
+    totalDue: filtered.reduce((sum, p) => sum + p.dueAmount, 0),
+    averagePurchase: filtered.length > 0 ? filtered.reduce((sum, p) => sum + p.totalAmount, 0) / filtered.length : 0
+  };
+  
+  return { purchases: paginated, totalPages: Math.ceil(total / limit), currentPage: parseInt(page), total, summary };
+};
+
 // Get all purchases with pagination and filters
 router.get('/', async (req, res) => {
+  // Mock mode
+  if (global.mockMode) {
+    console.log('🛒 Returning MOCK purchases data');
+    const { page = 1, limit = 20, supplierName = '', paymentMethod } = req.query;
+    let query = {};
+    if (supplierName) query.supplierName = { $regex: supplierName, $options: 'i' };
+    if (paymentMethod) query.paymentMethod = paymentMethod;
+    return res.json(getMockPurchases(query, page, limit));
+  }
+  
   try {
     const { 
       page = 1, 
@@ -93,6 +129,13 @@ router.get('/', async (req, res) => {
 
 // Get single purchase
 router.get('/:id', async (req, res) => {
+  // Mock mode
+  if (global.mockMode) {
+    const mockPur = getMockPurchases().purchases.find(p => p._id === req.params.id);
+    if (!mockPur) return res.status(404).json({ message: 'Purchase not found' });
+    return res.json(mockPur);
+  }
+  
   try {
     const purchase = await Purchase.findById(req.params.id)
       .populate('items.medicine', 'name genericName strength unit');
@@ -121,6 +164,13 @@ router.post('/', [
   body('paidAmount').isNumeric().withMessage('Paid amount must be a number'),
   body('receivedBy').notEmpty().withMessage('Received by is required')
 ], async (req, res) => {
+  // Mock mode
+  if (global.mockMode) {
+    console.log('🛒 MOCK: Creating purchase from', req.body.supplierName);
+    const newPurchase = { _id: 'mock_pur_' + Date.now(), purchaseNumber: 'PR-2026-' + Date.now().toString().slice(-3), ...req.body, purchaseDate: new Date(), status: 'completed' };
+    return res.status(201).json(newPurchase);
+  }
+  
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -175,6 +225,18 @@ router.post('/', [
 
 // Get today's purchases summary
 router.get('/summary/today', async (req, res) => {
+  // Mock mode
+  if (global.mockMode) {
+    console.log('🛒 MOCK: Getting today\'s purchases summary');
+    return res.json({
+      totalPurchases: 2,
+      totalAmount: 13800,
+      totalPaid: 11800,
+      totalDue: 2000,
+      averagePurchase: 6900
+    });
+  }
+  
   try {
     const today = new Date();
     const startOfDay = new Date(today.getFullYear(), today.getMonth(), today.getDate());
@@ -200,6 +262,23 @@ router.get('/summary/today', async (req, res) => {
 
 // Get purchase analytics
 router.get('/analytics/period', async (req, res) => {
+  // Mock mode
+  if (global.mockMode) {
+    console.log('🛒 MOCK: Getting purchase analytics');
+    return res.json({
+      period: req.query.period || 'week',
+      totalPurchases: 8,
+      totalSpent: 25000,
+      totalPaid: 22000,
+      totalDue: 3000,
+      averagePurchase: 3125,
+      topSuppliers: [
+        { supplierName: 'MediDist Ltd', totalPurchases: 3, totalAmount: 15000, lastPurchase: new Date() },
+        { supplierName: 'Square Pharma', totalPurchases: 2, totalAmount: 8000, lastPurchase: new Date(Date.now() - 86400000) }
+      ]
+    });
+  }
+  
   try {
     const { period = 'week' } = req.query;
     let startDate, endDate;
@@ -249,6 +328,17 @@ router.get('/analytics/period', async (req, res) => {
 
 // Get purchases by date range with detailed analytics
 router.get('/analytics/range', async (req, res) => {
+  // Mock mode
+  if (global.mockMode) {
+    console.log('🛒 MOCK: Getting purchase analytics by range');
+    return res.json({
+      period: { startDate: req.query.startDate, endDate: req.query.endDate, groupBy: req.query.groupBy || 'day' },
+      analytics: [
+        { _id: { year: 2026, month: 5, day: 8 }, totalPurchases: 2, totalSpent: 13800, totalPaid: 11800, totalDue: 2000, averagePurchase: 6900 }
+      ]
+    });
+  }
+  
   try {
     const { startDate, endDate, groupBy = 'day' } = req.query;
     

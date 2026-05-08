@@ -1,5 +1,19 @@
 const express = require('express');
 const router = express.Router();
+
+// Mock middleware - return empty data in mock mode
+const mockModeCheck = (req, res, next) => {
+  if (global.mockMode) {
+    if (req.method === 'GET') {
+      return res.json([]);
+    }
+    return res.json({ success: true, message: 'Mock mode - no database' });
+  }
+  next();
+};
+
+router.use(mockModeCheck);
+
 const Notification = require('../models/Notification');
 const Medicine = require('../models/Medicine');
 const Due = require('../models/Due');

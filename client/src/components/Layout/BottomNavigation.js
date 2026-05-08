@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { 
   FiHome, 
   FiShoppingCart, 
@@ -13,11 +13,14 @@ import {
 } from 'react-icons/fi';
 import './BottomNavigation.css';
 
-const BottomNavigation = ({ currentPath }) => {
+const BottomNavigation = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [showAllItems, setShowAllItems] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [mounted, setMounted] = useState(false);
+  const [ripple, setRipple] = useState({ x: 0, y: 0, visible: false });
+  const navRef = useRef(null);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -31,9 +34,33 @@ const BottomNavigation = ({ currentPath }) => {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  if (!mounted) return null;
+  // Close expanded menu on route change
+  useEffect(() => {
+    if (showAllItems && isMobile) {
+      setShowAllItems(false);
+    }
+  }, [location.pathname, showAllItems, isMobile]);
 
-  const navItems = [
+  const handleNavigation = useCallback((path, event) => {
+    // Haptic feedback for mobile devices
+    if (navigator.vibrate) {
+      navigator.vibrate(10); // Very short vibration for tap feedback
+    }
+    
+    // Ripple effect with precise positioning
+    if (event && event.currentTarget) {
+      const rect = event.currentTarget.getBoundingClientRect();
+      const x = event.clientX - rect.left;
+      const y = event.clientY - rect.top;
+      
+      setRipple({ x, y, visible: true });
+      setTimeout(() => setRipple({ x: 0, y: 0, visible: false }), 600);
+    }
+    
+    navigate(path);
+  }, [navigate]);
+
+  const navItems = useMemo(() => [
     {
       path: '/',
       icon: FiHome,
@@ -84,13 +111,16 @@ const BottomNavigation = ({ currentPath }) => {
       name: 'Reports',
       priority: 'low'
     }
-  ];
+  ], []);
 
-  const handleNavigation = (path) => {
-    navigate(path);
-  };
+  const isActive = useCallback((item) => {
+    if (item.path === '/') {
+      return location.pathname === '/';
+    }
+    return location.pathname.startsWith(item.path.split('/new')[0]);
+  }, [location.pathname]);
 
-  const getDisplayItems = () => {
+  const getDisplayItems = useCallback(() => {
     if (!isMobile) {
       return navItems;
     }
@@ -100,47 +130,60 @@ const BottomNavigation = ({ currentPath }) => {
     }
     
     return navItems.filter(item => item.priority === 'high');
-  };
+  }, [isMobile, showAllItems, navItems]);
 
   const displayItems = getDisplayItems();
   const hasMoreItems = isMobile && !showAllItems && navItems.some(item => item.priority !== 'high');
 
+  if (!mounted) return null;
+
   return (
-    <nav className="bottom-navigation">
-      <div className="nav-items">
+    <nav 
+      className="bottom-navigation" 
+      role="navigation" 
+      aria-label="Main navigation"
+      ref={navRef}
+    >
+      <div className={`nav-items ${showAllItems ? 'expanded' : ''}`}>
         {displayItems.map((item, index) => {
           const IconComponent = item.icon;
-          const isActive = currentPath === item.path || 
-            (item.path === '/sales/new' && currentPath.startsWith('/sales')) ||
-            (item.path === '/medicines' && currentPath.startsWith('/medicines')) ||
-            (item.path === '/purchases/new' && currentPath.startsWith('/purchases'));
+          const active = isActive(item);
           
           return (
             <button
               key={item.path}
-              className={`nav-item ${isActive ? 'active' : ''} ${item.isPrimary ? 'primary' : ''}`}
+              className={`nav-item ${active ? 'active' : ''} ${item.isPrimary ? 'primary' : ''}`}
               type="button"
-              onClick={() => handleNavigation(item.path)}
+              onClick={(e) => handleNavigation(item.path, e)}
               title={item.name}
-              aria-label={item.name}
-              aria-current={isActive ? 'page' : undefined}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.setProperty('--hover-delay', `${index * 0.1}s`);
+              aria-label={item.label}
+              aria-current={active ? 'page' : undefined}
+              style={{
+                '--item-index': index,
+                '--ripple-x': `${ripple.x}px`,
+                '--ripple-y': `${ripple.y}px`
               }}
             >
               <span className="nav-icon" aria-hidden="true">
                 <IconComponent />
-                <div className="icon-glow" />
               </span>
               <span className="nav-label">
                 {item.label}
               </span>
               
-              {isActive && (
+              {active && (
                 <div className="active-indicator" />
               )}
               
-              <div className="nav-ripple" />
+              {ripple.visible && (
+                <div 
+                  className="nav-ripple"
+                  style={{
+                    left: `${ripple.x}px`,
+                    top: `${ripple.y}px`
+                  }}
+                />
+              )}
             </button>
           );
         })}
@@ -152,13 +195,12 @@ const BottomNavigation = ({ currentPath }) => {
             onClick={() => setShowAllItems(true)}
             title="Show More Options"
             aria-label="Show more navigation options"
+            aria-expanded={false}
           >
             <span className="nav-icon" aria-hidden="true">
               <FiMoreHorizontal />
-              <div className="icon-glow" />
             </span>
             <span className="nav-label">আরো</span>
-            <div className="nav-ripple" />
           </button>
         )}
         
@@ -172,10 +214,8 @@ const BottomNavigation = ({ currentPath }) => {
           >
             <span className="nav-icon" aria-hidden="true">
               <FiChevronUp />
-              <div className="icon-glow" />
             </span>
             <span className="nav-label">কম</span>
-            <div className="nav-ripple" />
           </button>
         )}
       </div>
@@ -183,4 +223,4 @@ const BottomNavigation = ({ currentPath }) => {
   );
 };
 
-export default BottomNavigation;
+export default React.memo(BottomNavigation);

@@ -6,6 +6,37 @@ const Expense = require('../models/Expense');
 const Medicine = require('../models/Medicine');
 const Due = require('../models/Due');
 
+// Mock reports data for when MongoDB is not available
+const getMockReportData = () => ({
+  overview: {
+    sales: { totalSales: 15000, totalTransactions: 50, totalDue: 3000 },
+    purchases: { totalPurchases: 8000, totalTransactions: 20 },
+    expenses: { totalExpenses: 5000, totalTransactions: 15 },
+    profit: 2000,
+    dueData: [{ _id: 'pending', count: 5, amount: 3000 }, { _id: 'paid', count: 10, amount: 0 }],
+    stockAlerts: { lowStock: 3, outOfStock: 1, expiringSoon: 2 }
+  },
+  sales: {
+    totalRevenue: 15000, totalSales: 50, averageSale: 300,
+    paymentMethods: [
+      { method: 'cash', amount: 8000, count: 30, percentage: 53.3 },
+      { method: 'mobile_banking', amount: 7000, count: 20, percentage: 46.7 }
+    ],
+    topMedicines: [
+      { name: 'Napa Extra', genericName: 'Paracetamol', totalQuantity: 100, totalRevenue: 12000 },
+      { name: 'Cetirizine', genericName: 'Cetirizine HCL', totalQuantity: 60, totalRevenue: 5400 }
+    ]
+  },
+  profitLoss: {
+    totalRevenue: 15000, costOfGoodsSold: 9000, operatingExpenses: 5000,
+    grossProfit: 6000, netProfit: 1000,
+    expenseBreakdown: [
+      { category: 'Utilities', amount: 2000 },
+      { category: 'Salaries', amount: 3000 }
+    ]
+  }
+});
+
 // Helper function to get date range
 const getMatchStage = (startDate, endDate, dateField = 'saleDate') => {
   let matchStage = {};
@@ -19,6 +50,12 @@ const getMatchStage = (startDate, endDate, dateField = 'saleDate') => {
 
 // Comprehensive Overview Report
 router.get('/overview', async (req, res) => {
+  // Mock mode
+  if (global.mockMode) {
+    console.log('📊 MOCK: Getting overview report');
+    return res.json(getMockReportData().overview);
+  }
+  
   try {
     const { startDate, endDate } = req.query;
     const salesMatch = getMatchStage(startDate, endDate, 'saleDate');
@@ -68,6 +105,12 @@ router.get('/overview', async (req, res) => {
 
 // Sales Report
 router.get('/sales', async (req, res) => {
+  // Mock mode
+  if (global.mockMode) {
+    console.log('📊 MOCK: Getting sales report');
+    return res.json(getMockReportData().sales);
+  }
+  
   try {
     const { startDate, endDate } = req.query;
     const matchStage = getMatchStage(startDate, endDate);
@@ -103,6 +146,12 @@ router.get('/sales', async (req, res) => {
 
 // Profit & Loss Report
 router.get('/profit-loss', async (req, res) => {
+  // Mock mode
+  if (global.mockMode) {
+    console.log('📊 MOCK: Getting profit-loss report');
+    return res.json(getMockReportData().profitLoss);
+  }
+  
   try {
     const { startDate, endDate } = req.query;
     const salesMatchStage = getMatchStage(startDate, endDate, 'saleDate');
@@ -137,8 +186,27 @@ router.get('/profit-loss', async (req, res) => {
 
 // Medicine Performance Report
 router.get('/medicines', async (req, res) => {
-    try {
-        const { startDate, endDate } = req.query;
+  // Mock mode
+  if (global.mockMode) {
+    console.log('📊 MOCK: Getting medicines report');
+    return res.json({
+      totalMedicines: 50,
+      lowStockItems: 3,
+      expiringSoon: 2,
+      outOfStock: 1,
+      topPerforming: [
+        { name: 'Napa Extra', genericName: 'Paracetamol', totalSales: 100, revenue: 12000 },
+        { name: 'Cetirizine', genericName: 'Cetirizine HCL', totalSales: 60, revenue: 5400 }
+      ],
+      categoryPerformance: [
+        { category: 'Painkiller', count: 500, revenue: 60000 },
+        { category: 'Antibiotic', count: 300, revenue: 45000 }
+      ]
+    });
+  }
+  
+  try {
+    const { startDate, endDate } = req.query;
         const matchStage = getMatchStage(startDate, endDate);
 
         const totalMedicines = await Medicine.countDocuments();
@@ -174,8 +242,21 @@ router.get('/medicines', async (req, res) => {
 
 // Customer Analytics Report with Due Integration
 router.get('/customers', async (req, res) => {
-    try {
-        const { startDate, endDate } = req.query;
+  // Mock mode
+  if (global.mockMode) {
+    console.log('📊 MOCK: Getting customers report');
+    return res.json({
+      totalCustomers: 25,
+      activeCustomers: 15,
+      topCustomers: [
+        { customerName: 'রহিম মিয়া', customerPhone: '01712345678', totalPurchases: 5, totalSpent: 6000, totalDue: 300, outstandingDue: 300 },
+        { customerName: 'করিম উদ্দিন', customerPhone: '01812345678', totalPurchases: 3, totalSpent: 3500, totalDue: 70, outstandingDue: 70 }
+      ]
+    });
+  }
+  
+  try {
+    const { startDate, endDate } = req.query;
         const matchStage = getMatchStage(startDate, endDate);
 
         const allCustomers = await Sale.distinct('customerPhone', { customerPhone: { $ne: null } });
@@ -223,8 +304,23 @@ router.get('/customers', async (req, res) => {
 
 // Due Management Report
 router.get('/dues', async (req, res) => {
-    try {
-        const { startDate, endDate } = req.query;
+  // Mock mode
+  if (global.mockMode) {
+    console.log('📊 MOCK: Getting dues report');
+    return res.json({
+      duesSummary: [{ _id: 'pending', count: 5, totalAmount: 3000, remainingAmount: 3000 }, { _id: 'paid', count: 10, totalAmount: 0, remainingAmount: 0 }],
+      overdueCustomers: [
+        { customerName: 'করিম উদ্দিন', customerPhone: '01812345678', remainingAmount: 70, dueDate: new Date(Date.now() - 5*24*60*60*1000), daysPastDue: 5 }
+      ],
+      paymentTrends: [
+        { _id: '2026-05-08', totalCollected: 500, transactionCount: 2 },
+        { _id: '2026-05-07', totalCollected: 300, transactionCount: 1 }
+      ]
+    });
+  }
+  
+  try {
+    const { startDate, endDate } = req.query;
         const matchStage = getMatchStage(startDate, endDate, 'createdAt');
 
         const duesSummary = await Due.aggregate([
@@ -271,8 +367,27 @@ router.get('/dues', async (req, res) => {
 
 // Financial Dashboard
 router.get('/financial', async (req, res) => {
-    try {
-        const { startDate, endDate } = req.query;
+  // Mock mode
+  if (global.mockMode) {
+    console.log('📊 MOCK: Getting financial report');
+    return res.json({
+      dailyTrends: [
+        { _id: '2026-05-08', sales: 15000, transactions: 5, cash: 10000, card: 5000 },
+        { _id: '2026-05-07', sales: 12000, transactions: 4, cash: 7000, card: 5000 }
+      ],
+      expenseBreakdown: [
+        { _id: 'Utilities', amount: 5000, count: 1 },
+        { _id: 'Salaries', amount: 15000, count: 1 }
+      ],
+      profitByCategory: [
+        { _id: 'Painkiller', revenue: 60000, cost: 40000, quantity: 500, profit: 20000, margin: 33.3 },
+        { _id: 'Antibiotic', revenue: 45000, cost: 30000, quantity: 300, profit: 15000, margin: 33.3 }
+      ]
+    });
+  }
+  
+  try {
+    const { startDate, endDate } = req.query;
         const salesMatch = getMatchStage(startDate, endDate, 'saleDate');
         const purchaseMatch = getMatchStage(startDate, endDate, 'purchaseDate');
         const expenseMatch = getMatchStage(startDate, endDate, 'expenseDate');

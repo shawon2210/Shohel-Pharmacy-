@@ -1,10 +1,57 @@
 const express = require('express');
 const router = express.Router();
-const { getDashboardData, getSalesAnalytics, getTopSellingMedicines } = require('../database/analytics');
+
+// Mock dashboard data for when MongoDB is not available
+const getMockDashboardData = () => {
+  const now = new Date();
+  const sparklineData = [12000, 15000, 8000, 18000, 22000, 16000, 20000];
+  
+  return {
+    today: {
+      sales: {
+        amount: 24500,
+        count: 12,
+        vsAverage: 15
+      },
+      purchases: {
+        amount: 18200,
+        count: 3,
+        vsAverage: -5
+      }
+    },
+    totalDue: {
+      amount: 156000,
+      count: 23
+    },
+    sparklines: {
+      sales: sparklineData,
+      purchases: [5000, 8000, 12000, 9000, 15000, 11000, 8000],
+      due: [140000, 142000, 145000, 148000, 150000, 153000, 156000]
+    },
+    recentTransactions: [
+      { type: 'sale', id: 'sale1', customerName: 'রহিম মিয়া', amount: 2500, date: new Date(now - 1000*60*30).toISOString() },
+      { type: 'sale', id: 'sale2', customerName: 'করিম উদ্দিন', amount: 1800, date: new Date(now - 1000*60*60).toISOString() },
+      { type: 'purchase', id: 'pur1', customerName: 'MediDist Ltd', amount: 12000, date: new Date(now - 1000*60*90).toISOString() },
+      { type: 'sale', id: 'sale3', customerName: 'ফাতিমা খাতুন', amount: 3200, date: new Date(now - 1000*60*120).toISOString() },
+      { type: 'sale', id: 'sale4', customerName: 'সালাম মিয়া', amount: 950, date: new Date(now - 1000*60*180).toISOString() }
+    ],
+    alerts: {
+      lowStock: 3,
+      expiring: 2
+    }
+  };
+};
 
 // Get dashboard summary data
 router.get('/summary', async (req, res) => {
+  // Return mock data if in mock mode
+  if (global.mockMode) {
+    console.log('📊 Returning MOCK dashboard data');
+    return res.json(getMockDashboardData());
+  }
+  
   try {
+    const { getDashboardData } = require('../database/analytics');
     const dashboardData = await getDashboardData();
     res.json(dashboardData);
   } catch (error) {

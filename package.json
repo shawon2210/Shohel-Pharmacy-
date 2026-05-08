@@ -12,7 +12,12 @@
     "build": "cd client && npm run build",
     "test-auth": "node test-auth.js"
   },
-  "keywords": ["pharmacy", "management", "medicine", "inventory"],
+  "keywords": [
+    "pharmacy",
+    "management",
+    "medicine",
+    "inventory"
+  ],
   "author": "Shohel Pharmacy",
   "license": "MIT",
   "devDependencies": {

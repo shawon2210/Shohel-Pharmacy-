@@ -4,8 +4,37 @@ const Due = require('../models/Due');
 const Sale = require('../models/Sale');
 const { body, validationResult } = require('express-validator');
 
+// Mock dues data for when MongoDB is not available
+const getMockDues = (query = {}, page = 1, limit = 20) => {
+  const mockDues = [
+    { _id: 'mock_due_1', customerName: 'রহিম মিয়া', customerPhone: '01712345678', sale: 'mock_sale_1', dueAmount: 500, remainingAmount: 300, dueDate: new Date(Date.now() + 15*24*60*60*1000), status: 'partial', paymentHistory: [{ amount: 200, paymentMethod: 'cash', date: new Date() }] },
+    { _id: 'mock_due_2', customerName: 'করিম উদ্দিন', customerPhone: '01812345678', sale: 'mock_sale_2', dueAmount: 70, remainingAmount: 70, dueDate: new Date(Date.now() - 5*24*60*60*1000), status: 'pending', paymentHistory: [] },
+    { _id: 'mock_due_3', customerName: 'ফাতিমা খাতুন', customerPhone: '01912345678', sale: 'mock_sale_3', dueAmount: 0, remainingAmount: 0, dueDate: new Date(Date.now() + 20*24*60*60*1000), status: 'paid', paymentHistory: [] }
+  ];
+  
+  let filtered = [...mockDues];
+  if (query.status) filtered = filtered.filter(d => d.status === query.status);
+  if (query.customerName) filtered = filtered.filter(d => d.customerName.toLowerCase().includes(query.customerName.$regex.toLowerCase()));
+  
+  const total = filtered.length;
+  const start = (page -1) * limit;
+  const paginated = filtered.slice(start, start + parseInt(limit));
+  
+  return { dues: paginated, totalPages: Math.ceil(total / limit), currentPage: parseInt(page), total };
+};
+
 // Get all dues with pagination and filters
 router.get('/', async (req, res) => {
+  // Mock mode
+  if (global.mockMode) {
+    console.log('💳 Returning MOCK dues data');
+    const { page = 1, limit = 20, status = '', customerName = '' } = req.query;
+    let query = {};
+    if (status) query.status = status;
+    if (customerName) query.customerName = { $regex: customerName, $options: 'i' };
+    return res.json(getMockDues(query, page, limit));
+  }
+  
   try {
     const { page = 1, limit = 20, status = '', customerName = '' } = req.query;
     
@@ -42,6 +71,13 @@ router.get('/', async (req, res) => {
 
 // Get single due
 router.get('/:id', async (req, res) => {
+  // Mock mode
+  if (global.mockMode) {
+    const mockDue = getMockDues().dues.find(d => d._id === req.params.id);
+    if (!mockDue) return res.status(404).json({ message: 'Due not found' });
+    return res.json(mockDue);
+  }
+  
   try {
     const due = await Due.findById(req.params.id)
       .populate('sale', 'saleNumber saleDate totalAmount items');
@@ -63,6 +99,13 @@ router.post('/', [
   body('dueAmount').isNumeric().withMessage('Due amount must be a number'),
   body('dueDate').isISO8601().withMessage('Valid due date is required')
 ], async (req, res) => {
+  // Mock mode
+  if (global.mockMode) {
+    console.log('💳 MOCK: Creating due for', req.body.customerName);
+    const newDue = { _id: 'mock_due_' + Date.now(), ...req.body, remainingAmount: req.body.dueAmount, status: 'pending', paymentHistory: [] };
+    return res.status(201).json(newDue);
+  }
+  
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -91,6 +134,12 @@ router.post('/:id/payment', [
   body('paymentMethod').optional().isIn(['cash', 'card', 'mobile_banking', 'bank_transfer']),
   body('notes').optional().isString()
 ], async (req, res) => {
+  // Mock mode
+  if (global.mockMode) {
+    console.log('💳 MOCK: Recording payment for', req.params.id);
+    return res.json({ _id: req.params.id, remainingAmount: 0, paidAmount: req.body.amount, status: 'paid' });
+  }
+  
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -132,6 +181,18 @@ router.post('/:id/payment', [
 
 // Get dues summary
 router.get('/summary/total', async (req, res) => {
+  // Mock mode
+  if (global.mockMode) {
+    console.log('💳 MOCK: Getting dues summary');
+    return res.json({
+      pending: { count: 1, amount: 300 },
+      partial: { count: 1, amount: 70 },
+      overdue: { count: 0, amount: 0 },
+      paid: { count: 1, amount: 0 },
+      total: { count: 3, amount: 370 }
+    });
+  }
+  
   try {
     const totalDues = await Due.aggregate([
       {
@@ -174,6 +235,14 @@ router.get('/summary/total', async (req, res) => {
 
 // Get overdue dues
 router.get('/alerts/overdue', async (req, res) => {
+  // Mock mode
+  if (global.mockMode) {
+    console.log('💳 MOCK: Getting overdue dues');
+    return res.json([
+      { _id: 'mock_due_2', customerName: 'করিম উদ্দিন', customerPhone: '01812345678', remainingAmount: 70, dueDate: new Date(Date.now() - 5*24*60*60*1000), status: 'pending' }
+    ]);
+  }
+  
   try {
     const now = new Date();
     const overdueDues = await Due.find({
@@ -191,6 +260,19 @@ router.get('/alerts/overdue', async (req, res) => {
 
 // Get dues analytics
 router.get('/analytics/period', async (req, res) => {
+  // Mock mode
+  if (global.mockMode) {
+    console.log('💳 MOCK: Getting dues analytics');
+    return res.json({
+      period: req.query.period || 'month',
+      totalDues: 3,
+      totalDueAmount: 370,
+      totalPaidAmount: 200,
+      totalRemainingAmount: 170,
+      collectionRate: 54.1
+    });
+  }
+  
   try {
     const { period = 'month' } = req.query;
     let startDate, endDate;

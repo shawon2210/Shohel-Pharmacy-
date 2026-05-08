@@ -1,158 +1,323 @@
-/* General Settings Page Styles */
+/* ==============================================
+   SETINGS PAGE - EXACT DASHBOARD MATCH
+   Pixel-perfect consistency | Mobile-first | Senior Dev Quality
+   ============================================== */
+
+/* Page Wrapper - EXACT match to Dashboard */
 .settings-page {
-  max-width: 1200px;
+  padding: var(--space-4);
+  max-width: var(--max-width);
   margin: 0 auto;
-  padding: 2rem;
+  min-height: calc(100vh - var(--bottom-nav-height));
+  background: var(--bg-secondary);
+  padding-bottom: calc(var(--bottom-nav-height) + var(--space-4));
+  position: relative;
 }
 
-.page-header h1 {
-  font-size: 2rem;
-  font-weight: 700;
-  color: #1f2937;
-  margin-bottom: 0.25rem;
-}
-
-.page-header p {
-  font-size: 1rem;
-  color: #6b7280;
-}
-
-.settings-layout {
+/* ==============================================
+   PAGE HEADER - EXACT Dashboard Style
+   ============================================== */
+.page-header {
   display: flex;
-  gap: 2rem;
-  margin-top: 2rem;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+  padding: var(--space-4);
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-normal);
 }
 
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex: 1;
+  min-width: 200px;
+}
+
+.header-left svg {
+  width: 24px;
+  height: 24px;
+  color: var(--color-primary);
+}
+
+.header-text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.header-text h1 {
+  margin: 0;
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.header-text h1 .bengali-text {
+  font-family: var(--font-family-bengali);
+}
+
+.header-subtitle {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.header-subtitle .bengali-text {
+  font-family: var(--font-family-bengali);
+}
+
+/* ==============================================
+   SETINGS LAYOUT - Dashboard Style
+   ============================================== */
+.settings-layout {
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  gap: var(--space-6);
+  margin-bottom: var(--space-6);
+}
+
+@media (max-width: 768px) {
+  .settings-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==============================================
+   SETINGS SIDEBAR - Glassmorphism Like Dashboard
+   ============================================== */
 .settings-sidebar {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-  width: 220px;
+  gap: var(--space-2);
+  background: rgba(255, 255, 255, 0.75); /* EXACT glass-card background */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: var(--radius-xl); /* EXACT glass-card radius */
+  padding: var(--space-4);
+  box-shadow: var(--shadow-md);
+  height: fit-content;
+  position: sticky;
+  top: var(--space-4);
 }
 
 .settings-sidebar button {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  padding: 0.75rem 1rem;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  min-height: 48px; /* 48px touch target */
   border: none;
   background: transparent;
-  border-radius: 8px;
-  font-size: 0.95rem;
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
   font-weight: 500;
-  color: #374151;
+  color: var(--text-secondary);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all var(--transition-fast);
   text-align: left;
+  font-family: inherit;
+  white-space: nowrap;
 }
 
 .settings-sidebar button:hover {
-  background: #f3f4f6;
-  color: #111827;
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+  transform: translateX(2px);
 }
 
 .settings-sidebar button.active {
-  background: #e0f2f1;
-  color: #047857;
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-purple) 100%);
+  color: var(--text-inverse);
   font-weight: 600;
+  box-shadow: 0 4px 15px rgba(var(--color-primary-rgb), 0.3);
 }
 
 .settings-sidebar button svg {
-  font-size: 1.1rem;
+  font-size: var(--text-lg);
+  flex-shrink: 0;
 }
 
+/* ==============================================
+   SETINGS CONTENT
+   ============================================== */
 .settings-content {
-  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+/* ==============================================
+   SETINGS SECTION - Glass-card Style
+   ============================================== */
+.settings-section {
+  background: rgba(255, 255, 255, 0.75); /* EXACT glass-card background */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: var(--radius-xl); /* EXACT glass-card radius */
+  padding: var(--space-5);
+  box-shadow: var(--shadow-md);
+  transition: all var(--transition-normal);
+}
+
+.settings-section:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-1px);
 }
 
 .settings-section h2 {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: #1f2937;
-  margin-bottom: 1.5rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid #e5e7eb;
+  gap: var(--space-3);
+  font-size: var(--text-xl);
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 var(--space-4) 0;
+  padding-bottom: var(--space-3);
+  border-bottom: 2px solid var(--border-light);
 }
 
+.settings-section h2 svg {
+  color: var(--color-primary);
+}
+
+.settings-section h2 .bengali-text {
+  font-family: var(--font-family-bengali);
+}
+
+.settings-section h4 {
+  font-size: var(--text-base);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: var(--space-4) 0 var(--space-2) 0;
+}
+
+.settings-section hr {
+  border: none;
+  border-top: 1px solid var(--border-light);
+  margin: var(--space-4) 0;
+}
+
+/* ==============================================
+   SETINGS CARD - Inner Card Style
+   ============================================== */
 .settings-card {
-  background: white;
-  border-radius: 12px;
-  padding: 2rem;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  background: var(--bg-primary);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  margin-bottom: var(--space-4);
+  transition: all var(--transition-fast);
 }
 
-.settings-card hr {
-  border: none;
-  border-top: 1px solid #e5e7eb;
-  margin: 1.5rem 0;
+.settings-card:last-child {
+  margin-bottom: 0;
 }
 
-.settings-card h4 {
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: #1f2937;
-  margin-bottom: 1rem;
+.settings-card:hover {
+  border-color: var(--color-primary);
+  box-shadow: 0 4px 12px rgba(var(--color-primary-rgb), 0.1);
 }
 
-.section-footer {
-  margin-top: 1.5rem;
+.settings-card.about-card {
+  text-align: center;
+}
+
+.settings-card h3 {
+  font-size: var(--text-lg);
+  font-weight: var(--font-semibold);
+  color: var(--text-primary);
+  margin: 0 0 var(--space-2) 0;
+}
+
+.settings-card h3 .bengali-text {
+  font-family: var(--font-family-bengali);
+}
+
+.settings-card p {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  margin: 0 0 var(--space-2) 0;
+}
+
+.settings-card .links {
   display: flex;
-  justify-content: flex-end;
+  gap: var(--space-3);
+  justify-content: center;
+  margin-top: var(--space-4);
 }
 
-.save-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.75rem 1.5rem;
-  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 0.9rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+.settings-card .links a {
+  color: var(--color-primary);
+  text-decoration: none;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  transition: all var(--transition-fast);
 }
 
-.save-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+.settings-card .links a:hover {
+  color: var(--color-purple);
+  text-decoration: underline;
 }
 
-/* Toggle Switch Styles */
+/* ==============================================
+   TOGGLE SWITCH - Dashboard Style
+   ============================================== */
 .toggle-switch {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 0;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  background: var(--bg-secondary);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-3);
+  transition: all var(--transition-fast);
+}
+
+.toggle-switch:hover {
+  background: var(--color-primary-light);
+}
+
+.toggle-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
 }
 
 .toggle-info label {
-  font-size: 1rem;
-  font-weight: 500;
-  color: #374151;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--text-primary);
+  cursor: pointer;
 }
 
 .toggle-info span {
-  font-size: 0.875rem;
-  color: #6b7280;
-  display: block;
-  margin-top: 0.25rem;
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
 }
 
+/* Toggle Switch UI */
 .switch {
   position: relative;
   display: inline-block;
   width: 48px;
   height: 28px;
+  flex-shrink: 0;
 }
 
-.switch input { 
+.switch input {
   opacity: 0;
   width: 0;
   height: 0;
@@ -165,8 +330,9 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #ccc;
-  transition: .4s;
+  background-color: var(--color-gray-300);
+  transition: var(--transition-fast);
+  border-radius: 28px;
 }
 
 .slider:before {
@@ -177,129 +343,312 @@
   left: 4px;
   bottom: 4px;
   background-color: white;
-  transition: .4s;
+  transition: var(--transition-fast);
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-input:checked + .slider {
-  background-color: #10b981;
+.switch input:checked + .slider {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-purple) 100%);
 }
 
-input:focus + .slider {
-  box-shadow: 0 0 1px #10b981;
-}
-
-input:checked + .slider:before {
+.switch input:checked + .slider:before {
   transform: translateX(20px);
 }
 
-.slider.round {
-  border-radius: 34px;
-}
-
-.slider.round:before {
-  border-radius: 50%;
-}
-
-/* Profile & Appearance Settings */
-.form-group {
-  margin-bottom: 1.5rem;
-}
-
-.form-group label {
-  display: block;
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: #374151;
-  margin-bottom: 0.5rem;
-}
-
-.form-group input {
-  width: 100%;
-  padding: 0.75rem 1rem;
-  border: 1px solid #d1d5db;
-  border-radius: 8px;
-  font-size: 1rem;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-.form-group input:focus {
-  outline: none;
-  border-color: #10b981;
-  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
-}
-
+/* ==============================================
+   CHOICE GROUP - Dashboard Style
+   ============================================== */
 .choice-group {
   display: flex;
-  gap: 0.75rem;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-4);
 }
 
 .choice-group button {
-  padding: 0.5rem 1rem;
-  border: 1px solid #d1d5db;
-  background: white;
-  border-radius: 8px;
-  font-size: 0.9rem;
+  flex: 1;
+  min-width: 100px;
+  padding: var(--space-3) var(--space-4);
+  min-height: 48px; /* 48px touch target */
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all var(--transition-fast);
+  font-family: inherit;
+  white-space: nowrap;
 }
 
 .choice-group button:hover {
-  background: #f3f4f6;
+  background: var(--color-primary-light);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  transform: translateY(-1px);
 }
 
 .choice-group button.active {
-  background: #10b981;
-  color: white;
-  border-color: #10b981;
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-purple) 100%);
+  color: var(--text-inverse);
+  border-color: var(--color-primary);
+  box-shadow: 0 4px 15px rgba(var(--color-primary-rgb), 0.3);
 }
 
-/* About Section */
-.about-card {
-  text-align: center;
-}
-
-.about-card h3 {
-  font-size: 1.25rem;
-  font-weight: 600;
-}
-
-.about-card p {
-  color: #6b7280;
-  margin-bottom: 0.5rem;
-}
-
-.about-card .links {
-  margin-top: 1.5rem;
+/* ==============================================
+   FORM STYLES - Dashboard Standards
+   ============================================== */
+.form-group {
   display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin-bottom: var(--space-3);
+}
+
+.form-group label {
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  color: var(--text-primary);
+}
+
+.form-group label .bengali-text {
+  font-family: var(--font-family-bengali);
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: var(--space-3);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  font-family: inherit;
+  color: var(--text-primary);
+  background: var(--bg-primary);
+  outline: none;
+  transition: all var(--transition-fast);
+  box-sizing: border-box;
+  min-height: 48px; /* 48px touch target */
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(var(--color-primary-rgb), 0.1);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-3);
+}
+
+@media (min-width: 640px) {
+  .form-row {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* ==============================================
+   BUTTONS - EXACT Dashboard Standards (48px)
+   ============================================== */
+.primary-button {
+  display: inline-flex;
+  align-items: center;
   justify-content: center;
-  gap: 1.5rem;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  min-height: 48px; /* 48px touch target */
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-purple) 100%);
+  color: var(--text-inverse);
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+  font-family: inherit;
+  box-shadow: 0 4px 15px rgba(var(--color-primary-rgb), 0.3);
 }
 
-.about-card .links a {
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: #059669;
-  text-decoration: none;
-  transition: color 0.2s ease;
+.primary-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(var(--color-primary-rgb), 0.4);
 }
 
-.about-card .links a:hover {
-  color: #047857;
-  text-decoration: underline;
+.secondary-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  min-height: 48px; /* 48px touch target */
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+  font-family: inherit;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .settings-layout {
+.secondary-button:hover:not(:disabled) {
+  background: var(--color-primary-light);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  transform: translateY(-2px);
+}
+
+.danger-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  min-height: 48px; /* 48px touch target */
+  background: linear-gradient(135deg, var(--color-danger) 0%, #dc2626 100%);
+  color: var(--text-inverse);
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+  font-family: inherit;
+  box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+}
+
+.danger-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+/* ==============================================
+   SECTION FOOTER
+   ============================================== */
+.section-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-3);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border-light);
+  margin-top: var(--space-4);
+  flex-wrap: wrap;
+}
+
+/* ==============================================
+   DANGER ZONE
+   ============================================== */
+.danger-zone {
+  background: rgba(var(--color-danger-rgb), 0.05);
+  border: 1px solid rgba(var(--color-danger-rgb), 0.2);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  margin-top: var(--space-4);
+}
+
+.danger-zone h3 {
+  font-size: var(--text-base);
+  font-weight: 600;
+  color: var(--color-danger);
+  margin: 0 0 var(--space-2) 0;
+}
+
+.danger-zone h3 .bengali-text {
+  font-family: var(--font-family-bengali);
+}
+
+.danger-zone p {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  margin: 0 0 var(--space-4) 0;
+}
+
+/* ==============================================
+   RESPONSIVE DESIGN - EXACT Dashboard Breakpoints
+   ============================================== */
+
+/* Small Mobile (360px and below) */
+@media (max-width: 360px) {
+  .settings-page {
+    padding: var(--space-2);
+  }
+  
+  .page-header {
+    padding: var(--space-3);
+  }
+  
+  .page-header h1 {
+    font-size: var(--text-xl);
+  }
+  
+  .settings-section {
+    padding: var(--space-4);
+  }
+  
+  .section-footer {
     flex-direction: column;
   }
-  .settings-sidebar {
+  
+  .primary-button,
+  .secondary-button,
+  .danger-button {
     width: 100%;
-    flex-direction: row;
-    overflow-x: auto;
-    padding-bottom: 1rem;
+    justify-content: center;
   }
+}
+
+/* Medium Mobile (361px - 768px) */
+@media (min-width: 361px) and (max-width: 768px) {
+  .settings-sidebar {
+    position: static;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+  
   .settings-sidebar button {
-    white-space: nowrap;
+    flex: 1;
+    min-width: 120px;
+    justify-content: center;
+  }
+  
+  .choice-group button {
+    min-width: 80px;
+  }
+}
+
+/* Tablet and Desktop (769px+) */
+@media (min-width: 769px) {
+  .settings-sidebar {
+    position: sticky;
+    flex-direction: column;
+  }
+}
+
+/* Large Desktop (1024px+) */
+@media (min-width: 1024px) {
+  .settings-layout {
+    grid-template-columns: 250px 1fr;
   }
 }

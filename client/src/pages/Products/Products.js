@@ -285,33 +285,34 @@ const Products = () => {
         {loading ? (
           <div className="loading">Loading medicines...</div>
         ) : (
-          <>
-            <div className="medicines-grid">
+            ) : (
+              <div className="products-content">
+              <div className="medicines-grid">
               {medicines.map(medicine => (
                 <div key={medicine._id} className="medicine-card">
                   <div className="medicine-header">
                     <h3>{medicine.name}</h3>
                     <div className="medicine-actions">
-                      <button 
-                        className="action-btn view-btn"
-                        onClick={() => openViewModal(medicine)}
-                        title="View Details"
-                      >
-                        <FaEye />
-                      </button>
-                      <button 
+                        <button
+                          className="action-btn view-btn"
+                          onClick={() => openViewModal(medicine)}
+                          title="View Details"
+                        >
+                          <FiEye />
+                        </button>
+                      <button
                         className="action-btn edit-btn"
                         onClick={() => openEditModal(medicine)}
                         title="Edit"
                       >
-                        <FaEdit />
+                        <FiEdit />
                       </button>
-                      <button 
+                      <button
                         className="action-btn delete-btn"
                         onClick={() => handleDeleteMedicine(medicine._id)}
                         title="Delete"
                       >
-                        <FaTrash />
+                        <FiTrash2 />
                       </button>
                     </div>
                   </div>
@@ -328,12 +329,12 @@ const Products = () => {
                   <div className="medicine-alerts">
                     {isLowStock(medicine) && (
                       <span className="alert low-stock">
-                        <FaExclamationTriangle /> Low Stock
+                        <FiAlertTriangle /> Low Stock
                       </span>
                     )}
                     {isExpiringSoon(medicine.expiryDate) && (
                       <span className="alert expiring">
-                        <FaClock /> Expiring Soon
+                        <FiClock /> Expiring Soon
                       </span>
                     )}
                   </div>
@@ -371,8 +372,8 @@ const Products = () => {
                 </button>
               </div>
             )}
-          </>
-        )}
+            </div>
+            )}
       </div>
 
       {/* Add Medicine Modal */}

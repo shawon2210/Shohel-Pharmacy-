@@ -5,8 +5,46 @@ const Medicine = require('../models/Medicine');
 const Due = require('../models/Due');
 const { body, validationResult } = require('express-validator');
 
+// Mock sales data for when MongoDB is not available
+const getMockSales = (query = {}, page = 1, limit = 20) => {
+  const mockSales = [
+    { _id: 'mock_sale_1', saleNumber: 'SL-2026-001', customerName: 'রহিম মিয়া', customerPhone: '01712345678', saleDate: new Date(), items: [{ medicine: 'mock_med_1', medicineName: 'Napa Extra', quantity: 2, unitPrice: 120, totalPrice: 240 }], subtotal: 240, discount: 0, totalAmount: 240, paidAmount: 240, dueAmount: 0, paymentMethod: 'cash', status: 'completed', soldBy: 'mock_user_123' },
+    { _id: 'mock_sale_2', saleNumber: 'SL-2026-002', customerName: 'করিম উদ্দিন', customerPhone: '01812345678', saleDate: new Date(Date.now() - 86400000), items: [{ medicine: 'mock_med_2', medicineName: 'Amoxicillin 500', quantity: 1, unitPrice: 180, totalPrice: 180 }], subtotal: 180, discount: 10, totalAmount: 170, paidAmount: 100, dueAmount: 70, paymentMethod: 'mobile_banking', status: 'partial', soldBy: 'mock_user_123' },
+    { _id: 'mock_sale_3', saleNumber: 'SL-2026-003', customerName: 'ফাতিমা খাতুন', customerPhone: '01912345678', saleDate: new Date(Date.now() - 172800000), items: [{ medicine: 'mock_med_3', medicineName: 'Cetirizine', quantity: 3, unitPrice: 90, totalPrice: 270 }], subtotal: 270, discount: 20, totalAmount: 250, paidAmount: 250, dueAmount: 0, paymentMethod: 'cash', status: 'completed', soldBy: 'mock_user_123' }
+  ];
+  
+  // Apply filters (simplified)
+  let filtered = [...mockSales];
+  if (query.customerName) filtered = filtered.filter(s => s.customerName.toLowerCase().includes(query.customerName.$regex.toLowerCase()));
+  if (query.paymentMethod) filtered = filtered.filter(s => s.paymentMethod === query.paymentMethod);
+  
+  const total = filtered.length;
+  const start = (page - 1) * limit;
+  const paginated = filtered.slice(start, start + parseInt(limit));
+  
+  const summary = {
+    totalSales: filtered.length,
+    totalAmount: filtered.reduce((sum, s) => sum + s.totalAmount, 0),
+    totalPaid: filtered.reduce((sum, s) => sum + s.paidAmount, 0),
+    totalDue: filtered.reduce((sum, s) => sum + s.dueAmount, 0),
+    averageSale: filtered.length > 0 ? filtered.reduce((sum, s) => sum + s.totalAmount, 0) / filtered.length : 0
+  };
+  
+  return { sales: paginated, totalPages: Math.ceil(total / limit), currentPage: parseInt(page), total, summary };
+};
+
 // Get all sales with pagination and filters
 router.get('/', async (req, res) => {
+  // Mock mode
+  if (global.mockMode) {
+    console.log('💰 Returning MOCK sales data');
+    const { page = 1, limit = 20, customerName = '', paymentMethod } = req.query;
+    let query = {};
+    if (customerName) query.customerName = { $regex: customerName, $options: 'i' };
+    if (paymentMethod) query.paymentMethod = paymentMethod;
+    return res.json(getMockSales(query, page, limit));
+  }
+  
   try {
     const { 
       page = 1, 
@@ -94,6 +132,13 @@ router.get('/', async (req, res) => {
 
 // Get single sale
 router.get('/:id', async (req, res) => {
+  // Mock mode
+  if (global.mockMode) {
+    const mockSale = getMockSales().sales.find(s => s._id === req.params.id);
+    if (!mockSale) return res.status(404).json({ message: 'Sale not found' });
+    return res.json(mockSale);
+  }
+  
   try {
     const sale = await Sale.findById(req.params.id)
       .populate('items.medicine', 'name genericName strength unit');
@@ -121,6 +166,13 @@ router.post('/', [
   body('paidAmount').isNumeric().withMessage('Paid amount must be a number'),
   body('soldBy').notEmpty().withMessage('Sold by is required')
 ], async (req, res) => {
+  // Mock mode
+  if (global.mockMode) {
+    console.log('💰 MOCK: Creating sale for', req.body.customerName);
+    const newSale = { _id: 'mock_sale_' + Date.now(), saleNumber: 'SL-2026-' + Date.now().toString().slice(-3), ...req.body, saleDate: new Date(), status: 'completed' };
+    return res.status(201).json(newSale);
+  }
+  
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -211,6 +263,18 @@ router.post('/', [
 
 // Get today's sales summary
 router.get('/summary/today', async (req, res) => {
+  // Mock mode
+  if (global.mockMode) {
+    console.log('💰 MOCK: Getting today\'s sales summary');
+    return res.json({
+      totalSales: 3,
+      totalAmount: 660,
+      totalPaid: 590,
+      totalDue: 70,
+      averageSale: 220
+    });
+  }
+  
   try {
     const today = new Date();
     const startOfDay = new Date(today.getFullYear(), today.getMonth(), today.getDate());
@@ -236,6 +300,23 @@ router.get('/summary/today', async (req, res) => {
 
 // Get sales analytics
 router.get('/analytics/period', async (req, res) => {
+  // Mock mode
+  if (global.mockMode) {
+    console.log('💰 MOCK: Getting sales analytics');
+    return res.json({
+      period: req.query.period || 'week',
+      totalSales: 15,
+      totalRevenue: 4500,
+      totalPaid: 4200,
+      totalDue: 300,
+      averageSale: 300,
+      topSellingMedicines: [
+        { medicine: { _id: 'mock_med_1', name: 'Napa Extra', genericName: 'Paracetamol' }, totalQuantity: 50, totalRevenue: 6000, saleCount: 10 },
+        { medicine: { _id: 'mock_med_3', name: 'Cetirizine', genericName: 'Cetirizine HCL' }, totalQuantity: 30, totalRevenue: 2700, saleCount: 8 }
+      ]
+    });
+  }
+  
   try {
     const { period = 'week' } = req.query;
     let startDate, endDate;
@@ -285,6 +366,17 @@ router.get('/analytics/period', async (req, res) => {
 
 // Get sales by date range with detailed analytics
 router.get('/analytics/range', async (req, res) => {
+  // Mock mode
+  if (global.mockMode) {
+    console.log('💰 MOCK: Getting sales analytics by range');
+    return res.json({
+      period: { startDate: req.query.startDate, endDate: req.query.endDate, groupBy: req.query.groupBy || 'day' },
+      analytics: [
+        { _id: { year: 2026, month: 5, day: 8 }, totalSales: 5, totalRevenue: 1500, totalPaid: 1400, totalDue: 100, averageSale: 300 }
+      ]
+    });
+  }
+  
   try {
     const { startDate, endDate, groupBy = 'day' } = req.query;
     
@@ -372,6 +464,17 @@ router.get('/analytics/range', async (req, res) => {
 
 // Get top selling medicines
 router.get('/analytics/top-medicines', async (req, res) => {
+  // Mock mode
+  if (global.mockMode) {
+    console.log('💰 MOCK: Getting top selling medicines');
+    return res.json({
+      topMedicines: [
+        { medicine: { _id: 'mock_med_1', name: 'Napa Extra', genericName: 'Paracetamol', strength: '500mg', unit: 'Tablet' }, totalQuantity: 50, totalRevenue: 6000, saleCount: 10 },
+        { medicine: { _id: 'mock_med_3', name: 'Cetirizine', genericName: 'Cetirizine HCL', strength: '10mg', unit: 'Tablet' }, totalQuantity: 30, totalRevenue: 2700, saleCount: 8 }
+      ]
+    });
+  }
+  
   try {
     const { limit = 10, startDate, endDate } = req.query;
     
@@ -428,6 +531,17 @@ router.get('/analytics/top-medicines', async (req, res) => {
 
 // Get customer analytics
 router.get('/analytics/customers', async (req, res) => {
+  // Mock mode
+  if (global.mockMode) {
+    console.log('💰 MOCK: Getting customer analytics');
+    return res.json({
+      customerAnalytics: [
+        { customerName: 'রহিম মিয়া', customerPhone: '01712345678', totalPurchases: 5, totalSpent: 1200, totalPaid: 1000, totalDue: 200, lastPurchaseDate: new Date(), averagePurchase: 240 },
+        { customerName: 'করিম উদ্দিন', customerPhone: '01812345678', totalPurchases: 3, totalSpent: 800, totalPaid: 800, totalDue: 0, lastPurchaseDate: new Date(Date.now() - 86400000), averagePurchase: 267 }
+      ]
+    });
+  }
+  
   try {
     const { limit = 10, startDate, endDate } = req.query;
     

@@ -1,26 +1,25 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { 
-  FaPlus, 
-  FaSearch, 
-  FaEdit, 
-  FaTrash, 
-  FaEye, 
-  FaTimes,
-  FaCalendarAlt,
-  FaMoneyBillWave,
-  FaCreditCard,
-  FaBuilding,
-  FaFileInvoice,
-  FaChartBar,
-  FaDownload,
-  FaFilter,
-  FaReceipt,
-  FaUser
-} from 'react-icons/fa';
-import moment from 'moment';
-import Background3D from '../../components/UI/Background3D';
+  FiPlus, 
+  FiSearch, 
+  FiEdit, 
+  FiTrash2, 
+  FiEye, 
+  FiX,
+  FiCalendar,
+  FiDollarSign,
+  FiCreditCard,
+  FiHome,
+  FiFileText,
+  FiBarChart2,
+  FiDownload,
+  FiFilter,
+  FiReceipt,
+  FiUser
+} from 'react-icons/fi';
 import './ExpenseManagement.css';
 import { formatCurrency, CURRENCY_SYMBOL } from '../../utils/currency';
 
@@ -46,14 +45,13 @@ const ExpenseManagement = () => {
     totalAmount: 0,
     averageExpense: 0
   });
-  // categories list is fetched but not used in current UI
 
   // === ADD EXPENSE STATE ===
   const [formData, setFormData] = useState({
     category: '',
     description: '',
     amount: '',
-    expenseDate: moment().format('YYYY-MM-DD'),
+    expenseDate: new Date().toISOString().split('T')[0],
     paymentMethod: 'cash',
     receiptNumber: '',
     vendor: '',
@@ -95,21 +93,22 @@ const ExpenseManagement = () => {
     }
   }, []);
 
-  const fetchCategories = useCallback(async () => {
-    try {
-      await axios.get('/api/expenses/categories/list');
-    } catch (error) {
-      console.error('Error fetching categories:', error);
-    }
-  }, []);
-
   useEffect(() => {
     if (activeTab === 'expense-list') {
       fetchExpenses();
       fetchSummary();
     }
-    fetchCategories();
-  }, [activeTab, fetchExpenses, fetchSummary, fetchCategories]);
+  }, [activeTab, fetchExpenses, fetchSummary]);
+
+  // Debounced search
+  useEffect(() => {
+    const delayDebounceFn = setTimeout(() => {
+      if (activeTab === 'expense-list') {
+        fetchExpenses();
+      }
+    }, 500);
+    return () => clearTimeout(delayDebounceFn);
+  }, [searchTerm, fetchExpenses, activeTab]);
 
   // === FORM HANDLING ===
   const handleInputChange = (e) => {
@@ -125,7 +124,7 @@ const ExpenseManagement = () => {
       category: '',
       description: '',
       amount: '',
-      expenseDate: moment().format('YYYY-MM-DD'),
+      expenseDate: new Date().toISOString().split('T')[0],
       paymentMethod: 'cash',
       receiptNumber: '',
       vendor: '',
@@ -201,6 +200,7 @@ const ExpenseManagement = () => {
         await axios.delete(`/api/expenses/${id}`);
         fetchExpenses();
         fetchSummary();
+        toast.success('Expense deleted successfully');
       } catch (error) {
         toast.error('Failed to delete expense');
       }
@@ -208,24 +208,22 @@ const ExpenseManagement = () => {
   };
 
   // === UTILITY FUNCTIONS ===
-  // use shared formatCurrency imported from ../../utils/currency
-
   const formatDate = (date) => {
-    return moment(date).format('DD/MM/YYYY');
+    return new Date(date).toLocaleDateString('en-GB');
   };
 
   const getPaymentMethodIcon = (method) => {
     switch (method) {
       case 'cash':
-        return <FaMoneyBillWave className="payment-icon cash" />;
+        return <FiDollarSign className="payment-icon cash" />;
       case 'card':
-        return <FaCreditCard className="payment-icon card" />;
+        return <FiCreditCard className="payment-icon card" />;
       case 'bank_transfer':
-        return <span className="payment-icon bank">🏦</span>;
+        return <FiHome className="payment-icon bank" />;
       case 'cheque':
-        return <span className="payment-icon cheque">📄</span>;
+        return <FiCreditCard className="payment-icon cheque" />;
       default:
-        return <FaMoneyBillWave className="payment-icon" />;
+        return <FiDollarSign className="payment-icon" />;
     }
   };
 
@@ -247,44 +245,44 @@ const ExpenseManagement = () => {
   const getCategoryIcon = (category) => {
     switch (category) {
       case 'rent':
-        return '🏠';
+        return <FiHome />;
       case 'utilities':
-        return '⚡';
+        return <FiBarChart2 />;
       case 'staff_salary':
-        return '👥';
+        return <FiUser />;
       case 'maintenance':
-        return '🔧';
+        return <FiEdit />;
       case 'marketing':
-        return '📢';
+        return <FiBarChart2 />;
       case 'office_supplies':
-        return '📋';
+        return <FiFileText />;
       case 'transport':
-        return '🚗';
+        return <FiHome />;
       case 'other':
-        return '📦';
+        return <FiDollarSign />;
       default:
-        return '💰';
+        return <FiDollarSign />;
     }
   };
 
   const getCategoryLabel = (category) => {
     switch (category) {
       case 'rent':
-        return 'Rent';
+        return 'Rent / ভাড়া';
       case 'utilities':
-        return 'Utilities';
+        return 'Utilities / সেবা';
       case 'staff_salary':
-        return 'Staff Salary';
+        return 'Staff Salary / কর্মচারী বেতন';
       case 'maintenance':
-        return 'Maintenance';
+        return 'Maintenance / রক্ষণাবেক্ষণ';
       case 'marketing':
-        return 'Marketing';
+        return 'Marketing / বিপণন';
       case 'office_supplies':
-        return 'Office Supplies';
+        return 'Office Supplies / অফিস সরবরাহ';
       case 'transport':
-        return 'Transport';
+        return 'Transport / পরিবহন';
       case 'other':
-        return 'Other';
+        return 'Other / অন্যান্য';
       default:
         return category;
     }
@@ -301,7 +299,7 @@ const ExpenseManagement = () => {
       category: expense.category,
       description: expense.description,
       amount: expense.amount,
-      expenseDate: moment(expense.expenseDate).format('YYYY-MM-DD'),
+      expenseDate: new Date(expense.expenseDate).toISOString().split('T')[0],
       paymentMethod: expense.paymentMethod,
       receiptNumber: expense.receiptNumber || '',
       vendor: expense.vendor || '',
@@ -346,626 +344,620 @@ const ExpenseManagement = () => {
   };
 
   const expenseCategories = [
-    { value: 'rent', label: 'Rent', icon: '🏠' },
-    { value: 'utilities', label: 'Utilities', icon: '⚡' },
-    { value: 'staff_salary', label: 'Staff Salary', icon: '👥' },
-    { value: 'maintenance', label: 'Maintenance', icon: '🔧' },
-    { value: 'marketing', label: 'Marketing', icon: '📢' },
-    { value: 'office_supplies', label: 'Office Supplies', icon: '📋' },
-    { value: 'transport', label: 'Transport', icon: '🚗' },
-    { value: 'other', label: 'Other', icon: '📦' }
+    { value: 'rent', label: 'Rent / ভাড়া', icon: <FiHome /> },
+    { value: 'utilities', label: 'Utilities / সেবা', icon: <FiBarChart2 /> },
+    { value: 'staff_salary', label: 'Staff Salary / কর্মচারী বেতন', icon: <FiUser /> },
+    { value: 'maintenance', label: 'Maintenance / রক্ষণাবেক্ষণ', icon: <FiEdit /> },
+    { value: 'marketing', label: 'Marketing / বিপণন', icon: <FiBarChart2 /> },
+    { value: 'office_supplies', label: 'Office Supplies / অফিস সরবরাহ', icon: <FiFileText /> },
+    { value: 'transport', label: 'Transport / পরিবহন', icon: <FiHome /> },
+    { value: 'other', label: 'Other / অন্যান্য', icon: <FiDollarSign /> }
   ];
 
   return (
-    <>
-      <Background3D variant="medical" />
-      <div className="expense-management-page">
+    <div className="expense-management-page">
+      <div className="expense-list-container">
+        {/* ========== 1. PAGE HEADER ========== */}
         <div className="page-header">
-          <h1>💵 Expense Management / ব্যয় ব্যবস্থাপনা</h1>
+          <div className="header-left">
+            <FiDollarSign size={24} />
+            <div className="header-text">
+              <h1>Expense Management / <span className="bengali-text">ব্যয় ব্যবস্থাপনা</span></h1>
+              <p className="header-subtitle">Track and manage all business expenses / <span className="bengali-text">সকল ব্যবসায়িক ব্যয় ট্র্যাক ও পরিচালনা করুন</span></p>
+            </div>
+          </div>
           <div className="header-actions">
             <button 
               className={`tab-button ${activeTab === 'add-expense' ? 'active' : ''}`}
               onClick={() => setActiveTab('add-expense')}
             >
-              <FaPlus /> Add Expense / ব্যয় যোগ করুন
+              <FiPlus /> Add Expense / <span className="bengali-text">ব্যয় যোগ করুন</span>
             </button>
-          <button 
-            className={`tab-button ${activeTab === 'expense-list' ? 'active' : ''}`}
-            onClick={() => setActiveTab('expense-list')}
-          >
-            <FaFileInvoice /> Expense List / ব্যয় তালিকা
-          </button>
-        </div>
-      </div>
-
-      {/* ADD EXPENSE TAB */}
-      {activeTab === 'add-expense' && (
-        <div className="add-expense-container">
-          <div className="expense-form-container">
-            <div className="form-header">
-              <h2>Add New Expense</h2>
-              <p>Record a new business expense with detailed information</p>
-            </div>
-
-            <form onSubmit={handleAddExpense} className="expense-form">
-              <div className="form-row">
-                <div className="form-group">
-                  <label>Category *</label>
-                  <select
-                    name="category"
-                    value={formData.category}
-                    onChange={handleInputChange}
-                    required
-                  >
-                    <option value="">Select Category</option>
-                    {expenseCategories.map(cat => (
-                      <option key={cat.value} value={cat.value}>
-                        {cat.icon} {cat.label}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                
-                <div className="form-group">
-                  <label>Amount ({CURRENCY_SYMBOL}) *</label>
-                  <input
-                    type="number"
-                    name="amount"
-                    value={formData.amount}
-                    onChange={handleInputChange}
-                    step="0.01"
-                    min="0"
-                    required
-                    placeholder="0.00"
-                  />
-                </div>
-              </div>
-
-              <div className="form-group">
-                <label>Description *</label>
-                <input
-                  type="text"
-                  name="description"
-                  value={formData.description}
-                  onChange={handleInputChange}
-                  required
-                  placeholder="Enter expense description"
-                />
-              </div>
-
-              <div className="form-row">
-                <div className="form-group">
-                  <label>Expense Date *</label>
-                  <input
-                    type="date"
-                    name="expenseDate"
-                    value={formData.expenseDate}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </div>
-                
-                <div className="form-group">
-                  <label>Payment Method</label>
-                  <select
-                    name="paymentMethod"
-                    value={formData.paymentMethod}
-                    onChange={handleInputChange}
-                  >
-                    <option value="cash">💵 Cash</option>
-                    <option value="card">💳 Card</option>
-                    <option value="bank_transfer">🏦 Bank Transfer</option>
-                    <option value="cheque">📄 Cheque</option>
-                  </select>
-                </div>
-              </div>
-
-              <div className="form-row">
-                <div className="form-group">
-                  <label>Receipt Number</label>
-                  <input
-                    type="text"
-                    name="receiptNumber"
-                    value={formData.receiptNumber}
-                    onChange={handleInputChange}
-                    placeholder="Enter receipt number"
-                  />
-                </div>
-                
-                <div className="form-group">
-                  <label>Vendor</label>
-                  <input
-                    type="text"
-                    name="vendor"
-                    value={formData.vendor}
-                    onChange={handleInputChange}
-                    placeholder="Enter vendor name"
-                  />
-                </div>
-              </div>
-
-              <div className="form-group">
-                <label>Notes</label>
-                <textarea
-                  name="notes"
-                  value={formData.notes}
-                  onChange={handleInputChange}
-                  placeholder="Additional notes or comments..."
-                  rows="3"
-                />
-              </div>
-
-              <div className="form-actions">
-                <button 
-                  type="button" 
-                  className="secondary-button" 
-                  onClick={resetForm}
-                >
-                  <FaTimes /> Clear Form
-                </button>
-                <button 
-                  type="submit" 
-                  className="primary-button"
-                  disabled={submitting}
-                >
-                  {submitting ? 'Adding...' : <><FaPlus /> Add Expense</>}
-                </button>
-              </div>
-            </form>
+            <button 
+              className={`tab-button ${activeTab === 'expense-list' ? 'active' : ''}`}
+              onClick={() => setActiveTab('expense-list')}
+            >
+              <FiFileText /> Expense List / <span className="bengali-text">ব্যয় তালিকা</span>
+            </button>
           </div>
         </div>
-      )}
 
-      {/* EXPENSE LIST TAB */}
-      {activeTab === 'expense-list' && (
-        <div className="expense-list-container">
-          {/* Summary Cards */}
-          <div className="summary-cards">
-            <div className="summary-card">
-              <div className="summary-icon expenses">
-                <FaMoneyBillWave />
-              </div>
-              <div className="summary-content">
-                <h3>Total Expenses</h3>
-                <p className="summary-number">{summary.totalExpenses}</p>
-                <span className="summary-label">Today</span>
-              </div>
+        {/* ========== 2. SUMMARY CARDS (Horizontal Scroll like Dashboard) ========== */}
+        <div className="summary-cards">
+          <div className="summary-card">
+            <div className="card-icon expenses">
+              <FiBarChart2 />
             </div>
-            
-            <div className="summary-card">
-              <div className="summary-icon amount">
-                <FaChartBar />
-              </div>
-              <div className="summary-content">
-                <h3>Total Amount</h3>
-                <p className="summary-number">{formatCurrency(summary.totalAmount)}</p>
-                <span className="summary-label">Today</span>
-              </div>
-            </div>
-            
-            <div className="summary-card">
-              <div className="summary-icon average">
-                <FaReceipt />
-              </div>
-              <div className="summary-content">
-                <h3>Average</h3>
-                <p className="summary-number">{formatCurrency(summary.averageExpense)}</p>
-                <span className="summary-label">Per Expense</span>
-              </div>
+            <div className="card-content">
+              <h3>মোট ব্যয়</h3>
+              <div className="card-value">{summary.totalExpenses || 0}</div>
+              <div className="card-subtitle">Total expenses</div>
             </div>
           </div>
 
-          {/* Filters */}
-          <div className="filters-section">
-            <div className="search-box">
-              <FaSearch className="search-icon" />
-              <input
-                type="text"
-                placeholder="Search expenses by description, vendor, or receipt number..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
+          <div className="summary-card">
+            <div className="card-icon amount">
+              <FiDollarSign />
             </div>
+            <div className="card-content">
+              <h3>মোট টাকা</h3>
+              <div className="card-value">{formatCurrency(summary.totalAmount || 0)}</div>
+              <div className="card-subtitle">Total spent</div>
+            </div>
+          </div>
 
-            <div className="filter-controls">
-              <div className="date-filters">
-                <div className="date-input">
-                  <FaCalendarAlt className="date-icon" />
+          <div className="summary-card">
+            <div className="card-icon average">
+              <FiBarChart2 />
+            </div>
+            <div className="card-content">
+              <h3>গড় ব্যয়</h3>
+              <div className="card-value">{formatCurrency(summary.averageExpense || 0)}</div>
+              <div className="card-subtitle">Average per expense</div>
+            </div>
+          </div>
+        </div>
+
+        {/* ========== 3. ADD EXPENSE TAB ========== */}
+        {activeTab === 'add-expense' && (
+          <div className="add-expense-container">
+            <div className="expense-form-container">
+              <div className="form-header">
+                <h2>Add New Expense / <span className="bengali-text">নতুন ব্যয় যোগ করুন</span></h2>
+                <p>Record a new business expense with detailed information</p>
+              </div>
+
+              <form onSubmit={handleAddExpense} className="expense-form">
+                <div className="form-row">
+                  <div className="form-group">
+                    <label>Category * / <span className="bengali-text">ক্যাটাগরি</span></label>
+                    <select
+                      name="category"
+                      value={formData.category}
+                      onChange={handleInputChange}
+                      required
+                    >
+                      <option value="">Select Category / ক্যাটাগরি নির্বাচন করুন</option>
+                      {expenseCategories.map(cat => (
+                        <option key={cat.value} value={cat.value}>
+                          {cat.label}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  
+                  <div className="form-group">
+                    <label>Amount ({CURRENCY_SYMBOL}) *</label>
+                    <input
+                      type="number"
+                      name="amount"
+                      value={formData.amount}
+                      onChange={handleInputChange}
+                      step="0.01"
+                      min="0"
+                      required
+                      placeholder="0.00"
+                    />
+                  </div>
+                </div>
+
+                <div className="form-group">
+                  <label>Description * / <span className="bengali-text">বিবরণ</span></label>
+                  <input
+                    type="text"
+                    name="description"
+                    value={formData.description}
+                    onChange={handleInputChange}
+                    required
+                    placeholder="Enter expense description"
+                  />
+                </div>
+
+                <div className="form-row">
+                  <div className="form-group">
+                    <label>Expense Date * / <span className="bengali-text">তারিখ</span></label>
+                    <input
+                      type="date"
+                      name="expenseDate"
+                      value={formData.expenseDate}
+                      onChange={handleInputChange}
+                      required
+                    />
+                  </div>
+                  
+                  <div className="form-group">
+                    <label>Payment Method / <span className="bengali-text">পেমেন্ট পদ্ধতি</span></label>
+                    <select
+                      name="paymentMethod"
+                      value={formData.paymentMethod}
+                      onChange={handleInputChange}
+                    >
+                      <option value="cash">Cash / নগদ</option>
+                      <option value="card">Card / কার্ড</option>
+                      <option value="bank_transfer">Bank Transfer / ব্যাংক ট্রান্সফার</option>
+                      <option value="cheque">Cheque / চেক</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div className="form-row">
+                  <div className="form-group">
+                    <label>Receipt Number / <span className="bengali-text">রসিদ নম্বর</span></label>
+                    <input
+                      type="text"
+                      name="receiptNumber"
+                      value={formData.receiptNumber}
+                      onChange={handleInputChange}
+                      placeholder="Enter receipt number"
+                    />
+                  </div>
+                  
+                  <div className="form-group">
+                    <label>Vendor / <span className="bengali-text">বিক্রেতা</span></label>
+                    <input
+                      type="text"
+                      name="vendor"
+                      value={formData.vendor}
+                      onChange={handleInputChange}
+                      placeholder="Enter vendor name"
+                    />
+                  </div>
+                </div>
+
+                <div className="form-group">
+                  <label>Notes / <span className="bengali-text">নোট</span></label>
+                  <textarea
+                    name="notes"
+                    value={formData.notes}
+                    onChange={handleInputChange}
+                    placeholder="Additional notes or comments..."
+                    rows="3"
+                  />
+                </div>
+
+                <div className="form-actions">
+                  <button 
+                    type="button" 
+                    className="secondary-button"
+                    onClick={resetForm}
+                  >
+                    <FiX /> Clear Form
+                  </button>
+                  <button 
+                    type="submit"
+                    className="primary-button"
+                    disabled={submitting}
+                  >
+                    {submitting ? 'Processing...' : <><FiPlus /> Add Expense / <span className="bengali-text">ব্যয় যোগ করুন</span></>}
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
+
+        {/* ========== 4. EXPENSE LIST TAB ========== */}
+        {activeTab === 'expense-list' && (
+          <div className="expenses-content">
+            {/* Filters Section */}
+            <div className="filters-section">
+              <div className="filters-grid">
+                <div className="filter-group">
+                  <label>Search / <span className="bengali-text">অনুসন্ধান</span></label>
+                  <div className="search-input">
+                    <FiSearch />
+                    <input
+                      type="text"
+                      placeholder="Search by description or vendor..."
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      aria-label="Search expenses"
+                    />
+                  </div>
+                </div>
+                
+                <div className="filter-group">
+                  <label>Start Date / <span className="bengali-text">শুরুর তারিখ</span></label>
                   <input
                     type="date"
                     value={startDate}
                     onChange={(e) => setStartDate(e.target.value)}
-                    placeholder="Start Date"
+                    aria-label="Start date filter"
                   />
                 </div>
                 
-                <div className="date-input">
-                  <FaCalendarAlt className="date-icon" />
+                <div className="filter-group">
+                  <label>End Date / <span className="bengali-text">শেষ তারিখ</span></label>
                   <input
                     type="date"
                     value={endDate}
                     onChange={(e) => setEndDate(e.target.value)}
-                    placeholder="End Date"
+                    aria-label="End date filter"
                   />
                 </div>
-              </div>
-
-              <select
-                value={selectedCategory}
-                onChange={(e) => setSelectedCategory(e.target.value)}
-                className="category-filter"
-              >
-                <option value="">All Categories</option>
-                {expenseCategories.map(cat => (
-                  <option key={cat.value} value={cat.value}>
-                    {cat.icon} {cat.label}
-                  </option>
-                ))}
-              </select>
-
-              <button 
-                className="clear-filters-btn"
-                onClick={clearFilters}
-              >
-                <FaFilter /> Clear Filters
-              </button>
-            </div>
-          </div>
-
-          {/* Expenses List */}
-          <div className="expenses-content">
-            {loading ? (
-              <div className="loading">Loading expenses...</div>
-            ) : (
-              <>
-                <div className="expenses-header">
-                  <h2>Expense List ({totalExpenses} expenses)</h2>
-                  <div className="expenses-actions">
-                    <button className="export-btn" onClick={exportExpenses}>
-                      <FaDownload /> Export
-                    </button>
-                  </div>
-                </div>
-
-                {expenses.length === 0 ? (
-                  <div className="no-expenses">
-                    <p>No expenses found. Try adjusting your filters or add a new expense.</p>
-                    <button 
-                      className="primary-button"
-                      onClick={() => setActiveTab('add-expense')}
-                    >
-                      <FaPlus /> Add New Expense
-                    </button>
-                  </div>
-                ) : (
-                  <div className="expenses-grid">
-                    {expenses.map(expense => (
-                      <div key={expense._id} className="expense-card">
-                        <div className="expense-header">
-                          <div className="expense-category">
-                            <span className="category-icon">{getCategoryIcon(expense.category)}</span>
-                            <span className="category-label">{getCategoryLabel(expense.category)}</span>
-                          </div>
-                          <div className="expense-actions">
-                            <button 
-                              className="action-btn view-btn"
-                              onClick={() => viewExpenseDetails(expense)}
-                              title="View Details"
-                            >
-                              <FaEye />
-                            </button>
-                            <button 
-                              className="action-btn edit-btn"
-                              onClick={() => openEditModal(expense)}
-                              title="Edit"
-                            >
-                              <FaEdit />
-                            </button>
-                            <button 
-                              className="action-btn delete-btn"
-                              onClick={() => handleDeleteExpense(expense._id)}
-                              title="Delete"
-                            >
-                              <FaTrash />
-                            </button>
-                          </div>
-                        </div>
-
-                        <div className="expense-info">
-                          <h3>{expense.description}</h3>
-                          <p className="expense-amount">{formatCurrency(expense.amount)}</p>
-                          <p className="expense-date">{formatDate(expense.expenseDate)}</p>
-                          {expense.vendor && (
-                            <p className="expense-vendor">
-                              <FaBuilding /> {expense.vendor}
-                            </p>
-                          )}
-                          {expense.receiptNumber && (
-                            <p className="expense-receipt">
-                              <FaReceipt /> {expense.receiptNumber}
-                            </p>
-                          )}
-                        </div>
-
-                        <div className="expense-footer">
-                          <div className="payment-method">
-                            {getPaymentMethodIcon(expense.paymentMethod)}
-                            <span>{getPaymentMethodLabel(expense.paymentMethod)}</span>
-                          </div>
-                          <div className="recorded-by">
-                            <FaUser />
-                            <span>{expense.recordedBy}</span>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
-
-                {/* Pagination */}
-                {totalPages > 1 && (
-                  <div className="pagination">
-                    <button
-                      onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-                      disabled={currentPage === 1}
-                      className="page-btn"
-                    >
-                      Previous
-                    </button>
-                    
-                    <span className="page-info">
-                      Page {currentPage} of {totalPages}
-                    </span>
-                    
-                    <button
-                      onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
-                      disabled={currentPage === totalPages}
-                      className="page-btn"
-                    >
-                      Next
-                    </button>
-                  </div>
-                )}
-              </>
-            )}
-          </div>
-        </div>
-      )}
-
-      {/* Expense Details Modal */}
-      {showViewModal && selectedExpense && (
-        <div className="modal-overlay">
-          <div className="modal">
-            <div className="modal-header">
-              <h2>Expense Details</h2>
-              <button 
-                className="close-btn"
-                onClick={() => {
-                  setShowViewModal(false);
-                  setSelectedExpense(null);
-                }}
-              >
-                ×
-              </button>
-            </div>
-            
-            <div className="expense-details">
-              <div className="detail-section">
-                <h3>Basic Information</h3>
-                <div className="detail-grid">
-                  <div className="detail-item">
-                    <label>Category:</label>
-                    <span>{getCategoryIcon(selectedExpense.category)} {getCategoryLabel(selectedExpense.category)}</span>
-                  </div>
-                  <div className="detail-item">
-                    <label>Description:</label>
-                    <span>{selectedExpense.description}</span>
-                  </div>
-                  <div className="detail-item">
-                    <label>Amount:</label>
-                    <span className="amount">{formatCurrency(selectedExpense.amount)}</span>
-                  </div>
-                  <div className="detail-item">
-                    <label>Date:</label>
-                    <span>{formatDate(selectedExpense.expenseDate)}</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="detail-section">
-                <h3>Payment & Vendor Information</h3>
-                <div className="detail-grid">
-                  <div className="detail-item">
-                    <label>Payment Method:</label>
-                    <span>{getPaymentMethodIcon(selectedExpense.paymentMethod)} {getPaymentMethodLabel(selectedExpense.paymentMethod)}</span>
-                  </div>
-                  {selectedExpense.vendor && (
-                    <div className="detail-item">
-                      <label>Vendor:</label>
-                      <span>{selectedExpense.vendor}</span>
-                    </div>
-                  )}
-                  {selectedExpense.receiptNumber && (
-                    <div className="detail-item">
-                      <label>Receipt Number:</label>
-                      <span>{selectedExpense.receiptNumber}</span>
-                    </div>
-                  )}
-                  <div className="detail-item">
-                    <label>Recorded By:</label>
-                    <span>{selectedExpense.recordedBy}</span>
-                  </div>
-                </div>
-              </div>
-
-              {selectedExpense.notes && (
-                <div className="detail-section">
-                  <h3>Notes</h3>
-                  <p className="expense-notes">{selectedExpense.notes}</p>
-                </div>
-              )}
-
-              <div className="detail-actions">
-                <button 
-                  className="primary-button"
-                  onClick={() => {
-                    setShowViewModal(false);
-                    openEditModal(selectedExpense);
-                  }}
-                >
-                  <FaEdit /> Edit Expense
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Edit Expense Modal */}
-      {showEditModal && selectedExpense && (
-        <div className="modal-overlay">
-          <div className="modal">
-            <div className="modal-header">
-              <h2>Edit Expense</h2>
-              <button 
-                className="close-btn"
-                onClick={() => {
-                  setShowEditModal(false);
-                  setSelectedExpense(null);
-                  resetForm();
-                }}
-              >
-                ×
-              </button>
-            </div>
-            
-            <form onSubmit={handleEditExpense} className="expense-form">
-              <div className="form-row">
-                <div className="form-group">
-                  <label>Category *</label>
+                
+                <div className="filter-group">
+                  <label>Category / <span className="bengali-text">ক্যাটাগরি</span></label>
                   <select
-                    name="category"
-                    value={formData.category}
-                    onChange={handleInputChange}
-                    required
+                    value={selectedCategory}
+                    onChange={(e) => setSelectedCategory(e.target.value)}
+                    aria-label="Filter by category"
                   >
+                    <option value="">All Categories / সকল ক্যাটাগরি</option>
                     {expenseCategories.map(cat => (
-                      <option key={cat.value} value={cat.value}>
-                        {cat.icon} {cat.label}
-                      </option>
+                      <option key={cat.value} value={cat.value}>{cat.label}</option>
                     ))}
                   </select>
                 </div>
-                
-                <div className="form-group">
-                  <label>Amount ({CURRENCY_SYMBOL}) *</label>
-                  <input
-                    type="number"
-                    name="amount"
-                    value={formData.amount}
-                    onChange={handleInputChange}
-                    step="0.01"
-                    min="0"
-                    required
-                  />
-                </div>
               </div>
-
-              <div className="form-group">
-                <label>Description *</label>
-                <input
-                  type="text"
-                  name="description"
-                  value={formData.description}
-                  onChange={handleInputChange}
-                  required
-                />
-              </div>
-
-              <div className="form-row">
-                <div className="form-group">
-                  <label>Expense Date *</label>
-                  <input
-                    type="date"
-                    name="expenseDate"
-                    value={formData.expenseDate}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </div>
-                
-                <div className="form-group">
-                  <label>Payment Method</label>
-                  <select
-                    name="paymentMethod"
-                    value={formData.paymentMethod}
-                    onChange={handleInputChange}
-                  >
-                    <option value="cash">💵 Cash</option>
-                    <option value="card">💳 Card</option>
-                    <option value="bank_transfer">🏦 Bank Transfer</option>
-                    <option value="cheque">📄 Cheque</option>
-                  </select>
-                </div>
-              </div>
-
-              <div className="form-row">
-                <div className="form-group">
-                  <label>Receipt Number</label>
-                  <input
-                    type="text"
-                    name="receiptNumber"
-                    value={formData.receiptNumber}
-                    onChange={handleInputChange}
-                  />
-                </div>
-                
-                <div className="form-group">
-                  <label>Vendor</label>
-                  <input
-                    type="text"
-                    name="vendor"
-                    value={formData.vendor}
-                    onChange={handleInputChange}
-                  />
-                </div>
-              </div>
-
-              <div className="form-group">
-                <label>Notes</label>
-                <textarea
-                  name="notes"
-                  value={formData.notes}
-                  onChange={handleInputChange}
-                  rows="3"
-                />
-              </div>
-
-              <div className="form-actions">
-                <button 
-                  type="button" 
-                  className="secondary-button" 
-                  onClick={() => {
-                    setShowEditModal(false);
-                    setSelectedExpense(null);
-                    resetForm();
-                  }}
-                >
-                  Cancel
+              
+              <div className="filter-actions">
+                <button className="clear-filters-btn" onClick={clearFilters}>
+                  Clear Filters / <span className="bengali-text">ফিল্টার সাফ করুন</span>
                 </button>
-                <button 
-                  type="submit" 
-                  className="primary-button"
-                >
-                  <FaEdit /> Update Expense
+                <button className="secondary-button" onClick={exportExpenses}>
+                  <FiDownload /> Export / <span className="bengali-text">এক্সপোর্ট</span>
                 </button>
               </div>
-            </form>
+            </div>
+
+            {/* Expenses Table Section */}
+            <div className="expenses-table-section">
+              <div className="section-header">
+                <div className="section-title">
+                  <FiBarChart2 size={20} />
+                  <h2>Expense List / <span className="bengali-text">ব্যয় তালিকা</span></h2>
+                </div>
+                <div className="table-info">
+                  Showing {expenses.length} of {totalExpenses} expenses
+                </div>
+              </div>
+
+              {loading ? (
+                <div className="expenses-skeleton">
+                  <div className="skeleton-header"></div>
+                  <div className="skeleton-cards">
+                    {[1,2,3].map(i => (
+                      <div key={i} className="skeleton-card"></div>
+                    ))}
+                  </div>
+                </div>
+              ) : expenses.length === 0 ? (
+                <div className="empty-state">
+                  <div className="empty-icon-wrapper">
+                    <FiDollarSign className="empty-icon" size={48} />
+                  </div>
+                  <h3>No expenses found / <span className="bengali-text">কোন ব্যয় পাওয়া যায়নি</span></h3>
+                  <p>Start by adding your first expense / <span className="bengali-text">প্রথম ব্যয় যোগ করে শুরু করুন</span></p>
+                </div>
+              ) : (
+                <>
+                  {/* Desktop Table View */}
+                  <div className="expenses-table">
+                    <div className="table-header">
+                      <div className="th">Category / <span className="bengali-text">ক্যাটাগরি</span></div>
+                      <div className="th">Description / <span className="bengali-text">বিবরণ</span></div>
+                      <div className="th">Amount / <span className="bengali-text">পরিমাণ</span></div>
+                      <div className="th">Payment / <span className="bengali-text">পেমেন্ট</span></div>
+                      <div className="th">Date / <span className="bengali-text">তারিখ</span></div>
+                      <div className="th">Actions / <span className="bengali-text">কার্যক্রম</span></div>
+                    </div>
+
+                    <div className="table-body">
+                      {expenses.map((expense) => (
+                        <div key={expense._id} className="table-row">
+                          <div className="td">
+                            <div className="expense-category">
+                              <div className={`category-icon ${expense.category}`}>
+                                {getCategoryIcon(expense.category)}
+                              </div>
+                              <span className="category-label">{getCategoryLabel(expense.category)}</span>
+                            </div>
+                          </div>
+                          <div className="td">
+                            <div className="expense-description">
+                              <div className="description-text">{expense.description}</div>
+                              {expense.vendor && (
+                                <div className="expense-vendor">
+                                  <FiUser /> {expense.vendor}
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                          <div className="td">
+                            <div className="expense-amount">{formatCurrency(expense.amount)}</div>
+                          </div>
+                          <div className="td">
+                            <div className="payment-method">
+                              {getPaymentMethodIcon(expense.paymentMethod)}
+                              <span>{getPaymentMethodLabel(expense.paymentMethod)}</span>
+                            </div>
+                          </div>
+                          <div className="td">
+                            <div className="expense-date">
+                              <span className="date-text">{formatDate(expense.expenseDate)}</span>
+                            </div>
+                          </div>
+                          <div className="td">
+                            <div className="action-buttons">
+                              <button 
+                                className="action-btn view-btn"
+                                onClick={() => viewExpenseDetails(expense)}
+                                title="View Details"
+                                aria-label="View expense details"
+                              >
+                                <FiEye />
+                              </button>
+                              <button 
+                                className="action-btn edit-btn"
+                                onClick={() => openEditModal(expense)}
+                                title="Edit Expense"
+                                aria-label="Edit expense"
+                              >
+                                <FiEdit />
+                              </button>
+                              <button 
+                                className="action-btn delete-btn"
+                                onClick={() => handleDeleteExpense(expense._id)}
+                                title="Delete Expense"
+                                aria-label="Delete expense"
+                              >
+                                <FiTrash2 />
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Pagination */}
+                  {totalPages > 1 && (
+                    <div className="pagination">
+                      <button 
+                        className="pagination-btn"
+                        disabled={currentPage === 1}
+                        onClick={() => setCurrentPage(currentPage - 1)}
+                      >
+                        Previous / <span className="bengali-text">পূর্ববর্তী</span>
+                      </button>
+                      
+                      <div className="pagination-info">
+                        Page {currentPage} of {totalPages}
+                      </div>
+                      
+                      <button 
+                        className="pagination-btn"
+                        disabled={currentPage === totalPages}
+                        onClick={() => setCurrentPage(currentPage + 1)}
+                      >
+                        Next / <span className="bengali-text">পরবর্তী</span>
+                      </button>
+                    </div>
+                  )}
+                </>
+              )}
+            </div>
           </div>
-        </div>
-      )}
+        )}
+
+        {/* ========== 5. VIEW MODAL ========== */}
+        {showViewModal && selectedExpense && (
+          <div className="modal-overlay" onClick={() => setShowViewModal(false)}>
+            <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+              <div className="modal-header">
+                <h2>Expense Details / <span className="bengali-text">ব্যয়ের বিবরণ</span></h2>
+                <button 
+                  className="close-btn"
+                  onClick={() => setShowViewModal(false)}
+                  aria-label="Close modal"
+                >
+                  <FiX />
+                </button>
+              </div>
+              <div className="modal-body">
+                <div className="detail-row">
+                  <strong>Category:</strong>
+                  <span>{getCategoryIcon(selectedExpense.category)} {getCategoryLabel(selectedExpense.category)}</span>
+                </div>
+                <div className="detail-row">
+                  <strong>Description:</strong>
+                  <span>{selectedExpense.description}</span>
+                </div>
+                <div className="detail-row">
+                  <strong>Amount:</strong>
+                  <span className="amount">{formatCurrency(selectedExpense.amount)}</span>
+                </div>
+                <div className="detail-row">
+                  <strong>Payment Method:</strong>
+                  <span>{getPaymentMethodIcon(selectedExpense.paymentMethod)} {getPaymentMethodLabel(selectedExpense.paymentMethod)}</span>
+                </div>
+                <div className="detail-row">
+                  <strong>Date:</strong>
+                  <span>{formatDate(selectedExpense.expenseDate)}</span>
+                </div>
+                {selectedExpense.vendor && (
+                  <div className="detail-row">
+                    <strong>Vendor:</strong>
+                    <span>{selectedExpense.vendor}</span>
+                  </div>
+                )}
+                {selectedExpense.receiptNumber && (
+                  <div className="detail-row">
+                    <strong>Receipt Number:</strong>
+                    <span>{selectedExpense.receiptNumber}</span>
+                  </div>
+                )}
+                {selectedExpense.notes && (
+                  <div className="detail-row">
+                    <strong>Notes:</strong>
+                    <span>{selectedExpense.notes}</span>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ========== 6. EDIT MODAL ========== */}
+        {showEditModal && selectedExpense && (
+          <div className="modal-overlay" onClick={() => setShowEditModal(false)}>
+            <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+              <div className="modal-header">
+                <h2>Edit Expense / <span className="bengali-text">ব্যয় সম্পাদনা</span></h2>
+                <button 
+                  className="close-btn"
+                  onClick={() => setShowEditModal(false)}
+                  aria-label="Close modal"
+                >
+                  <FiX />
+                </button>
+              </div>
+              <form onSubmit={handleEditExpense} className="expense-form">
+                <div className="form-row">
+                  <div className="form-group">
+                    <label>Category *</label>
+                    <select
+                      name="category"
+                      value={formData.category}
+                      onChange={handleInputChange}
+                      required
+                    >
+                      <option value="">Select Category</option>
+                      {expenseCategories.map(cat => (
+                        <option key={cat.value} value={cat.value}>
+                          {cat.label}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  
+                  <div className="form-group">
+                    <label>Amount ({CURRENCY_SYMBOL}) *</label>
+                    <input
+                      type="number"
+                      name="amount"
+                      value={formData.amount}
+                      onChange={handleInputChange}
+                      step="0.01"
+                      min="0"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="form-group">
+                  <label>Description *</label>
+                  <input
+                    type="text"
+                    name="description"
+                    value={formData.description}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </div>
+
+                <div className="form-row">
+                  <div className="form-group">
+                    <label>Expense Date *</label>
+                    <input
+                      type="date"
+                      name="expenseDate"
+                      value={formData.expenseDate}
+                      onChange={handleInputChange}
+                      required
+                    />
+                  </div>
+                  
+                  <div className="form-group">
+                    <label>Payment Method</label>
+                    <select
+                      name="paymentMethod"
+                      value={formData.paymentMethod}
+                      onChange={handleInputChange}
+                    >
+                      <option value="cash">Cash</option>
+                      <option value="card">Card</option>
+                      <option value="bank_transfer">Bank Transfer</option>
+                      <option value="cheque">Cheque</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div className="form-row">
+                  <div className="form-group">
+                    <label>Receipt Number</label>
+                    <input
+                      type="text"
+                      name="receiptNumber"
+                      value={formData.receiptNumber}
+                      onChange={handleInputChange}
+                    />
+                  </div>
+                  
+                  <div className="form-group">
+                    <label>Vendor</label>
+                    <input
+                      type="text"
+                      name="vendor"
+                      value={formData.vendor}
+                      onChange={handleInputChange}
+                    />
+                  </div>
+                </div>
+
+                <div className="form-group">
+                  <label>Notes</label>
+                  <textarea
+                    name="notes"
+                    value={formData.notes}
+                    onChange={handleInputChange}
+                    rows="3"
+                  />
+                </div>
+
+                <div className="form-actions">
+                  <button 
+                    type="button" 
+                    className="secondary-button"
+                    onClick={() => setShowEditModal(false)}
+                  >
+                    <FiX /> Cancel
+                  </button>
+                  <button 
+                    type="submit"
+                    className="primary-button"
+                    disabled={submitting}
+                  >
+                    {submitting ? 'Processing...' : <><FiEdit /> Update Expense</>}
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
       </div>
-    </>
+    </div>
   );
 };
 

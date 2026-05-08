@@ -25,6 +25,7 @@
     "react-scripts": "^5.0.1",
     "react-spring": "^9.7.5",
     "react-toastify": "^11.0.5",
+    "recharts": "^3.8.1",
     "socket.io-client": "^4.8.1",
     "styled-components": "^6.1.19",
     "three": "^0.170.0",

@@ -1,22 +1,20 @@
-
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { 
-  FaSearch, 
-  FaPlus, 
-  FaTrash, 
-  FaCalculator,
-  FaUser,
-  FaCreditCard,
-  FaMoneyBillWave,
-  FaPrint,
-  FaArrowLeft,
-  FaCheckCircle,
-  FaShoppingCart
-} from 'react-icons/fa';
-import Background3D from '../../components/UI/Background3D';
+  FiSearch, 
+  FiPlus, 
+  FiTrash2, 
+  FiDollarSign,
+  FiUser,
+  FiCreditCard,
+  FiPrinter,
+  FiArrowLeft,
+  FiCheckCircle,
+  FiShoppingCart,
+  FiSmartphone
+} from 'react-icons/fi';
 import './NewSale.css';
 import { formatCurrency, CURRENCY_SYMBOL } from '../../utils/currency';
 
@@ -202,26 +200,28 @@ const NewSale = () => {
   };
 
   return (
-    <>
-      <Background3D variant="medical" />
-      <div className="new-sale-page">
+    <div className="new-sale-page">
+      <div className="sale-container">
+        {/* ========== 1. PAGE HEADER ========== */}
         <div className="page-header">
           <button 
             className="back-button"
             onClick={() => navigate('/sales')}
           >
-            <FaArrowLeft /> Back to Sales
+            <FiArrowLeft /> Back to Sales
           </button>
-          <h1><FaShoppingCart /> New Sale / নতুন বিক্রি</h1>
+          <h1>
+            <FiShoppingCart /> New Sale / <span className="bengali-text">নতুন বিক্রি</span>
+          </h1>
         </div>
 
-      <div className="sale-container">
         <div className="sale-left">
+          {/* ========== 2. MEDICINE SEARCH ========== */}
           <div className="medicine-search-section">
-            <h3>Search Medicines</h3>
+            <h3>Search Medicines / <span className="bengali-text">ঔষধ খুঁজুন</span></h3>
             <div className="search-container">
               <div className="search-box">
-                <FaSearch className="search-icon" />
+                <FiSearch className="search-icon" />
                 <input
                   type="text"
                   placeholder="Search medicines by name, generic name, or manufacturer..."
@@ -230,7 +230,13 @@ const NewSale = () => {
                 />
               </div>
               
-              {loading && <div className="loading-indicator">Searching...</div>}
+              {loading && (
+                <div className="loading-skeleton">
+                  {[1,2,3].map(i => (
+                    <div key={i} className="skeleton-item"></div>
+                  ))}
+                </div>
+              )}
               
               {medicines.length > 0 && (
                 <div className="search-results">
@@ -253,7 +259,7 @@ const NewSale = () => {
 
             {selectedMedicine && (
               <div className="add-to-cart-form">
-                <h4>Add to Cart</h4>
+                <h4>Add to Cart / <span className="bengali-text">কার্টে যোগ করুন</span></h4>
                 <div className="selected-medicine">
                   <span><strong>{selectedMedicine.name}</strong></span>
                   <span>{formatCurrency(selectedMedicine.sellingPrice)} per {selectedMedicine.unit}</span>
@@ -276,14 +282,15 @@ const NewSale = () => {
                   className="add-to-cart-btn"
                   onClick={addToCart}
                 >
-                  <FaPlus /> Add to Cart
+                  <FiPlus /> Add to Cart
                 </button>
               </div>
             )}
           </div>
 
+          {/* ========== 3. CART SECTION ========== */}
           <div className="cart-section">
-            <h3>Shopping Cart ({cart.length} items)</h3>
+            <h3>Shopping Cart ({cart.length} items) / <span className="bengali-text">কার্ট</span></h3>
             
             {cart.length === 0 ? (
               <div className="empty-cart">
@@ -292,7 +299,7 @@ const NewSale = () => {
             ) : (
               <div className="cart-items">
                 {cart.map((item, index) => (
-                  <div key={index} className="cart-item">
+                  <div key={index} className="cart-item glass-card">
                     <div className="item-details">
                       <h4>{item.medicine.name}</h4>
                       <p>{item.medicine.genericName} - {item.medicine.strength} {item.medicine.unit}</p>
@@ -322,7 +329,7 @@ const NewSale = () => {
                         className="remove-btn"
                         title="Remove item"
                       >
-                        <FaTrash />
+                        <FiTrash2 />
                       </button>
                     </div>
                   </div>
@@ -333,8 +340,9 @@ const NewSale = () => {
         </div>
 
         <div className="sale-right">
+          {/* ========== 4. CUSTOMER SECTION ========== */}
           <div className="customer-section">
-            <h3><FaUser /> Customer Information</h3>
+            <h3><FiUser /> Customer Information / <span className="bengali-text">ক্রেতার তথ্য</span></h3>
             <div className="form-group">
               <label>Customer Name</label>
               <input
@@ -355,8 +363,9 @@ const NewSale = () => {
             </div>
           </div>
 
+          {/* ========== 5. PAYMENT SECTION ========== */}
           <div className="payment-section">
-            <h3><FaCreditCard /> Payment Details</h3>
+            <h3><FiCreditCard /> Payment Details / <span className="bengali-text">পেমেন্ট</span></h3>
             
             <div className="payment-methods">
               <label className="payment-method">
@@ -367,7 +376,7 @@ const NewSale = () => {
                   checked={paymentDetails.method === 'cash'}
                   onChange={(e) => setPaymentDetails(prev => ({ ...prev, method: e.target.value }))}
                 />
-                <FaMoneyBillWave /> Cash
+                <FiDollarSign className="cash" /> Cash
               </label>
               <label className="payment-method">
                 <input
@@ -377,7 +386,7 @@ const NewSale = () => {
                   checked={paymentDetails.method === 'card'}
                   onChange={(e) => setPaymentDetails(prev => ({ ...prev, method: e.target.value }))}
                 />
-                <FaCreditCard /> Card
+                <FiCreditCard className="card" /> Card
               </label>
               <label className="payment-method">
                 <input
@@ -387,7 +396,7 @@ const NewSale = () => {
                   checked={paymentDetails.method === 'mobile_banking'}
                   onChange={(e) => setPaymentDetails(prev => ({ ...prev, method: e.target.value }))}
                 />
-                📱 Mobile Banking
+                <FiSmartphone className="mobile" /> Mobile Banking
               </label>
             </div>
 
@@ -424,13 +433,14 @@ const NewSale = () => {
             </div>
           </div>
 
+          {/* ========== 6. BILLING SECTION ========== */}
           <div className="billing-section">
-            <h3><FaCalculator /> Billing Summary</h3>
+            <h3><FiDollarSign /> Billing Summary / <span className="bengali-text">বিল</span></h3>
             
             <div className="bill-details">
               <div className="bill-row">
                 <span>Subtotal:</span>
-                  <span>{formatCurrency(cart.reduce((sum, item) => sum + item.totalPrice, 0))}</span>
+                <span>{formatCurrency(cart.reduce((sum, item) => sum + item.totalPrice, 0))}</span>
               </div>
               
               {paymentDetails.discount > 0 && (
@@ -473,8 +483,9 @@ const NewSale = () => {
             </div>
           </div>
 
+          {/* ========== 7. NOTES SECTION ========== */}
           <div className="notes-section">
-            <h3>Notes</h3>
+            <h3>Notes / <span className="bengali-text">নোট</span></h3>
             <textarea
               placeholder="Add any special instructions or notes..."
               value={notes}
@@ -483,13 +494,14 @@ const NewSale = () => {
             />
           </div>
 
+          {/* ========== 8. ACTION BUTTONS ========== */}
           <div className="action-buttons">
             <button 
               className="print-btn"
               onClick={printReceipt}
               disabled={cart.length === 0}
             >
-              <FaPrint /> Print Receipt
+              <FiPrinter /> Print Receipt
             </button>
             
             <button 
@@ -497,13 +509,12 @@ const NewSale = () => {
               onClick={handleSubmitSale}
               disabled={cart.length === 0 || submitting}
             >
-              {submitting ? 'Processing...' : <><FaCheckCircle /> Complete Sale</>}
+              {submitting ? 'Processing...' : <><FiCheckCircle /> Complete Sale / <span className="bengali-text">বিক্রি সম্পন্ন</span></>}
             </button>
           </div>
         </div>
       </div>
-      </div>
-    </>
+    </div>
   );
 };
 
