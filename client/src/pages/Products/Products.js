@@ -11,6 +11,7 @@ import {
   FaExclamationTriangle,
   FaClock
 } from 'react-icons/fa';
+import { FiEye, FiEdit, FiTrash2, FiAlertTriangle, FiClock } from 'react-icons/fi';
 import Background3D from '../../components/UI/Background3D';
 import './Products.css';
 import { formatCurrency, CURRENCY_SYMBOL } from '../../utils/currency';
@@ -284,8 +285,7 @@ const Products = () => {
       <div className="page-content">
         {loading ? (
           <div className="loading">Loading medicines...</div>
-        ) : (
-            ) : (
+         ) : (
               <div className="products-content">
               <div className="medicines-grid">
               {medicines.map(medicine => (
