@@ -8,7 +8,7 @@ import {
 } from 'react-icons/fi';
 import { 
   FaPlus, FaBoxes, FaMoneyBillWave, FaCreditCard, FaCalendarAlt, 
-  FaSearch, FaUsers, FaChartLine, FaFileExport, FaEye as FaEyeIcon
+  FaSearch, FaUsers, FaChartLine, FaFileExport
 } from 'react-icons/fa';
 import { formatCurrency } from '../../utils/currency';
 import './Purchases.css';
