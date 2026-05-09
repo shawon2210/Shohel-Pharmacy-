@@ -4,22 +4,17 @@ import { toast } from 'react-toastify';
 import { 
   FiBarChart2, 
   FiPieChart, 
-  FiFilter, 
   FiFileText, 
   FiDownload, 
   FiDollarSign, 
   FiShoppingCart, 
   FiUsers, 
-  FiTrendingUp, 
-  FiTrendingDown, 
-  FiMinus,
-  FiCalendar, 
   FiBox
 } from 'react-icons/fi';
 import * as XLSX from 'xlsx';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
-import { formatCurrency, formatNumber, CURRENCY_SYMBOL } from '../../utils/currency';
+import { formatCurrency } from '../../utils/currency';
 import ReportPlaceholder from '../../components/Reports/ReportPlaceholder';
 
 const SimpleLoader = () => (
@@ -98,8 +93,6 @@ const ReportsAnalytics = () => {
   useEffect(() => {
     fetchData();
   }, [fetchData]);
-
-  const formatPercentage = (num) => `${num.toFixed(1)}%`;
 
   const formatDate = (date) => {
     return new Date(date).toLocaleDateString('en-GB', {
@@ -284,12 +277,6 @@ const ReportsAnalytics = () => {
     }
 
     doc.save(`${reportName}_Report_${new Date().toISOString().split('T')[0]}.pdf`);
-  };
-
-  const getTrendIcon = (value) => {
-    if (value > 0) return <FiTrendingUp className="trend-icon trend-up" />;
-    if (value < 0) return <FiTrendingDown className="trend-icon trend-down" />;
-    return <FiMinus className="trend-icon trend-neutral" />;
   };
 
   const reportTypes = [

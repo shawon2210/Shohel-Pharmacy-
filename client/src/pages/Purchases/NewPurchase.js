@@ -6,7 +6,6 @@ import {
   FiSearch, 
   FiPlus, 
   FiTrash2, 
-  FiHash,
   FiHome,
   FiCreditCard,
   FiDollarSign,

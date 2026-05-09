@@ -1,0 +1,60 @@
+version: '3.8'
+
+services:
+  # MongoDB Database
+  mongo:
+    image: mongo:6.0
+    container_name: pharmacy-mongo
+    restart: unless-stopped
+    volumes:
+      - mongo-data:/data/db
+      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_DATABASE=pharmacy
+      # For production, use proper credentials and secrets
+      # - MONGO_INITDB_ROOT_USERNAME=admin
+      # - MONGO_INITDB_ROOT_PASSWORD=example
+
+  # Backend Express API
+  backend:
+    build: ./server
+    container_name: pharmacy-backend
+    restart: unless-stopped
+    ports:
+      - "5001:5001"
+    environment:
+      - NODE_ENV=development
+      - PORT=5001
+      - MONGO_URI=mongodb://mongo:27017/pharmacy
+      - JWT_SECRET=your_super_secret_jwt_key_change_in_production
+      # Frontend URL for CORS (adjust as needed)
+      - CLIENT_URL=http://localhost:3000
+    depends_on:
+      - mongo
+    volumes:
+      - ./server:/app
+      - /app/node_modules  # Prevent overwriting node_modules with bind mount
+
+  # Frontend React App
+  frontend:
+    build: ./client
+    container_name: pharmacy-frontend
+    restart: unless-stopped
+    ports:
+      - "3000:80"  # Nginx serves on port 80 inside container
+    environment:
+      - NODE_ENV=production
+      # In production, the frontend will be served by nginx
+      # API URL will be relative or set via nginx config
+      # For development with hot reload, you'd use a different setup
+    depends_on:
+      - backend
+    # For development with hot reload, use bind mount instead of built image
+    # volumes:
+    #   - ./client:/app
+    #   - /app/node_modules
+
+volumes:
+  mongo-data:

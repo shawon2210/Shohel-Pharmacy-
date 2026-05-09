@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { FiUser, FiBell, FiSliders, FiInfo, FiSave, FiCheck, FiAlertTriangle, FiGlobe } from 'react-icons/fi';
+import { FiUser, FiBell, FiSliders, FiInfo, FiSave, FiAlertTriangle, FiGlobe } from 'react-icons/fi';
 import './Settings.css';
 import { useTheme } from '../../context/ThemeContext';
-import { useLocale } from '../../context/LocaleContext';
 
 const Settings = () => {
   const [activeTab, setActiveTab] = useState('notifications');
@@ -29,8 +28,6 @@ const Settings = () => {
     theme: theme || 'light',
     fontSize: 'medium',
   });
-
-  const { locale, setLocale } = useLocale();
 
   const handleNotificationChange = (setting) => {
     setNotificationSettings(prev => ({ ...prev, [setting]: !prev[setting] }));
@@ -322,37 +319,6 @@ const AboutSection = () => (
       <p>নিচের বোতামে ক্লিক করলে সমস্ত ডাটা মুছে যাবে। সাবধান! / Clicking the button below will erase all data. Be careful!</p>
       <button className="danger-button">
         <FiAlertTriangle /> সমস্ত ডাটা মুছুন / <span className="bengali-text">Delete All Data</span>
-      </button>
-    </div>
-  </div>
-);
-
-const LanguageSettings = ({ locale, setLocale }) => (
-  <div className="settings-section">
-    <h2><FiGlobe /> ভাষা / <span className="bengali-text">Language</span></h2>
-    <div className="settings-card">
-      <h4>ভাষা নির্বাচন / Select Language</h4>
-      <p style={{ fontSize: 'var(--text-sm)', color: 'var(--text-secondary)', marginBottom: 'var(--space-4)' }}>
-        আপনার পছন্দের ভাষা বেছে নিন / Choose your preferred language
-      </p>
-      <div className="choice-group">
-        <button 
-          onClick={() => setLocale('bn')} 
-          className={locale === 'bn' ? 'active' : ''}
-        >
-          বাংলা / Bengali
-        </button>
-        <button 
-          onClick={() => setLocale('en')} 
-          className={locale === 'en' ? 'active' : ''}
-        >
-          English
-        </button>
-      </div>
-    </div>
-    <div className="section-footer">
-      <button className="primary-button" onClick={() => alert('ভাষা সেটিংস সফলভাবে সংরক্ষিত হয়েছে! / Language settings saved!')}>
-        <FiSave /> সেভ করুন / <span className="bengali-text">Save Changes</span>
       </button>
     </div>
   </div>

@@ -25,17 +25,35 @@ const { initializeDatabase } = require('./database/init');
 setupConnectionHandlers();
 
 // Connect to database and initialize
-connectDB().then(async (conn) => {
-  if (conn) {
-    await initializeDatabase();
-    console.log('✅ Database initialized');
-  } else {
-    console.log('🔧 Running in MOCK MODE - no database connection');
-  }
-}).catch(error => {
-  console.error('❌ Failed to start server:', error);
-  process.exit(1);
-});
+// In serverless (Vercel) environments, the process is short-lived and we must
+// avoid exiting the process on transient DB issues.
+const IS_VERCEL = process.env.VERCEL === '1';
+let dbInitPromise = null;
+
+function initDbOnce() {
+  if (dbInitPromise) return dbInitPromise;
+  dbInitPromise = connectDB()
+    .then(async (conn) => {
+      if (conn) {
+        await initializeDatabase();
+        console.log('✅ Database initialized');
+      } else {
+        console.log('🔧 Running in MOCK MODE - no database connection');
+      }
+      return conn;
+    })
+    .catch((error) => {
+      console.error('❌ Database init failed:', error);
+      if (!IS_VERCEL) {
+        process.exit(1);
+      }
+      return null;
+    });
+  return dbInitPromise;
+}
+
+// Kick off initialization early (safe for both local + serverless).
+initDbOnce();
 
 // Routes
 app.use('/api/auth', require('./routes/auth'));
@@ -64,14 +82,19 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-const PORT = process.env.PORT || 5001;
-const server = app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+// Local/dev server entrypoint. In Vercel serverless, we export the app instead.
+let server = null;
+if (require.main === module) {
+  const PORT = process.env.PORT || 5001;
+  server = app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+  });
+}
 
 // Setup Socket.io for real-time notifications
 try {
   const { Server } = require('socket.io');
+  if (!server) throw new Error('Socket.io disabled (serverless mode)');
   const io = new Server(server, {
     cors: {
       origin: '*',
@@ -94,3 +117,5 @@ try {
 }
 
 //shawon
+
+module.exports = app;

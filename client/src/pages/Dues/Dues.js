@@ -13,9 +13,7 @@ import {
   FiMessageSquare,
   FiX,
   FiPieChart,
-  FiPhone,
-  FiTrendingUp,
-  FiDownload
+  FiPhone
 } from 'react-icons/fi';
 import './Dues.css';
 import { formatCurrency } from '../../utils/currency';

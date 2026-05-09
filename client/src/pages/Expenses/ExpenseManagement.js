@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { 
@@ -9,15 +8,12 @@ import {
   FiTrash2, 
   FiEye, 
   FiX,
-  FiCalendar,
   FiDollarSign,
   FiCreditCard,
   FiHome,
   FiFileText,
   FiBarChart2,
   FiDownload,
-  FiFilter,
-  FiReceipt,
   FiUser
 } from 'react-icons/fi';
 import './ExpenseManagement.css';

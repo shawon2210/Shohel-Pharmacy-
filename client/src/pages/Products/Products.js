@@ -3,13 +3,9 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { 
   FaPlus, 
-  FaSearch, 
-  FaEdit, 
-  FaTrash, 
-  FaEye, 
+  FaSearch,
   FaTimes,
-  FaExclamationTriangle,
-  FaClock
+  FaEdit
 } from 'react-icons/fa';
 import { FiEye, FiEdit, FiTrash2, FiAlertTriangle, FiClock } from 'react-icons/fi';
 import Background3D from '../../components/UI/Background3D';
