@@ -37,3 +37,4 @@ out
 .parcel-cache
 .vercel
 >>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
+node_modules
