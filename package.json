@@ -9,7 +9,11 @@
     "server": "cd server && npm run dev",
     "client": "cd client && npm start",
     "install-all": "npm install && cd server && npm install && cd ../client && npm install",
+<<<<<<< HEAD
     "build": "cd client && npm run build",
+=======
+    "build": "cd client && npm install --legacy-peer-deps && npm run build",
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
     "test-auth": "node test-auth.js"
   },
   "keywords": [

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { 
+<<<<<<< HEAD
   FaPlus, 
   FaSearch,
   FaTimes,
@@ -9,6 +10,22 @@ import {
 } from 'react-icons/fa';
 import { FiEye, FiEdit, FiTrash2, FiAlertTriangle, FiClock } from 'react-icons/fi';
 import Background3D from '../../components/UI/Background3D';
+=======
+  FiPlus, 
+  FiSearch, 
+  FiEdit, 
+  FiTrash2, 
+  FiX, 
+  FiAlertTriangle, 
+  FiClock,
+  FiBox
+} from 'react-icons/fi';
+import { 
+  FaTimes, 
+  FaEdit,
+  FaEye
+} from 'react-icons/fa';
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
 import './Products.css';
 import { formatCurrency, CURRENCY_SYMBOL } from '../../utils/currency';
 
@@ -212,6 +229,7 @@ const Products = () => {
     setCurrentPage(1);
   };
 
+<<<<<<< HEAD
   return (
     <>
       <Background3D variant="medical" />
@@ -224,12 +242,31 @@ const Products = () => {
           >
             <FaPlus /> Add Medicine
           </button>
+=======
+return (
+    <div className="products-page">
+        <div className="page-header">
+            <div className="header-left">
+                <FiBox size={24} />
+                <h1>Medicine Management</h1>
+            </div>
+            <button 
+                className="primary-button"
+                onClick={() => setShowAddModal(true)}
+            >
+                <FiPlus /> Add Medicine
+            </button>
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
         </div>
 
       {/* Filters */}
       <div className="filters-section">
         <div className="search-box">
+<<<<<<< HEAD
           <FaSearch className="search-icon" />
+=======
+          <FiSearch className="search-icon" />
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
           <input
             type="text"
             placeholder="Search medicines..."
@@ -272,7 +309,11 @@ const Products = () => {
             className="clear-filters-btn"
             onClick={clearFilters}
           >
+<<<<<<< HEAD
             <FaTimes /> Clear
+=======
+            <FiX /> Clear
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
           </button>
         </div>
       </div>
@@ -280,15 +321,35 @@ const Products = () => {
       {/* Medicines List */}
       <div className="page-content">
         {loading ? (
+<<<<<<< HEAD
           <div className="loading">Loading medicines...</div>
          ) : (
               <div className="products-content">
               <div className="medicines-grid">
+=======
+              <div className="product-skeleton">
+                <div className="skeleton-header"></div>
+                <div className="skeleton-card">
+                  <div className="skeleton-icon"></div>
+                  <div className="skeleton-text medium"></div>
+                  <div className="skeleton-stat"></div>
+                </div>
+                <div className="skeleton-card">
+                  <div className="skeleton-icon"></div>
+                  <div className="skeleton-text short"></div>
+                  <div className="skeleton-stat"></div>
+                </div>
+              </div>
+            ) : (
+          <>
+            <div className="medicines-grid">
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
               {medicines.map(medicine => (
                 <div key={medicine._id} className="medicine-card">
                   <div className="medicine-header">
                     <h3>{medicine.name}</h3>
                     <div className="medicine-actions">
+<<<<<<< HEAD
                         <button
                           className="action-btn view-btn"
                           onClick={() => openViewModal(medicine)}
@@ -297,13 +358,27 @@ const Products = () => {
                           <FiEye />
                         </button>
                       <button
+=======
+                      <button 
+                        className="action-btn view-btn"
+                        onClick={() => openViewModal(medicine)}
+                        title="View Details"
+                      >
+                        <FaEye />
+                      </button>
+                      <button 
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
                         className="action-btn edit-btn"
                         onClick={() => openEditModal(medicine)}
                         title="Edit"
                       >
                         <FiEdit />
                       </button>
+<<<<<<< HEAD
                       <button
+=======
+                      <button 
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
                         className="action-btn delete-btn"
                         onClick={() => handleDeleteMedicine(medicine._id)}
                         title="Delete"
@@ -368,8 +443,13 @@ const Products = () => {
                 </button>
               </div>
             )}
+<<<<<<< HEAD
             </div>
             )}
+=======
+          </>
+        )}
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
       </div>
 
       {/* Add Medicine Modal */}
@@ -385,7 +465,11 @@ const Products = () => {
                   resetForm();
                 }}
               >
+<<<<<<< HEAD
                 <FaTimes />
+=======
+                <FiX />
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
               </button>
             </div>
             <form onSubmit={handleAddMedicine} className="medicine-form">
@@ -958,7 +1042,10 @@ const Products = () => {
         </div>
       )}
       </div>
+<<<<<<< HEAD
     </>
+=======
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
   );
 };
 

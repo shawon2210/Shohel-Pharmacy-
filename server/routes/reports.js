@@ -6,6 +6,7 @@ const Expense = require('../models/Expense');
 const Medicine = require('../models/Medicine');
 const Due = require('../models/Due');
 
+<<<<<<< HEAD
 // Mock reports data for when MongoDB is not available
 const getMockReportData = () => ({
   overview: {
@@ -37,6 +38,8 @@ const getMockReportData = () => ({
   }
 });
 
+=======
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
 // Helper function to get date range
 const getMatchStage = (startDate, endDate, dateField = 'saleDate') => {
   let matchStage = {};
@@ -50,12 +53,15 @@ const getMatchStage = (startDate, endDate, dateField = 'saleDate') => {
 
 // Comprehensive Overview Report
 router.get('/overview', async (req, res) => {
+<<<<<<< HEAD
   // Mock mode
   if (global.mockMode) {
     console.log('📊 MOCK: Getting overview report');
     return res.json(getMockReportData().overview);
   }
   
+=======
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
   try {
     const { startDate, endDate } = req.query;
     const salesMatch = getMatchStage(startDate, endDate, 'saleDate');
@@ -105,12 +111,15 @@ router.get('/overview', async (req, res) => {
 
 // Sales Report
 router.get('/sales', async (req, res) => {
+<<<<<<< HEAD
   // Mock mode
   if (global.mockMode) {
     console.log('📊 MOCK: Getting sales report');
     return res.json(getMockReportData().sales);
   }
   
+=======
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
   try {
     const { startDate, endDate } = req.query;
     const matchStage = getMatchStage(startDate, endDate);
@@ -146,12 +155,15 @@ router.get('/sales', async (req, res) => {
 
 // Profit & Loss Report
 router.get('/profit-loss', async (req, res) => {
+<<<<<<< HEAD
   // Mock mode
   if (global.mockMode) {
     console.log('📊 MOCK: Getting profit-loss report');
     return res.json(getMockReportData().profitLoss);
   }
   
+=======
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
   try {
     const { startDate, endDate } = req.query;
     const salesMatchStage = getMatchStage(startDate, endDate, 'saleDate');
@@ -186,6 +198,7 @@ router.get('/profit-loss', async (req, res) => {
 
 // Medicine Performance Report
 router.get('/medicines', async (req, res) => {
+<<<<<<< HEAD
   // Mock mode
   if (global.mockMode) {
     console.log('📊 MOCK: Getting medicines report');
@@ -207,6 +220,10 @@ router.get('/medicines', async (req, res) => {
   
   try {
     const { startDate, endDate } = req.query;
+=======
+    try {
+        const { startDate, endDate } = req.query;
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
         const matchStage = getMatchStage(startDate, endDate);
 
         const totalMedicines = await Medicine.countDocuments();
@@ -242,6 +259,7 @@ router.get('/medicines', async (req, res) => {
 
 // Customer Analytics Report with Due Integration
 router.get('/customers', async (req, res) => {
+<<<<<<< HEAD
   // Mock mode
   if (global.mockMode) {
     console.log('📊 MOCK: Getting customers report');
@@ -257,6 +275,10 @@ router.get('/customers', async (req, res) => {
   
   try {
     const { startDate, endDate } = req.query;
+=======
+    try {
+        const { startDate, endDate } = req.query;
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
         const matchStage = getMatchStage(startDate, endDate);
 
         const allCustomers = await Sale.distinct('customerPhone', { customerPhone: { $ne: null } });
@@ -304,6 +326,7 @@ router.get('/customers', async (req, res) => {
 
 // Due Management Report
 router.get('/dues', async (req, res) => {
+<<<<<<< HEAD
   // Mock mode
   if (global.mockMode) {
     console.log('📊 MOCK: Getting dues report');
@@ -321,6 +344,10 @@ router.get('/dues', async (req, res) => {
   
   try {
     const { startDate, endDate } = req.query;
+=======
+    try {
+        const { startDate, endDate } = req.query;
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
         const matchStage = getMatchStage(startDate, endDate, 'createdAt');
 
         const duesSummary = await Due.aggregate([
@@ -367,6 +394,7 @@ router.get('/dues', async (req, res) => {
 
 // Financial Dashboard
 router.get('/financial', async (req, res) => {
+<<<<<<< HEAD
   // Mock mode
   if (global.mockMode) {
     console.log('📊 MOCK: Getting financial report');
@@ -388,6 +416,10 @@ router.get('/financial', async (req, res) => {
   
   try {
     const { startDate, endDate } = req.query;
+=======
+    try {
+        const { startDate, endDate } = req.query;
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
         const salesMatch = getMatchStage(startDate, endDate, 'saleDate');
         const purchaseMatch = getMatchStage(startDate, endDate, 'purchaseDate');
         const expenseMatch = getMatchStage(startDate, endDate, 'expenseDate');

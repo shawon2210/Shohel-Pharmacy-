@@ -4,6 +4,7 @@ const Purchase = require('../models/Purchase');
 const Medicine = require('../models/Medicine');
 const { body, validationResult } = require('express-validator');
 
+<<<<<<< HEAD
 // Mock purchases data for when MongoDB is not available
 const getMockPurchases = (query = {}, page = 1, limit = 20) => {
   const mockPurchases = [
@@ -42,6 +43,10 @@ router.get('/', async (req, res) => {
     return res.json(getMockPurchases(query, page, limit));
   }
   
+=======
+// Get all purchases with pagination and filters
+router.get('/', async (req, res) => {
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
   try {
     const { 
       page = 1, 
@@ -129,6 +134,7 @@ router.get('/', async (req, res) => {
 
 // Get single purchase
 router.get('/:id', async (req, res) => {
+<<<<<<< HEAD
   // Mock mode
   if (global.mockMode) {
     const mockPur = getMockPurchases().purchases.find(p => p._id === req.params.id);
@@ -136,6 +142,8 @@ router.get('/:id', async (req, res) => {
     return res.json(mockPur);
   }
   
+=======
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
   try {
     const purchase = await Purchase.findById(req.params.id)
       .populate('items.medicine', 'name genericName strength unit');
@@ -164,6 +172,7 @@ router.post('/', [
   body('paidAmount').isNumeric().withMessage('Paid amount must be a number'),
   body('receivedBy').notEmpty().withMessage('Received by is required')
 ], async (req, res) => {
+<<<<<<< HEAD
   // Mock mode
   if (global.mockMode) {
     console.log('🛒 MOCK: Creating purchase from', req.body.supplierName);
@@ -171,6 +180,8 @@ router.post('/', [
     return res.status(201).json(newPurchase);
   }
   
+=======
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -225,6 +236,7 @@ router.post('/', [
 
 // Get today's purchases summary
 router.get('/summary/today', async (req, res) => {
+<<<<<<< HEAD
   // Mock mode
   if (global.mockMode) {
     console.log('🛒 MOCK: Getting today\'s purchases summary');
@@ -237,6 +249,8 @@ router.get('/summary/today', async (req, res) => {
     });
   }
   
+=======
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
   try {
     const today = new Date();
     const startOfDay = new Date(today.getFullYear(), today.getMonth(), today.getDate());
@@ -262,6 +276,7 @@ router.get('/summary/today', async (req, res) => {
 
 // Get purchase analytics
 router.get('/analytics/period', async (req, res) => {
+<<<<<<< HEAD
   // Mock mode
   if (global.mockMode) {
     console.log('🛒 MOCK: Getting purchase analytics');
@@ -279,6 +294,8 @@ router.get('/analytics/period', async (req, res) => {
     });
   }
   
+=======
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
   try {
     const { period = 'week' } = req.query;
     let startDate, endDate;
@@ -328,6 +345,7 @@ router.get('/analytics/period', async (req, res) => {
 
 // Get purchases by date range with detailed analytics
 router.get('/analytics/range', async (req, res) => {
+<<<<<<< HEAD
   // Mock mode
   if (global.mockMode) {
     console.log('🛒 MOCK: Getting purchase analytics by range');
@@ -339,6 +357,8 @@ router.get('/analytics/range', async (req, res) => {
     });
   }
   
+=======
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
   try {
     const { startDate, endDate, groupBy = 'day' } = req.query;
     

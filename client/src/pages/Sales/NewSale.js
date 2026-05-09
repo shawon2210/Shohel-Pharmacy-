@@ -1,8 +1,13 @@
+<<<<<<< HEAD
+=======
+
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { 
+<<<<<<< HEAD
   FiSearch, 
   FiPlus, 
   FiTrash2, 
@@ -15,6 +20,21 @@ import {
   FiShoppingCart,
   FiSmartphone
 } from 'react-icons/fi';
+=======
+  FaSearch, 
+  FaPlus, 
+  FaTrash, 
+  FaCalculator,
+  FaUser,
+  FaCreditCard,
+  FaMoneyBillWave,
+  FaPrint,
+  FaArrowLeft,
+  FaCheckCircle,
+  FaShoppingCart
+} from 'react-icons/fa';
+import Background3D from '../../components/UI/Background3D';
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
 import './NewSale.css';
 import { formatCurrency, CURRENCY_SYMBOL } from '../../utils/currency';
 
@@ -200,14 +220,21 @@ const NewSale = () => {
   };
 
   return (
+<<<<<<< HEAD
     <div className="new-sale-page">
       <div className="sale-container">
         {/* ========== 1. PAGE HEADER ========== */}
+=======
+    <>
+      <Background3D variant="medical" />
+      <div className="new-sale-page">
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
         <div className="page-header">
           <button 
             className="back-button"
             onClick={() => navigate('/sales')}
           >
+<<<<<<< HEAD
             <FiArrowLeft /> Back to Sales
           </button>
           <h1>
@@ -222,6 +249,20 @@ const NewSale = () => {
             <div className="search-container">
               <div className="search-box">
                 <FiSearch className="search-icon" />
+=======
+            <FaArrowLeft /> Back to Sales
+          </button>
+          <h1><FaShoppingCart /> New Sale / নতুন বিক্রি</h1>
+        </div>
+
+      <div className="sale-container">
+        <div className="sale-left">
+          <div className="medicine-search-section">
+            <h3>Search Medicines</h3>
+            <div className="search-container">
+              <div className="search-box">
+                <FaSearch className="search-icon" />
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
                 <input
                   type="text"
                   placeholder="Search medicines by name, generic name, or manufacturer..."
@@ -230,6 +271,7 @@ const NewSale = () => {
                 />
               </div>
               
+<<<<<<< HEAD
               {loading && (
                 <div className="loading-skeleton">
                   {[1,2,3].map(i => (
@@ -237,6 +279,9 @@ const NewSale = () => {
                   ))}
                 </div>
               )}
+=======
+              {loading && <div className="loading-indicator">Searching...</div>}
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
               
               {medicines.length > 0 && (
                 <div className="search-results">
@@ -259,7 +304,11 @@ const NewSale = () => {
 
             {selectedMedicine && (
               <div className="add-to-cart-form">
+<<<<<<< HEAD
                 <h4>Add to Cart / <span className="bengali-text">কার্টে যোগ করুন</span></h4>
+=======
+                <h4>Add to Cart</h4>
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
                 <div className="selected-medicine">
                   <span><strong>{selectedMedicine.name}</strong></span>
                   <span>{formatCurrency(selectedMedicine.sellingPrice)} per {selectedMedicine.unit}</span>
@@ -282,15 +331,24 @@ const NewSale = () => {
                   className="add-to-cart-btn"
                   onClick={addToCart}
                 >
+<<<<<<< HEAD
                   <FiPlus /> Add to Cart
+=======
+                  <FaPlus /> Add to Cart
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
                 </button>
               </div>
             )}
           </div>
 
+<<<<<<< HEAD
           {/* ========== 3. CART SECTION ========== */}
           <div className="cart-section">
             <h3>Shopping Cart ({cart.length} items) / <span className="bengali-text">কার্ট</span></h3>
+=======
+          <div className="cart-section">
+            <h3>Shopping Cart ({cart.length} items)</h3>
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
             
             {cart.length === 0 ? (
               <div className="empty-cart">
@@ -299,7 +357,11 @@ const NewSale = () => {
             ) : (
               <div className="cart-items">
                 {cart.map((item, index) => (
+<<<<<<< HEAD
                   <div key={index} className="cart-item glass-card">
+=======
+                  <div key={index} className="cart-item">
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
                     <div className="item-details">
                       <h4>{item.medicine.name}</h4>
                       <p>{item.medicine.genericName} - {item.medicine.strength} {item.medicine.unit}</p>
@@ -329,7 +391,11 @@ const NewSale = () => {
                         className="remove-btn"
                         title="Remove item"
                       >
+<<<<<<< HEAD
                         <FiTrash2 />
+=======
+                        <FaTrash />
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
                       </button>
                     </div>
                   </div>
@@ -340,9 +406,14 @@ const NewSale = () => {
         </div>
 
         <div className="sale-right">
+<<<<<<< HEAD
           {/* ========== 4. CUSTOMER SECTION ========== */}
           <div className="customer-section">
             <h3><FiUser /> Customer Information / <span className="bengali-text">ক্রেতার তথ্য</span></h3>
+=======
+          <div className="customer-section">
+            <h3><FaUser /> Customer Information</h3>
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
             <div className="form-group">
               <label>Customer Name</label>
               <input
@@ -363,9 +434,14 @@ const NewSale = () => {
             </div>
           </div>
 
+<<<<<<< HEAD
           {/* ========== 5. PAYMENT SECTION ========== */}
           <div className="payment-section">
             <h3><FiCreditCard /> Payment Details / <span className="bengali-text">পেমেন্ট</span></h3>
+=======
+          <div className="payment-section">
+            <h3><FaCreditCard /> Payment Details</h3>
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
             
             <div className="payment-methods">
               <label className="payment-method">
@@ -376,7 +452,11 @@ const NewSale = () => {
                   checked={paymentDetails.method === 'cash'}
                   onChange={(e) => setPaymentDetails(prev => ({ ...prev, method: e.target.value }))}
                 />
+<<<<<<< HEAD
                 <FiDollarSign className="cash" /> Cash
+=======
+                <FaMoneyBillWave /> Cash
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
               </label>
               <label className="payment-method">
                 <input
@@ -386,7 +466,11 @@ const NewSale = () => {
                   checked={paymentDetails.method === 'card'}
                   onChange={(e) => setPaymentDetails(prev => ({ ...prev, method: e.target.value }))}
                 />
+<<<<<<< HEAD
                 <FiCreditCard className="card" /> Card
+=======
+                <FaCreditCard /> Card
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
               </label>
               <label className="payment-method">
                 <input
@@ -396,7 +480,11 @@ const NewSale = () => {
                   checked={paymentDetails.method === 'mobile_banking'}
                   onChange={(e) => setPaymentDetails(prev => ({ ...prev, method: e.target.value }))}
                 />
+<<<<<<< HEAD
                 <FiSmartphone className="mobile" /> Mobile Banking
+=======
+                📱 Mobile Banking
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
               </label>
             </div>
 
@@ -433,14 +521,23 @@ const NewSale = () => {
             </div>
           </div>
 
+<<<<<<< HEAD
           {/* ========== 6. BILLING SECTION ========== */}
           <div className="billing-section">
             <h3><FiDollarSign /> Billing Summary / <span className="bengali-text">বিল</span></h3>
+=======
+          <div className="billing-section">
+            <h3><FaCalculator /> Billing Summary</h3>
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
             
             <div className="bill-details">
               <div className="bill-row">
                 <span>Subtotal:</span>
+<<<<<<< HEAD
                 <span>{formatCurrency(cart.reduce((sum, item) => sum + item.totalPrice, 0))}</span>
+=======
+                  <span>{formatCurrency(cart.reduce((sum, item) => sum + item.totalPrice, 0))}</span>
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
               </div>
               
               {paymentDetails.discount > 0 && (
@@ -483,9 +580,14 @@ const NewSale = () => {
             </div>
           </div>
 
+<<<<<<< HEAD
           {/* ========== 7. NOTES SECTION ========== */}
           <div className="notes-section">
             <h3>Notes / <span className="bengali-text">নোট</span></h3>
+=======
+          <div className="notes-section">
+            <h3>Notes</h3>
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
             <textarea
               placeholder="Add any special instructions or notes..."
               value={notes}
@@ -494,14 +596,21 @@ const NewSale = () => {
             />
           </div>
 
+<<<<<<< HEAD
           {/* ========== 8. ACTION BUTTONS ========== */}
+=======
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
           <div className="action-buttons">
             <button 
               className="print-btn"
               onClick={printReceipt}
               disabled={cart.length === 0}
             >
+<<<<<<< HEAD
               <FiPrinter /> Print Receipt
+=======
+              <FaPrint /> Print Receipt
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
             </button>
             
             <button 
@@ -509,12 +618,21 @@ const NewSale = () => {
               onClick={handleSubmitSale}
               disabled={cart.length === 0 || submitting}
             >
+<<<<<<< HEAD
               {submitting ? 'Processing...' : <><FiCheckCircle /> Complete Sale / <span className="bengali-text">বিক্রি সম্পন্ন</span></>}
+=======
+              {submitting ? 'Processing...' : <><FaCheckCircle /> Complete Sale</>}
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
             </button>
           </div>
         </div>
       </div>
+<<<<<<< HEAD
     </div>
+=======
+      </div>
+    </>
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
   );
 };
 

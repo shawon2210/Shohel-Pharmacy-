@@ -1,6 +1,11 @@
 /* ==============================================
+<<<<<<< HEAD
    SETINGS PAGE - EXACT DASHBOARD MATCH
    Pixel-perfect consistency | Mobile-first | Senior Dev Quality
+=======
+   SETINGS PAGE - PREMIUM DESIGN SYTEM
+   Pixel-perfect consistency with Dashboard
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
    ============================================== */
 
 /* Page Wrapper - EXACT match to Dashboard */
@@ -14,6 +19,7 @@
   position: relative;
 }
 
+<<<<<<< HEAD
 /* ==============================================
    PAGE HEADER - EXACT Dashboard Style
    ============================================== */
@@ -67,10 +73,29 @@
 
 .header-subtitle {
   font-size: var(--text-sm);
+=======
+/* Page Header */
+.page-header {
+  margin-bottom: var(--space-6);
+  padding-bottom: var(--space-4);
+  border-bottom: 2px solid var(--border-light);
+}
+
+.page-header h1 {
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 var(--space-1) 0;
+}
+
+.page-header p {
+  font-size: var(--text-base);
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
   color: var(--text-secondary);
   margin: 0;
 }
 
+<<<<<<< HEAD
 .header-subtitle .bengali-text {
   font-family: var(--font-family-bengali);
 }
@@ -83,6 +108,14 @@
   grid-template-columns: 250px 1fr;
   gap: var(--space-6);
   margin-bottom: var(--space-6);
+=======
+/* Settings Layout */
+.settings-layout {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: var(--space-6);
+  margin-top: var(--space-6);
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
 }
 
 @media (max-width: 768px) {
@@ -91,13 +124,18 @@
   }
 }
 
+<<<<<<< HEAD
 /* ==============================================
    SETINGS SIDEBAR - Glassmorphism Like Dashboard
    ============================================== */
+=======
+/* Settings Sidebar */
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
 .settings-sidebar {
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
+<<<<<<< HEAD
   background: rgba(255, 255, 255, 0.75); /* EXACT glass-card background */
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
@@ -105,6 +143,15 @@
   border-radius: var(--radius-xl); /* EXACT glass-card radius */
   padding: var(--space-4);
   box-shadow: var(--shadow-md);
+=======
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  box-shadow: var(--shadow-sm);
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
   height: fit-content;
   position: sticky;
   top: var(--space-4);
@@ -115,7 +162,10 @@
   align-items: center;
   gap: var(--space-3);
   padding: var(--space-3) var(--space-4);
+<<<<<<< HEAD
   min-height: 48px; /* 48px touch target */
+=======
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
   border: none;
   background: transparent;
   border-radius: var(--radius-md);
@@ -126,6 +176,7 @@
   transition: all var(--transition-fast);
   text-align: left;
   font-family: inherit;
+<<<<<<< HEAD
   white-space: nowrap;
 }
 
@@ -140,22 +191,42 @@
   color: var(--text-inverse);
   font-weight: 600;
   box-shadow: 0 4px 15px rgba(var(--color-primary-rgb), 0.3);
+=======
+}
+
+.settings-sidebar button:hover {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+.settings-sidebar button.active {
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+  font-weight: 600;
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
 }
 
 .settings-sidebar button svg {
   font-size: var(--text-lg);
+<<<<<<< HEAD
   flex-shrink: 0;
 }
 
 /* ==============================================
    SETINGS CONTENT
    ============================================== */
+=======
+}
+
+/* Settings Content */
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
 .settings-content {
   display: flex;
   flex-direction: column;
   gap: var(--space-6);
 }
 
+<<<<<<< HEAD
 /* ==============================================
    SETINGS SECTION - Glass-card Style
    ============================================== */
@@ -167,11 +238,24 @@
   border-radius: var(--radius-xl); /* EXACT glass-card radius */
   padding: var(--space-5);
   box-shadow: var(--shadow-md);
+=======
+/* Settings Section */
+.settings-section {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  box-shadow: var(--shadow-sm);
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
   transition: all var(--transition-normal);
 }
 
 .settings-section:hover {
+<<<<<<< HEAD
   box-shadow: var(--shadow-lg);
+=======
+  box-shadow: var(--shadow-md);
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
   transform: translateY(-1px);
 }
 
@@ -191,10 +275,13 @@
   color: var(--color-primary);
 }
 
+<<<<<<< HEAD
 .settings-section h2 .bengali-text {
   font-family: var(--font-family-bengali);
 }
 
+=======
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
 .settings-section h4 {
   font-size: var(--text-base);
   font-weight: 600;
@@ -208,6 +295,7 @@
   margin: var(--space-4) 0;
 }
 
+<<<<<<< HEAD
 /* ==============================================
    SETINGS CARD - Inner Card Style
    ============================================== */
@@ -215,6 +303,13 @@
   background: var(--bg-primary);
   border: 1px solid var(--border-light);
   border-radius: var(--radius-lg);
+=======
+/* Settings Card */
+.settings-card {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
   padding: var(--space-4);
   margin-bottom: var(--space-4);
   transition: all var(--transition-fast);
@@ -229,6 +324,7 @@
   box-shadow: 0 4px 12px rgba(var(--color-primary-rgb), 0.1);
 }
 
+<<<<<<< HEAD
 .settings-card.about-card {
   text-align: center;
 }
@@ -400,6 +496,9 @@
 /* ==============================================
    FORM STYLES - Dashboard Standards
    ============================================== */
+=======
+/* Form Styles */
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
 .form-group {
   display: flex;
   flex-direction: column;
@@ -409,6 +508,7 @@
 
 .form-group label {
   font-size: var(--text-sm);
+<<<<<<< HEAD
   font-weight: var(--font-medium);
   color: var(--text-primary);
 }
@@ -417,11 +517,21 @@
   font-family: var(--font-family-bengali);
 }
 
+=======
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
 .form-group input,
 .form-group select,
 .form-group textarea {
   width: 100%;
+<<<<<<< HEAD
   padding: var(--space-3);
+=======
+  padding: var(--space-2) var(--space-3);
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
   border: 1px solid var(--border-light);
   border-radius: var(--radius-md);
   font-size: var(--text-sm);
@@ -431,7 +541,10 @@
   outline: none;
   transition: all var(--transition-fast);
   box-sizing: border-box;
+<<<<<<< HEAD
   min-height: 48px; /* 48px touch target */
+=======
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
 }
 
 .form-group input:focus,
@@ -458,6 +571,7 @@
   }
 }
 
+<<<<<<< HEAD
 /* ==============================================
    BUTTONS - EXACT Dashboard Standards (48px)
    ============================================== */
@@ -471,11 +585,48 @@
   background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-purple) 100%);
   color: var(--text-inverse);
   border: none;
+=======
+/* Checkbox & Toggle */
+.checkbox-group,
+.toggle-group {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  background: var(--bg-secondary);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-3);
+}
+
+.checkbox-group label,
+.toggle-group label {
+  font-size: var(--text-sm);
+  color: var(--text-primary);
+  cursor: pointer;
+  flex: 1;
+}
+
+.checkbox-group input[type="checkbox"],
+.toggle-group input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--color-primary);
+  cursor: pointer;
+}
+
+/* Buttons */
+.primary-button {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-purple) 100%);
+  color: var(--text-inverse);
+  border: none;
+  padding: var(--space-3) var(--space-4);
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
   border-radius: var(--radius-md);
   font-size: var(--text-sm);
   font-weight: 600;
   cursor: pointer;
   transition: all var(--transition-fast);
+<<<<<<< HEAD
   white-space: nowrap;
   font-family: inherit;
   box-shadow: 0 4px 15px rgba(var(--color-primary-rgb), 0.3);
@@ -497,10 +648,31 @@
   border: 1px solid var(--border-light);
   border-radius: var(--radius-md);
   color: var(--text-secondary);
+=======
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: inherit;
+}
+
+.primary-button:hover:not(:disabled) {
+  background: var(--color-primary-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(var(--color-primary-rgb), 0.3);
+}
+
+.secondary-button {
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-light);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
   font-size: var(--text-sm);
   font-weight: 600;
   cursor: pointer;
   transition: all var(--transition-fast);
+<<<<<<< HEAD
   white-space: nowrap;
   font-family: inherit;
 }
@@ -522,11 +694,30 @@
   background: linear-gradient(135deg, var(--color-danger) 0%, #dc2626 100%);
   color: var(--text-inverse);
   border: none;
+=======
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: inherit;
+}
+
+.secondary-button:hover {
+  background: rgba(255, 255, 255, 0.95);
+  border-color: var(--text-secondary);
+}
+
+.danger-button {
+  background: var(--color-danger);
+  color: var(--text-inverse);
+  border: none;
+  padding: var(--space-3) var(--space-4);
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
   border-radius: var(--radius-md);
   font-size: var(--text-sm);
   font-weight: 600;
   cursor: pointer;
   transition: all var(--transition-fast);
+<<<<<<< HEAD
   white-space: nowrap;
   font-family: inherit;
   box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
@@ -535,6 +726,18 @@
 .danger-button:hover:not(:disabled) {
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
+=======
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: inherit;
+}
+
+.danger-button:hover:not(:disabled) {
+  background: var(--color-danger-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(var(--color-danger-rgb), 0.3);
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
 }
 
 button:disabled {
@@ -543,9 +746,13 @@ button:disabled {
   transform: none !important;
 }
 
+<<<<<<< HEAD
 /* ==============================================
    SECTION FOOTER
    ============================================== */
+=======
+/* Section Footer */
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
 .section-footer {
   display: flex;
   justify-content: flex-end;
@@ -553,6 +760,7 @@ button:disabled {
   padding-top: var(--space-4);
   border-top: 1px solid var(--border-light);
   margin-top: var(--space-4);
+<<<<<<< HEAD
   flex-wrap: wrap;
 }
 
@@ -565,6 +773,16 @@ button:disabled {
   border-radius: var(--radius-lg);
   padding: var(--space-4);
   margin-top: var(--space-4);
+=======
+}
+
+/* Danger Zone */
+.danger-zone {
+  background: rgba(var(--color-danger-rgb), 0.05);
+  border: 1px solid rgba(var(--color-danger-rgb), 0.2);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
 }
 
 .danger-zone h3 {
@@ -574,26 +792,49 @@ button:disabled {
   margin: 0 0 var(--space-2) 0;
 }
 
+<<<<<<< HEAD
 .danger-zone h3 .bengali-text {
   font-family: var(--font-family-bengali);
 }
 
+=======
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
 .danger-zone p {
   font-size: var(--text-sm);
   color: var(--text-secondary);
   margin: 0 0 var(--space-4) 0;
 }
 
+<<<<<<< HEAD
 /* ==============================================
    RESPONSIVE DESIGN - EXACT Dashboard Breakpoints
    ============================================== */
 
 /* Small Mobile (360px and below) */
+=======
+/* Responsive */
+@media (max-width: 768px) {
+  .settings-sidebar {
+    position: static;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+  
+  .settings-sidebar button {
+    flex: 1;
+    min-width: 120px;
+    justify-content: center;
+  }
+}
+
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
 @media (max-width: 360px) {
   .settings-page {
     padding: var(--space-2);
   }
   
+<<<<<<< HEAD
   .page-header {
     padding: var(--space-3);
   }
@@ -604,6 +845,10 @@ button:disabled {
   
   .settings-section {
     padding: var(--space-4);
+=======
+  .settings-section {
+    padding: var(--space-3);
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
   }
   
   .section-footer {
@@ -617,6 +862,7 @@ button:disabled {
     justify-content: center;
   }
 }
+<<<<<<< HEAD
 
 /* Medium Mobile (361px - 768px) */
 @media (min-width: 361px) and (max-width: 768px) {
@@ -652,3 +898,5 @@ button:disabled {
     grid-template-columns: 250px 1fr;
   }
 }
+=======
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3

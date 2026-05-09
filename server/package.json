@@ -12,7 +12,11 @@
   },
   "dependencies": {
     "express": "^4.21.2",
+<<<<<<< HEAD
     "socket.io": "^4.7.2",
+=======
+  "socket.io": "^4.7.2",
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
     "mongoose": "^8.18.1",
     "cors": "^2.8.5",
     "dotenv": "^17.2.2",

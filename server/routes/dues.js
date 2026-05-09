@@ -4,6 +4,7 @@ const Due = require('../models/Due');
 const Sale = require('../models/Sale');
 const { body, validationResult } = require('express-validator');
 
+<<<<<<< HEAD
 // Mock dues data for when MongoDB is not available
 const getMockDues = (query = {}, page = 1, limit = 20) => {
   const mockDues = [
@@ -35,6 +36,10 @@ router.get('/', async (req, res) => {
     return res.json(getMockDues(query, page, limit));
   }
   
+=======
+// Get all dues with pagination and filters
+router.get('/', async (req, res) => {
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
   try {
     const { page = 1, limit = 20, status = '', customerName = '' } = req.query;
     
@@ -71,6 +76,7 @@ router.get('/', async (req, res) => {
 
 // Get single due
 router.get('/:id', async (req, res) => {
+<<<<<<< HEAD
   // Mock mode
   if (global.mockMode) {
     const mockDue = getMockDues().dues.find(d => d._id === req.params.id);
@@ -78,6 +84,8 @@ router.get('/:id', async (req, res) => {
     return res.json(mockDue);
   }
   
+=======
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
   try {
     const due = await Due.findById(req.params.id)
       .populate('sale', 'saleNumber saleDate totalAmount items');
@@ -99,6 +107,7 @@ router.post('/', [
   body('dueAmount').isNumeric().withMessage('Due amount must be a number'),
   body('dueDate').isISO8601().withMessage('Valid due date is required')
 ], async (req, res) => {
+<<<<<<< HEAD
   // Mock mode
   if (global.mockMode) {
     console.log('💳 MOCK: Creating due for', req.body.customerName);
@@ -106,6 +115,8 @@ router.post('/', [
     return res.status(201).json(newDue);
   }
   
+=======
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -134,12 +145,15 @@ router.post('/:id/payment', [
   body('paymentMethod').optional().isIn(['cash', 'card', 'mobile_banking', 'bank_transfer']),
   body('notes').optional().isString()
 ], async (req, res) => {
+<<<<<<< HEAD
   // Mock mode
   if (global.mockMode) {
     console.log('💳 MOCK: Recording payment for', req.params.id);
     return res.json({ _id: req.params.id, remainingAmount: 0, paidAmount: req.body.amount, status: 'paid' });
   }
   
+=======
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -181,6 +195,7 @@ router.post('/:id/payment', [
 
 // Get dues summary
 router.get('/summary/total', async (req, res) => {
+<<<<<<< HEAD
   // Mock mode
   if (global.mockMode) {
     console.log('💳 MOCK: Getting dues summary');
@@ -193,6 +208,8 @@ router.get('/summary/total', async (req, res) => {
     });
   }
   
+=======
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
   try {
     const totalDues = await Due.aggregate([
       {
@@ -235,6 +252,7 @@ router.get('/summary/total', async (req, res) => {
 
 // Get overdue dues
 router.get('/alerts/overdue', async (req, res) => {
+<<<<<<< HEAD
   // Mock mode
   if (global.mockMode) {
     console.log('💳 MOCK: Getting overdue dues');
@@ -243,6 +261,8 @@ router.get('/alerts/overdue', async (req, res) => {
     ]);
   }
   
+=======
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
   try {
     const now = new Date();
     const overdueDues = await Due.find({
@@ -260,6 +280,7 @@ router.get('/alerts/overdue', async (req, res) => {
 
 // Get dues analytics
 router.get('/analytics/period', async (req, res) => {
+<<<<<<< HEAD
   // Mock mode
   if (global.mockMode) {
     console.log('💳 MOCK: Getting dues analytics');
@@ -273,6 +294,8 @@ router.get('/analytics/period', async (req, res) => {
     });
   }
   
+=======
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
   try {
     const { period = 'month' } = req.query;
     let startDate, endDate;

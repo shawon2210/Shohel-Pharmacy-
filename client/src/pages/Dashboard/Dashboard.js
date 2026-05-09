@@ -85,6 +85,7 @@ const Dashboard = () => {
 
   // Sparkline data from last 7 days
   const getSparklineData = (type) => {
+<<<<<<< HEAD
     if (!dashboardData?.sparklines) return [0, 0, 0, 0, 0, 0, 0];
     
     // If profit type requested, calculate from sales - purchases
@@ -95,6 +96,10 @@ const Dashboard = () => {
     }
     
     return dashboardData.sparklines[type] || [0, 0, 0, 0, 0, 0, 0];
+=======
+    if (!dashboardData?.sparklines?.[type]) return [0, 0, 0, 0, 0, 0, 0];
+    return dashboardData.sparklines[type];
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
   };
 
   const getTrendIcon = (change) => {
@@ -446,6 +451,7 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
+<<<<<<< HEAD
 
           {/* Profit Card */}
           <div className="kpi-card glass-card">
@@ -497,6 +503,8 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
+=======
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
         </div>
 
         {/* ========== 3. CASH FLOW BAR ========== */}

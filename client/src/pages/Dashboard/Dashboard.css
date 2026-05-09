@@ -162,11 +162,14 @@
   box-shadow: 0 4px 12px rgba(var(--color-danger-rgb), 0.3);
 }
 
+<<<<<<< HEAD
 .kpi-icon.profit {
   background: linear-gradient(135deg, var(--color-warning), #d97706);
   box-shadow: 0 4px 12px rgba(var(--color-warning-rgb), 0.3);
 }
 
+=======
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
 .kpi-title-section {
   flex: 1;
 }

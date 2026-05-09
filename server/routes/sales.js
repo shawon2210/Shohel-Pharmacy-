@@ -5,6 +5,7 @@ const Medicine = require('../models/Medicine');
 const Due = require('../models/Due');
 const { body, validationResult } = require('express-validator');
 
+<<<<<<< HEAD
 // Mock sales data for when MongoDB is not available
 const getMockSales = (query = {}, page = 1, limit = 20) => {
   const mockSales = [
@@ -45,6 +46,10 @@ router.get('/', async (req, res) => {
     return res.json(getMockSales(query, page, limit));
   }
   
+=======
+// Get all sales with pagination and filters
+router.get('/', async (req, res) => {
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
   try {
     const { 
       page = 1, 
@@ -132,6 +137,7 @@ router.get('/', async (req, res) => {
 
 // Get single sale
 router.get('/:id', async (req, res) => {
+<<<<<<< HEAD
   // Mock mode
   if (global.mockMode) {
     const mockSale = getMockSales().sales.find(s => s._id === req.params.id);
@@ -139,6 +145,8 @@ router.get('/:id', async (req, res) => {
     return res.json(mockSale);
   }
   
+=======
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
   try {
     const sale = await Sale.findById(req.params.id)
       .populate('items.medicine', 'name genericName strength unit');
@@ -166,6 +174,7 @@ router.post('/', [
   body('paidAmount').isNumeric().withMessage('Paid amount must be a number'),
   body('soldBy').notEmpty().withMessage('Sold by is required')
 ], async (req, res) => {
+<<<<<<< HEAD
   // Mock mode
   if (global.mockMode) {
     console.log('💰 MOCK: Creating sale for', req.body.customerName);
@@ -173,6 +182,8 @@ router.post('/', [
     return res.status(201).json(newSale);
   }
   
+=======
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -263,6 +274,7 @@ router.post('/', [
 
 // Get today's sales summary
 router.get('/summary/today', async (req, res) => {
+<<<<<<< HEAD
   // Mock mode
   if (global.mockMode) {
     console.log('💰 MOCK: Getting today\'s sales summary');
@@ -275,6 +287,8 @@ router.get('/summary/today', async (req, res) => {
     });
   }
   
+=======
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
   try {
     const today = new Date();
     const startOfDay = new Date(today.getFullYear(), today.getMonth(), today.getDate());
@@ -300,6 +314,7 @@ router.get('/summary/today', async (req, res) => {
 
 // Get sales analytics
 router.get('/analytics/period', async (req, res) => {
+<<<<<<< HEAD
   // Mock mode
   if (global.mockMode) {
     console.log('💰 MOCK: Getting sales analytics');
@@ -317,6 +332,8 @@ router.get('/analytics/period', async (req, res) => {
     });
   }
   
+=======
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
   try {
     const { period = 'week' } = req.query;
     let startDate, endDate;
@@ -366,6 +383,7 @@ router.get('/analytics/period', async (req, res) => {
 
 // Get sales by date range with detailed analytics
 router.get('/analytics/range', async (req, res) => {
+<<<<<<< HEAD
   // Mock mode
   if (global.mockMode) {
     console.log('💰 MOCK: Getting sales analytics by range');
@@ -377,6 +395,8 @@ router.get('/analytics/range', async (req, res) => {
     });
   }
   
+=======
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
   try {
     const { startDate, endDate, groupBy = 'day' } = req.query;
     
@@ -464,6 +484,7 @@ router.get('/analytics/range', async (req, res) => {
 
 // Get top selling medicines
 router.get('/analytics/top-medicines', async (req, res) => {
+<<<<<<< HEAD
   // Mock mode
   if (global.mockMode) {
     console.log('💰 MOCK: Getting top selling medicines');
@@ -475,6 +496,8 @@ router.get('/analytics/top-medicines', async (req, res) => {
     });
   }
   
+=======
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
   try {
     const { limit = 10, startDate, endDate } = req.query;
     
@@ -531,6 +554,7 @@ router.get('/analytics/top-medicines', async (req, res) => {
 
 // Get customer analytics
 router.get('/analytics/customers', async (req, res) => {
+<<<<<<< HEAD
   // Mock mode
   if (global.mockMode) {
     console.log('💰 MOCK: Getting customer analytics');
@@ -542,6 +566,8 @@ router.get('/analytics/customers', async (req, res) => {
     });
   }
   
+=======
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
   try {
     const { limit = 10, startDate, endDate } = req.query;
     

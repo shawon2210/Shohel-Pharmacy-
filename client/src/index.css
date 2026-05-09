@@ -242,6 +242,7 @@ body {
 .aging-safe-bg { background-color: var(--color-success-light); }
 .aging-warning-bg { background-color: var(--color-warning-light); }
 .aging-danger-bg { background-color: var(--color-danger-light); }
+<<<<<<< HEAD
 
 /* ==============================================
    DARK MODE THEME (data-theme="dark")
@@ -310,3 +311,5 @@ body {
   --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.5);
   --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.6);
 }
+=======
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3

@@ -1,4 +1,5 @@
 /* ==============================================
+<<<<<<< HEAD
    NEW SALE PAGE - EXACT DASHBOARD MATCH
    Pixel-perfect consistency | Mobile-first | Senior Dev Quality
    ============================================== */
@@ -19,12 +20,36 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-6);
+=======
+   NEW SALE PAGE - Matching Dashboard Design Exactly
+   Pixel-perfect consistency with Dashboard
+   ============================================== */
+
+/* Page Wrapper - EXACT match to .dashboard */
+.new-sale-page {
+  padding: var(--space-4); /* 16px */
+  min-height: 100vh;
+  background: var(--bg-secondary);
+  padding-bottom: calc(var(--bottom-nav-height) + var(--space-4)); /* 64px + 16px = 80px */
+  position: relative;
+}
+
+/* Container - EXACT match to .dashboard-container */
+.sale-container {
+  max-width: var(--max-width); /* 1400px */
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6); /* 24px */
+  margin-bottom: clamp(80px, 10vh, 100px);
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
 }
 
 @media (min-width: 1024px) {
   .sale-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
+<<<<<<< HEAD
     gap: var(--space-6);
   }
 }
@@ -32,6 +57,13 @@
 /* ==============================================
    PAGE HEADER - EXACT Dashboard Style
    ============================================== */
+=======
+    gap: var(--space-6); /* 24px */
+  }
+}
+
+/* Page Header - EXACT match to Dashboard date-strip styling */
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
 .page-header {
   display: flex;
   align-items: center;
@@ -55,24 +87,35 @@
   display: flex;
   align-items: center;
   gap: var(--space-2);
+<<<<<<< HEAD
   flex: 1;
+=======
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
 }
 
 .page-header h1 svg {
   color: var(--color-primary);
 }
 
+<<<<<<< HEAD
 .page-header h1 .bengali-text {
   font-family: var(--font-family-bengali);
 }
 
 /* Back Button - 48px Touch Target */
+=======
+/* Back Button */
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
 .back-button {
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
+<<<<<<< HEAD
   padding: var(--space-3) var(--space-4);
   min-height: 48px; /* 48px touch target */
+=======
+  padding: var(--space-2) var(--space-3);
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
   background: rgba(255, 255, 255, 0.9);
   border: 1px solid var(--border-light);
   border-radius: var(--radius-md);
@@ -82,7 +125,10 @@
   cursor: pointer;
   transition: all var(--transition-fast);
   font-family: inherit;
+<<<<<<< HEAD
   white-space: nowrap;
+=======
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
 }
 
 .back-button:hover {
@@ -92,9 +138,13 @@
   transform: translateX(-2px);
 }
 
+<<<<<<< HEAD
 /* ==============================================
    GLASSMORPHISM SECTIONS - EXACT Dashboard Match
    ============================================== */
+=======
+/* Glassmorphism Card Base - EXACT match to Dashboard cards */
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
 .medicine-search-section,
 .add-to-cart-form,
 .cart-section,
@@ -102,6 +152,7 @@
 .payment-section,
 .billing-section,
 .notes-section {
+<<<<<<< HEAD
   background: rgba(255, 255, 255, 0.75); /* EXACT glass-card background */
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
@@ -109,6 +160,15 @@
   border-radius: var(--radius-xl); /* EXACT glass-card radius */
   padding: var(--space-5);
   box-shadow: var(--shadow-md);
+=======
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  box-shadow: var(--shadow-sm);
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
   transition: all var(--transition-normal);
 }
 
@@ -118,7 +178,11 @@
 .customer-section:hover,
 .payment-section:hover,
 .billing-section:hover {
+<<<<<<< HEAD
   box-shadow: var(--shadow-lg);
+=======
+  box-shadow: var(--shadow-md);
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
   transform: translateY(-1px);
 }
 
@@ -146,9 +210,13 @@
   color: var(--color-primary);
 }
 
+<<<<<<< HEAD
 /* ==============================================
    SEARCH CONTAINER - Matching Dashboard
    ============================================== */
+=======
+/* Search Container */
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
 .search-container {
   position: relative;
   margin-bottom: var(--space-3);
@@ -159,7 +227,11 @@
   align-items: center;
   gap: var(--space-2);
   padding: var(--space-2) var(--space-3);
+<<<<<<< HEAD
   background: var(--bg-primary);
+=======
+  background: rgba(255, 255, 255, 0.9);
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
   border: 1px solid var(--border-light);
   border-radius: var(--radius-md);
   transition: all var(--transition-fast);
@@ -167,13 +239,20 @@
 
 .search-box:focus-within {
   border-color: var(--color-primary);
+<<<<<<< HEAD
   box-shadow: 0 0 0 3px rgba(var(--color-primary-rgb), 0.1);
+=======
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
 }
 
 .search-icon {
   color: var(--text-secondary);
   font-size: var(--text-base);
+<<<<<<< HEAD
   flex-shrink: 0;
+=======
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
 }
 
 .search-box input {
@@ -190,6 +269,7 @@
   color: var(--text-tertiary);
 }
 
+<<<<<<< HEAD
 /* Loading Skeleton - EXACT Dashboard Match */
 .loading-skeleton {
   padding: var(--space-3);
@@ -222,6 +302,17 @@
 /* ==============================================
    SEARCH RESULTS - Glassmorphism Style
    ============================================== */
+=======
+/* Loading Indicator */
+.loading-indicator {
+  padding: var(--space-3);
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+}
+
+/* Search Results */
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
 .search-results {
   max-height: 300px;
   overflow-y: auto;
@@ -264,9 +355,13 @@
   line-height: var(--leading-normal);
 }
 
+<<<<<<< HEAD
 /* ==============================================
    SELECTED MEDICINE & QUANTITY
    ============================================== */
+=======
+/* Selected Medicine */
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
 .selected-medicine {
   padding: var(--space-3);
   background: var(--color-primary-light);
@@ -313,12 +408,19 @@
   outline: none;
   transition: all var(--transition-fast);
   font-family: inherit;
+<<<<<<< HEAD
   min-height: 48px; /* 48px touch target */
+=======
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
 }
 
 .quantity-input input:focus {
   border-color: var(--color-primary);
+<<<<<<< HEAD
   box-shadow: 0 0 0 3px rgba(var(--color-primary-rgb), 0.1);
+=======
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
 }
 
 .quantity-input .unit {
@@ -326,9 +428,13 @@
   color: var(--text-secondary);
 }
 
+<<<<<<< HEAD
 /* ==============================================
    BUTTONS - EXACT Dashboard Standards (48px)
    ============================================== */
+=======
+/* Buttons - EXACT match to Dashboard button styles */
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
 .add-to-cart-btn,
 .complete-sale-btn,
 .print-btn {
@@ -345,7 +451,10 @@
   transition: all var(--transition-fast);
   width: 100%;
   font-family: inherit;
+<<<<<<< HEAD
   min-height: 48px; /* 48px touch target */
+=======
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
 }
 
 .add-to-cart-btn {
@@ -356,7 +465,11 @@
 .add-to-cart-btn:hover:not(:disabled) {
   background: var(--color-primary-dark);
   transform: translateY(-1px);
+<<<<<<< HEAD
   box-shadow: 0 4px 12px rgba(var(--color-primary-rgb), 0.3);
+=======
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
 }
 
 .complete-sale-btn {
@@ -369,7 +482,11 @@
 .complete-sale-btn:hover:not(:disabled) {
   background: var(--color-success-dark);
   transform: translateY(-1px);
+<<<<<<< HEAD
   box-shadow: 0 4px 12px rgba(var(--color-success-rgb), 0.3);
+=======
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
 }
 
 .print-btn {
@@ -389,9 +506,13 @@ button:disabled {
   transform: none !important;
 }
 
+<<<<<<< HEAD
 /* ==============================================
    CART SECTION
    ============================================== */
+=======
+/* Cart Section */
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
 .cart-section h3 {
   display: flex;
   align-items: center;
@@ -425,7 +546,11 @@ button:disabled {
 
 .cart-item:hover {
   border-color: var(--color-primary);
+<<<<<<< HEAD
   box-shadow: 0 2px 8px rgba(var(--color-primary-rgb), 0.1);
+=======
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.1);
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
 }
 
 .item-details {
@@ -457,7 +582,10 @@ button:disabled {
   align-items: flex-end;
 }
 
+<<<<<<< HEAD
 /* Quantity Controls - 48px Touch Targets */
+=======
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
 .quantity-controls {
   display: flex;
   align-items: center;
@@ -465,8 +593,13 @@ button:disabled {
 }
 
 .qty-btn {
+<<<<<<< HEAD
   width: 48px; /* EXACT 48px touch target */
   height: 48px;
+=======
+  width: 28px;
+  height: 28px;
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
   display: flex;
   align-items: center;
   justify-content: center;
@@ -499,6 +632,7 @@ button:disabled {
   color: var(--text-primary);
 }
 
+<<<<<<< HEAD
 /* Remove Button - 48px Touch Target */
 .remove-btn {
   width: 48px; /* EXACT 48px touch target */
@@ -511,11 +645,21 @@ button:disabled {
   border-radius: var(--radius-sm);
   color: var(--color-danger);
   cursor: pointer;
+=======
+.remove-btn {
+  background: none;
+  border: none;
+  color: var(--color-danger);
+  cursor: pointer;
+  padding: var(--space-1);
+  border-radius: var(--radius-sm);
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
   transition: all var(--transition-fast);
   font-family: inherit;
 }
 
 .remove-btn:hover {
+<<<<<<< HEAD
   background: rgba(var(--color-danger-rgb), 0.1);
   border-color: var(--color-danger);
 }
@@ -523,6 +667,12 @@ button:disabled {
 /* ==============================================
    FORM GROUPS - EXACT Dashboard Match
    ============================================== */
+=======
+  background: rgba(239, 68, 68, 0.1);
+}
+
+/* Form Groups - EXACT match */
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
 .form-group {
   margin-bottom: var(--space-3);
 }
@@ -539,24 +689,39 @@ button:disabled {
 .form-group select,
 .form-group textarea {
   width: 100%;
+<<<<<<< HEAD
   padding: var(--space-3);
+=======
+  padding: var(--space-2) var(--space-3);
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
   border: 1px solid var(--border-light);
   border-radius: var(--radius-md);
   font-size: var(--text-sm);
   font-family: inherit;
   color: var(--text-primary);
+<<<<<<< HEAD
   background: var(--bg-primary);
   outline: none;
   transition: all var(--transition-fast);
   box-sizing: border-box;
   min-height: 48px; /* 48px touch target */
+=======
+  background: rgba(255, 255, 255, 0.9);
+  outline: none;
+  transition: all var(--transition-fast);
+  box-sizing: border-box;
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
 }
 
 .form-group input:focus,
 .form-group select:focus,
 .form-group textarea:focus {
   border-color: var(--color-primary);
+<<<<<<< HEAD
   box-shadow: 0 0 0 3px rgba(var(--color-primary-rgb), 0.1);
+=======
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
 }
 
 .form-group textarea {
@@ -564,12 +729,19 @@ button:disabled {
   min-height: 80px;
 }
 
+<<<<<<< HEAD
 /* ==============================================
    PAYMENT METHODS - Matching Dashboard Icons
    ============================================== */
 .payment-methods {
   display: flex;
   flex-direction: column;
+=======
+/* Payment Methods */
+.payment-methods {
+  display: flex;
+  flex-wrap: wrap;
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
   gap: var(--space-2);
   margin-bottom: var(--space-3);
 }
@@ -579,14 +751,22 @@ button:disabled {
   align-items: center;
   gap: var(--space-2);
   padding: var(--space-2) var(--space-3);
+<<<<<<< HEAD
   background: var(--bg-primary);
+=======
+  background: rgba(255, 255, 255, 0.9);
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
   border: 1px solid var(--border-light);
   border-radius: var(--radius-md);
   cursor: pointer;
   transition: all var(--transition-fast);
   font-size: var(--text-sm);
   color: var(--text-primary);
+<<<<<<< HEAD
   min-height: 48px; /* 48px touch target */
+=======
+  font-family: inherit;
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
 }
 
 .payment-method:hover {
@@ -595,6 +775,7 @@ button:disabled {
 }
 
 .payment-method input[type="radio"] {
+<<<<<<< HEAD
   accent-color: var(--color-primary);
   cursor: pointer;
 }
@@ -622,11 +803,28 @@ button:disabled {
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
+=======
+  margin: 0;
+  accent-color: var(--color-primary);
+}
+
+.payment-method svg {
+  color: var(--color-primary);
+}
+
+/* Billing Section */
+.bill-details {
+  padding: var(--space-3);
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
 }
 
 .bill-row {
   display: flex;
   justify-content: space-between;
+<<<<<<< HEAD
   font-size: var(--text-sm);
   color: var(--text-secondary);
   padding: var(--space-1) 0;
@@ -650,18 +848,56 @@ button:disabled {
 }
 
 .bill-row.due {
+=======
+  align-items: center;
+  padding: var(--space-2) 0;
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border-light);
+}
+
+.bill-row:last-child {
+  border-bottom: none;
+}
+
+.bill-row.total {
+  font-size: var(--text-base);
+  font-weight: var(--font-bold);
+  color: var(--text-primary);
+  padding-top: var(--space-3);
+  border-top: 2px solid var(--border-light);
+}
+
+.bill-row.discount span:last-child {
+  color: var(--color-danger);
+}
+
+.bill-row.tax span:last-child {
+  color: var(--color-warning);
+}
+
+.bill-row.due span:last-child {
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
   color: var(--color-danger);
   font-weight: var(--font-semibold);
 }
 
+<<<<<<< HEAD
 .bill-row.change {
+=======
+.bill-row.change span:last-child {
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
   color: var(--color-success);
   font-weight: var(--font-semibold);
 }
 
+<<<<<<< HEAD
 /* ==============================================
    ACTION BUTTONS CONTAINER
    ============================================== */
+=======
+/* Action Buttons */
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
 .action-buttons {
   display: flex;
   flex-direction: column;
@@ -669,6 +905,7 @@ button:disabled {
   margin-top: var(--space-4);
 }
 
+<<<<<<< HEAD
 /* ==============================================
    RESPONSIVE DESIGN - EXACT Dashboard Breakpoints
    ============================================== */
@@ -686,6 +923,27 @@ button:disabled {
   
   .page-header h1 {
     font-size: var(--text-lg);
+=======
+/* Responsive */
+@media (max-width: 768px) {
+  .sale-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .page-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .payment-methods {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 360px) {
+  .new-sale-page {
+    padding: var(--space-2);
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
   }
   
   .medicine-search-section,
@@ -693,6 +951,7 @@ button:disabled {
   .cart-section,
   .customer-section,
   .payment-section,
+<<<<<<< HEAD
   .billing-section,
   .notes-section {
     padding: var(--space-4);
@@ -731,5 +990,9 @@ button:disabled {
 @media (min-width: 1024px) {
   .quantity-controls {
     flex-direction: row;
+=======
+  .billing-section {
+    padding: var(--space-3);
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
   }
 }

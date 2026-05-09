@@ -3,6 +3,7 @@ const router = express.Router();
 const Medicine = require('../models/Medicine');
 const { body, validationResult } = require('express-validator');
 
+<<<<<<< HEAD
 // Mock medicines data for when MongoDB is not available
 const getMockMedicines = (query = {}, page = 1, limit = 20) => {
   const mockMedicines = [
@@ -61,6 +62,10 @@ router.get('/', async (req, res) => {
     return res.json(getMockMedicines(query, page, limit));
   }
   
+=======
+// Get all medicines with search and pagination
+router.get('/', async (req, res) => {
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
   try {
     const { page = 1, limit = 20, search = '', category = '', lowStock = false, expiringSoon = false } = req.query;
     
@@ -112,6 +117,7 @@ router.get('/', async (req, res) => {
 
 // Get single medicine
 router.get('/:id', async (req, res) => {
+<<<<<<< HEAD
   // Mock mode
   if (global.mockMode) {
     const mockMed = getMockMedicines().medicines.find(m => m._id === req.params.id);
@@ -119,6 +125,8 @@ router.get('/:id', async (req, res) => {
     return res.json(mockMed);
   }
   
+=======
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
   try {
     const medicine = await Medicine.findById(req.params.id);
     if (!medicine) {
@@ -147,6 +155,7 @@ router.post('/', [
   body('stockQuantity').isNumeric().withMessage('Stock quantity must be a number'),
   body('minimumStock').isNumeric().withMessage('Minimum stock must be a number')
 ], async (req, res) => {
+<<<<<<< HEAD
   // Mock mode
   if (global.mockMode) {
     console.log('💊 MOCK: Creating medicine', req.body.name);
@@ -154,6 +163,8 @@ router.post('/', [
     return res.status(201).json(newMed);
   }
   
+=======
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -170,6 +181,7 @@ router.post('/', [
 
 // Update medicine
 router.put('/:id', async (req, res) => {
+<<<<<<< HEAD
   // Mock mode
   if (global.mockMode) {
     console.log('💊 MOCK: Updating medicine', req.params.id);
@@ -177,6 +189,8 @@ router.put('/:id', async (req, res) => {
     return res.json(mockMed);
   }
   
+=======
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
   try {
     const medicine = await Medicine.findByIdAndUpdate(
       req.params.id,
@@ -199,12 +213,15 @@ router.patch('/:id/stock', [
   body('quantity').isNumeric().withMessage('Quantity must be a number'),
   body('operation').isIn(['add', 'subtract']).withMessage('Operation must be add or subtract')
 ], async (req, res) => {
+<<<<<<< HEAD
   // Mock mode
   if (global.mockMode) {
     console.log('💊 MOCK: Updating stock for', req.params.id);
     return res.json({ _id: req.params.id, stockQuantity: 100, ...req.body });
   }
   
+=======
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -236,12 +253,15 @@ router.patch('/:id/stock', [
 
 // Delete medicine (soft delete)
 router.delete('/:id', async (req, res) => {
+<<<<<<< HEAD
   // Mock mode
   if (global.mockMode) {
     console.log('💊 MOCK: Deleting medicine', req.params.id);
     return res.json({ message: 'Medicine deleted successfully' });
   }
   
+=======
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
   try {
     const medicine = await Medicine.findByIdAndUpdate(
       req.params.id,
@@ -261,6 +281,7 @@ router.delete('/:id', async (req, res) => {
 
 // Get categories
 router.get('/categories/list', async (req, res) => {
+<<<<<<< HEAD
   // Mock mode
   if (global.mockMode) {
     console.log('💊 MOCK: Getting categories');
@@ -268,6 +289,8 @@ router.get('/categories/list', async (req, res) => {
     return res.json(categories);
   }
   
+=======
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
   try {
     const categories = await Medicine.distinct('category', { isActive: true });
     res.json(categories);
@@ -278,6 +301,7 @@ router.get('/categories/list', async (req, res) => {
 
 // Get low stock medicines
 router.get('/alerts/low-stock', async (req, res) => {
+<<<<<<< HEAD
   // Mock mode
   if (global.mockMode) {
     console.log('💊 MOCK: Getting low stock alerts');
@@ -286,6 +310,8 @@ router.get('/alerts/low-stock', async (req, res) => {
     return res.json(lowStock);
   }
   
+=======
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
   try {
     const medicines = await Medicine.find({
       isActive: true,
@@ -300,6 +326,7 @@ router.get('/alerts/low-stock', async (req, res) => {
 
 // Get expiring soon medicines
 router.get('/alerts/expiring', async (req, res) => {
+<<<<<<< HEAD
   // Mock mode
   if (global.mockMode) {
     console.log('💊 MOCK: Getting expiring alerts');
@@ -310,6 +337,8 @@ router.get('/alerts/expiring', async (req, res) => {
     return res.json(expiring);
   }
   
+=======
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
   try {
     const thirtyDaysFromNow = new Date();
     thirtyDaysFromNow.setDate(thirtyDaysFromNow.getDate() + 30);

@@ -3,6 +3,7 @@ const router = express.Router();
 const Expense = require('../models/Expense');
 const { body, validationResult } = require('express-validator');
 
+<<<<<<< HEAD
 // Mock expenses data for when MongoDB is not available
 const getMockExpenses = (query = {}, page = 1, limit = 20) => {
   const mockExpenses = [
@@ -46,6 +47,10 @@ router.get('/', async (req, res) => {
     return res.json(getMockExpenses(query, page, limit));
   }
   
+=======
+// Get all expenses with pagination and filters
+router.get('/', async (req, res) => {
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
   try {
     const { 
       page = 1, 
@@ -139,6 +144,7 @@ router.get('/', async (req, res) => {
 
 // Get single expense
 router.get('/:id', async (req, res) => {
+<<<<<<< HEAD
   // Mock mode
   if (global.mockMode) {
     const mockExp = getMockExpenses().expenses.find(e => e._id === req.params.id);
@@ -146,6 +152,8 @@ router.get('/:id', async (req, res) => {
     return res.json(mockExp);
   }
   
+=======
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
   try {
     const expense = await Expense.findById(req.params.id);
     
@@ -168,6 +176,7 @@ router.post('/', [
   body('paymentMethod').optional().isIn(['cash', 'card', 'bank_transfer', 'cheque']),
   body('recordedBy').notEmpty().withMessage('Recorded by is required')
 ], async (req, res) => {
+<<<<<<< HEAD
   // Mock mode
   if (global.mockMode) {
     console.log('💸 MOCK: Creating expense', req.body.description);
@@ -175,6 +184,8 @@ router.post('/', [
     return res.status(201).json(newExpense);
   }
   
+=======
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -192,12 +203,15 @@ router.post('/', [
 
 // Update expense
 router.put('/:id', async (req, res) => {
+<<<<<<< HEAD
   // Mock mode
   if (global.mockMode) {
     console.log('💸 MOCK: Updating expense', req.params.id);
     return res.json({ _id: req.params.id, ...req.body });
   }
   
+=======
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
   try {
     const expense = await Expense.findByIdAndUpdate(
       req.params.id,
@@ -217,12 +231,15 @@ router.put('/:id', async (req, res) => {
 
 // Delete expense
 router.delete('/:id', async (req, res) => {
+<<<<<<< HEAD
   // Mock mode
   if (global.mockMode) {
     console.log('💸 MOCK: Deleting expense', req.params.id);
     return res.json({ message: 'Expense deleted successfully' });
   }
   
+=======
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
   try {
     const expense = await Expense.findByIdAndDelete(req.params.id);
     
@@ -238,6 +255,7 @@ router.delete('/:id', async (req, res) => {
 
 // Get today's expenses summary
 router.get('/summary/today', async (req, res) => {
+<<<<<<< HEAD
   // Mock mode
   if (global.mockMode) {
     console.log('💸 MOCK: Getting today\'s expenses summary');
@@ -252,6 +270,8 @@ router.get('/summary/today', async (req, res) => {
     });
   }
   
+=======
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
   try {
     const today = new Date();
     const startOfDay = new Date(today.getFullYear(), today.getMonth(), today.getDate());
@@ -276,6 +296,7 @@ router.get('/summary/today', async (req, res) => {
 
 // Get expense analytics
 router.get('/analytics/period', async (req, res) => {
+<<<<<<< HEAD
   // Mock mode
   if (global.mockMode) {
     console.log('💸 MOCK: Getting expense analytics');
@@ -292,6 +313,8 @@ router.get('/analytics/period', async (req, res) => {
     });
   }
   
+=======
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
   try {
     const { period = 'month' } = req.query;
     let startDate, endDate;

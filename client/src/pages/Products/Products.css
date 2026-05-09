@@ -1,11 +1,16 @@
 /* ==============================================
+<<<<<<< HEAD
    MEDICINES/PRODUCTS PAGE - EXACT DASHBOARD MATCH
+=======
+   MEDICINES/PRODUCTS PAGE - PREMIUM RESPONSIVE DESIGN
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
    Pixel-perfect consistency | Mobile-first | Senior Dev Quality
    ============================================== */
 
 /* Page Wrapper - EXACT match to Dashboard */
 .products-page {
   padding: var(--space-4);
+<<<<<<< HEAD
   min-height: 100vh;
   background: var(--bg-secondary);
   padding-bottom: calc(var(--bottom-nav-height) + var(--space-4));
@@ -23,6 +28,17 @@
 /* ==============================================
    PAGE HEADER - EXACT Dashboard Style
    ============================================== */
+=======
+  max-width: var(--max-width);
+  margin: 0 auto;
+  min-height: calc(100vh - var(--bottom-nav-height));
+  background: var(--bg-secondary);
+  padding-bottom: calc(var(--bottom-nav-height) + var(--space-4));
+  position: relative;
+}
+
+/* Page Header */
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
 .page-header {
   display: flex;
   flex-wrap: wrap;
@@ -40,6 +56,7 @@
   transition: all var(--transition-normal);
 }
 
+<<<<<<< HEAD
 .header-left {
   display: flex;
   align-items: center;
@@ -54,6 +71,8 @@
   color: var(--text-primary);
 }
 
+=======
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
 .page-header h1 {
   margin: 0;
   font-size: var(--text-2xl);
@@ -63,6 +82,7 @@
   min-width: 200px;
 }
 
+<<<<<<< HEAD
 .page-header h1 .bengali-text {
   font-family: var(--font-family-bengali);
 }
@@ -70,6 +90,9 @@
 /* ==============================================
    PRIMARY BUTTON - EXACT Dashboard Standards
    ============================================== */
+=======
+/* Primary Button */
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
 .primary-button {
   background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-purple) 100%);
   color: var(--text-inverse);
@@ -86,7 +109,10 @@
   box-shadow: 0 4px 15px rgba(var(--color-primary-rgb), 0.3);
   white-space: nowrap;
   font-family: inherit;
+<<<<<<< HEAD
   min-height: 48px; /* 48px touch target */
+=======
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
 }
 
 .primary-button:hover {
@@ -94,6 +120,7 @@
   box-shadow: 0 6px 20px rgba(var(--color-primary-rgb), 0.4);
 }
 
+<<<<<<< HEAD
 .primary-button:active {
   transform: translateY(0);
 }
@@ -101,6 +128,9 @@
 /* ==============================================
    FILTERS SECTION - Glassmorphism Like Dashboard
    ============================================== */
+=======
+/* Filters Section */
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
 .filters-section {
   background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(12px);
@@ -125,7 +155,11 @@
 
 .search-box input {
   width: 100%;
+<<<<<<< HEAD
   padding: var(--space-3) var(--space-3);
+=======
+  padding: var(--space-2) var(--space-3);
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
   padding-left: calc(var(--space-3) + 20px);
   border: 1px solid var(--border-light);
   border-radius: var(--radius-md);
@@ -136,7 +170,10 @@
   transition: all var(--transition-fast);
   box-sizing: border-box;
   font-family: inherit;
+<<<<<<< HEAD
   min-height: 48px; /* 48px touch target */
+=======
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
 }
 
 .search-box input:focus {
@@ -162,7 +199,11 @@
 }
 
 .filter-select {
+<<<<<<< HEAD
   padding: var(--space-3) var(--space-3);
+=======
+  padding: var(--space-2) var(--space-3);
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
   border: 1px solid var(--border-light);
   border-radius: var(--radius-md);
   font-size: var(--text-sm);
@@ -172,8 +213,11 @@
   transition: all var(--transition-fast);
   font-family: inherit;
   min-width: 150px;
+<<<<<<< HEAD
   min-height: 48px; /* 48px touch target */
   cursor: pointer;
+=======
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
 }
 
 .filter-select:focus {
@@ -195,7 +239,10 @@
   border-radius: var(--radius-md);
   transition: all var(--transition-fast);
   white-space: nowrap;
+<<<<<<< HEAD
   min-height: 48px; /* 48px touch target */
+=======
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
 }
 
 .filter-checkbox:hover {
@@ -227,7 +274,10 @@
   transition: all var(--transition-fast);
   font-family: inherit;
   white-space: nowrap;
+<<<<<<< HEAD
   min-height: 48px; /* 48px touch target */
+=======
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
 }
 
 .clear-filters-btn:hover {
@@ -236,6 +286,7 @@
   transform: translateY(-1px);
 }
 
+<<<<<<< HEAD
 /* ==============================================
    SKELETON LOADING - EXACT Dashboard Match
    ============================================== */
@@ -261,17 +312,43 @@
 }
 
 .skeleton-grid {
+=======
+/* Page Content */
+.page-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+/* Loading State */
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-8);
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+}
+
+/* Medicines Grid */
+.medicines-grid {
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
   display: grid;
   grid-template-columns: 1fr;
   gap: var(--space-3);
 }
 
 @media (min-width: 640px) {
+<<<<<<< HEAD
   .skeleton-grid {
+=======
+  .medicines-grid {
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   }
 }
 
+<<<<<<< HEAD
 .skeleton-card {
   height: 200px;
   background: var(--color-gray-200);
@@ -329,14 +406,35 @@
   padding: var(--space-5);
   box-shadow: var(--shadow-md);
   transition: all var(--transition-normal);
+=======
+@media (min-width: 1024px) {
+  .medicines-grid {
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  }
+}
+
+/* Medicine Card */
+.medicine-card {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  transition: all var(--transition-fast);
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
 }
 
 .medicine-card:hover {
+<<<<<<< HEAD
   transform: translateY(-2px);
   box-shadow: var(--shadow-lg);
+=======
+  border-color: var(--color-primary);
+  box-shadow: 0 4px 12px rgba(var(--color-primary-rgb), 0.1);
+  transform: translateY(-2px);
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
 }
 
 /* Medicine Header */
@@ -355,7 +453,11 @@
   flex: 1;
 }
 
+<<<<<<< HEAD
 /* Medicine Actions - 48px Touch Target */
+=======
+/* Medicine Actions */
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
 .medicine-actions {
   display: flex;
   gap: var(--space-2);
@@ -363,14 +465,23 @@
 }
 
 .action-btn {
+<<<<<<< HEAD
   width: 48px; /* EXACT 48px touch target */
   height: 48px;
+=======
+  width: 32px;
+  height: 32px;
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
   display: inline-flex;
   align-items: center;
   justify-content: center;
   background: var(--bg-primary);
   border: 1px solid var(--border-light);
+<<<<<<< HEAD
   border-radius: var(--radius-md);
+=======
+  border-radius: var(--radius-sm);
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
   cursor: pointer;
   transition: all var(--transition-fast);
   color: var(--text-secondary);
@@ -382,11 +493,14 @@
   background: var(--color-primary-light);
   border-color: var(--color-primary);
   color: var(--color-primary);
+<<<<<<< HEAD
   transform: translateY(-2px);
 }
 
 .action-btn:active {
   transform: translateY(0);
+=======
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
 }
 
 .action-btn.view-btn:hover {
@@ -474,9 +588,13 @@
   border-radius: var(--radius-lg);
 }
 
+<<<<<<< HEAD
 /* ==============================================
    PAGINATION - 48px Touch Targets
    ============================================== */
+=======
+/* Pagination */
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
 .pagination {
   display: flex;
   justify-content: center;
@@ -486,11 +604,14 @@
 }
 
 .page-btn {
+<<<<<<< HEAD
   min-width: 48px; /* 48px touch target */
   min-height: 48px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+=======
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
   padding: var(--space-2) var(--space-3);
   background: var(--bg-primary);
   border: 1px solid var(--border-light);
@@ -506,7 +627,10 @@
   background: var(--color-primary-light);
   border-color: var(--color-primary);
   color: var(--color-primary);
+<<<<<<< HEAD
   transform: translateY(-1px);
+=======
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
 }
 
 .page-btn:disabled {
@@ -520,9 +644,16 @@
   padding: 0 var(--space-2);
 }
 
+<<<<<<< HEAD
 /* ==============================================
    MODAL STYLES - Enhanced UX
    ============================================== */
+=======
+/* ===========================
+   MODAL STYLES
+   =========================== */
+
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -583,8 +714,13 @@
 }
 
 .close-btn {
+<<<<<<< HEAD
   width: 48px; /* 48px touch target */
   height: 48px;
+=======
+  width: 36px;
+  height: 36px;
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
   display: flex;
   align-items: center;
   justify-content: center;
@@ -593,26 +729,176 @@
   border-radius: var(--radius-md);
   cursor: pointer;
   transition: all var(--transition-fast);
+<<<<<<< HEAD
   font-size: var(--text-lg);
+=======
+  color: var(--text-secondary);
+  font-size: var(--text-base);
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
   font-family: inherit;
 }
 
 .close-btn:hover {
+<<<<<<< HEAD
   background: var(--color-danger-light);
+=======
+  background: rgba(var(--color-danger-rgb), 0.1);
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
   border-color: var(--color-danger);
   color: var(--color-danger);
 }
 
+<<<<<<< HEAD
 /* ==============================================
    RESPONSIVE DESIGN - EXACT Dashboard Breakpoints
    ============================================== */
 
 /* Small Mobile (360px and below) */
+=======
+/* Medicine Form */
+.medicine-form {
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-3);
+}
+
+@media (min-width: 640px) {
+  .form-row {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin-bottom: var(--space-3);
+}
+
+.form-group label {
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  font-family: inherit;
+  color: var(--text-primary);
+  background: var(--bg-primary);
+  outline: none;
+  transition: all var(--transition-fast);
+  box-sizing: border-box;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(var(--color-primary-rgb), 0.1);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.form-actions {
+  display: flex;
+  gap: var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--border-light);
+  margin-top: var(--space-3);
+}
+
+@media (max-width: 360px) {
+  .form-actions {
+    flex-direction: column;
+  }
+  
+  .primary-button,
+  .secondary-button {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* Secondary Button (for modals) */
+.secondary-button {
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-light);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: inherit;
+}
+
+.secondary-button:hover {
+  background: rgba(255, 255, 255, 0.95);
+  border-color: var(--text-secondary);
+}
+
+/* ===========================
+   RESPONSIVE DESIGN
+   =========================== */
+
+@media (max-width: 768px) {
+  .page-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .page-header h1 {
+    width: 100%;
+  }
+  
+  .primary-button {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .filters-section {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .search-box {
+    min-width: 100%;
+  }
+  
+  .filter-controls {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
 @media (max-width: 360px) {
   .products-page {
     padding: var(--space-2);
   }
   
+<<<<<<< HEAD
   .page-header {
     padding: var(--space-3);
   }
@@ -655,3 +941,117 @@
     grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
   }
 }
+=======
+  .page-header,
+  .filters-section {
+    padding: var(--space-3);
+  }
+  
+  .medicine-card {
+    padding: var(--space-3);
+  }
+  
+  .modal {
+    margin: var(--space-2);
+  }
+  
+  .medicine-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .medicine-actions {
+    width: 100%;
+    justify-content: flex-start;
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .primary-button,
+  .medicine-card,
+  .action-btn,
+  .modal,
+  .modal-overlay {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+}
+
+/* Skeleton Loader Styles */
+.product-skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-4);
+}
+
+.skeleton-header {
+  height: 40px;
+  background: var(--color-gray-200);
+  border-radius: var(--radius-md);
+  animation: skeleton-shimmer 1.5s infinite;
+  background-size: 200% 100%;
+}
+
+.skeleton-card {
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  animation: skeleton-pulse 1.5s infinite;
+}
+
+.skeleton-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-lg);
+  background: rgba(99, 102, 241, 0.1);
+  margin-bottom: var(--space-3);
+}
+
+.skeleton-text {
+  height: 16px;
+  background: var(--color-gray-200);
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--space-2);
+  animation: skeleton-shimmer 1.5s infinite;
+  background-size: 200% 100%;
+}
+
+.skeleton-text.short { width: 60%; }
+.skeleton-text.medium { width: 80%; }
+
+.skeleton-stat {
+  height: 32px;
+  width: 120px;
+  background: var(--color-gray-200);
+  border-radius: var(--radius-sm);
+  animation: skeleton-shimmer 1.5s infinite;
+  background-size: 200% 100%;
+}
+
+/* Action Buttons - 48px tap target */
+.action-btn {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+}
+
+.action-btn:hover {
+  background: var(--color-primary-light);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3

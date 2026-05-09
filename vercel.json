@@ -1,11 +1,15 @@
 {
   "version": 2,
+<<<<<<< HEAD
   "name": "shohel-pharmacy",
+=======
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
   "builds": [
     {
       "src": "client/package.json",
       "use": "@vercel/static-build",
       "config": {
+<<<<<<< HEAD
         "distDir": "build",
         "installCommand": "npm install --legacy-peer-deps",
         "buildCommand": "npm run build"
@@ -24,6 +28,16 @@
     {
       "source": "/(.*)",
       "destination": "/index.html"
+=======
+        "distDir": "build"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/client/$1"
+>>>>>>> 02cc202584eb8ebf018c3a82cbf08b4204661ae3
     }
   ]
 }
